@@ -14,7 +14,9 @@ body > span
 {
     color: white;
     font-size: 2em;
+    margin-bottom: 5px;
 }
+/*
 table {
     max-width: 800px;
     margin: 0 auto;
@@ -22,18 +24,10 @@ table {
     border-radius: 10px;
     padding: 20px;
     color: #ECF9FB;
-}
-
-h1 {
-    text-align: center;
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
-
-table {
     width: 100%;
     border-collapse: collapse;
 }
+
 
 th, td {
     border: 2px solid #000000;
@@ -44,14 +38,61 @@ th {
     background-color: #3cf891;
     color: black;
 }
+*/
 
+table 
+{
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 5px;
+    background-color: #393d46;
+    color: #ECF9FB;
+}
+table th:not(:last-child),
+table td:not(:last-child) 
+{
+    border-right: 1px solid black;
+}
+table>thead>tr:not(:last-child)>th,
+table>thead>tr:not(:last-child)>td,
+table>tbody>tr:not(:last-child)>th,
+table>tbody>tr:not(:last-child)>td,
+table>tfoot>tr:not(:last-child)>th,
+table>tfoot>tr:not(:last-child)>td,
+table>tr:not(:last-child)>td,
+table>tr:not(:last-child)>th,
+table>thead:not(:last-child),
+table>tbody:not(:last-child),
+table>tfoot:not(:last-child) 
+{
+    border-bottom: 1px solid black;
+}
+tr:first-of-type > th:first-of-type
+{
+    border-top-left-radius: 5px;
+}
+tr:first-of-type > th:last-of-type
+{
+    border-top-right-radius: 5px;
+}
+th, td {
+    
+    padding: 10px;
+    text-align: center;
+}
+tr:nth-child(even)
+{
+    background-color: #26292F;
+}
+tr:nth-of-type(1), tr>td:nth-of-type(1), tr>td:nth-of-type(2)
+{
+    background-color: #48bfc4;
+    color: #111;
+    font-weight: bold;
+}
 a {
     color: #bfcad6;
     text-decoration: none;
-}
-.p
-{
-    height: 20px;
 }
 a:hover {
     text-decoration: underline;

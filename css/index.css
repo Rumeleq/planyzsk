@@ -34,7 +34,7 @@ main > div
 }
 h1
 {
-    color: #ECF9FB;
+    color: #42e5eb;;
     font-family: 'Zilla Slab', serif;
     font-size: 2.5em;
 }
@@ -67,7 +67,7 @@ h1
 }
 #search_input:focus
 {
-    box-shadow: 0 0 0 3px #1DA458;
+    box-shadow: 0 0 0 3px #48bfc4;;
 
 }
 #search_input::placeholder {
@@ -84,7 +84,11 @@ h1
 }
 button
 {
-    margin-left: 60px;
+    margin-left: 57px;
+    background-color: #b6c0c0;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
 #lists
