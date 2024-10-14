@@ -22,7 +22,6 @@
                 </div>
                 <button id="search_button">Szukaj</button>
             </div>
-            
         </div>
         <div id="lists">
             <ul id="o_list"></ul>
@@ -53,7 +52,6 @@
         }
 
         function getDisplayName(filename) {
-            // Remove the .html extension and the initials at the end
             return filename.replace(/\s[A-Z]+\.html$/, '');
         }
 
@@ -77,6 +75,10 @@
 
             if (filteredSchedules.length === 0) {
                 resultsContainer.innerHTML = '<li>Nie znaleziono.</li>';
+            }
+            let ulElement = document.getElementById('container').querySelector('ul');
+            if (ulElement) {
+                ulElement.remove();
             }
             container.appendChild(resultsContainer);
         }
