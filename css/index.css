@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+body
+{
+    margin: 0 auto;
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("../imgs/landing.webp");
+    background-repeat: repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    
+}
+main
+{
+    margin: 20px 0 20px 0;
+    width: 35vw;
+    min-width: 500px;
+}
+main > div
+{
+    background-color: #26292F;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 15px;
+}
+#welcome
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+h1
+{
+    color: #ECF9FB;
+    font-family: 'Zilla Slab', serif;
+    font-size: 2.5em;
+}
+#container
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#data_input
+{
+    display: flex;
+    
+}
+#search_container {
+    position: relative;
+    width: 250px;
+}
+
+#search_input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    font-size: 14px;
+    background-color: #33363D;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    transition: box-shadow 0.15s ease-in-out;
+}
+#search_input:focus
+{
+    box-shadow: 0 0 0 3px #1DA458;
+
+}
+#search_input::placeholder {
+    color: #888;
+}
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+button
+{
+    margin-left: 60px;
+}
+
+#lists
+{
+    display: flex;
+    justify-content: center;
+}
+a
+{
+    color: #bfcad6;
+}
+a:visited
+{
+    color: #d3dbe4;
+}
+li
+{
+    margin: 2px;
+}
