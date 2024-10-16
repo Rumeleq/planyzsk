@@ -69,8 +69,13 @@ li
 }
 a
 {
+    color: #bfcad6;
     text-decoration: none;
-
+    
+    &:visited
+    {
+        color: whitesmoke;
+    }
     &:hover
     {
         text-decoration: underline;
@@ -145,15 +150,6 @@ button#search-button
     }
 }
 
-a
-{  
-    color: #EEEEEE;
-
-    &:visited
-    {
-        color: whitesmoke;
-    }
-}
 .search_results
 {
     width: 100%;
