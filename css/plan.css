@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*
+{
+    color: #EEEEEE;
+}
 body 
 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Kanit";
     margin: 0;
     padding: 20px;
     display: flex;
@@ -13,18 +18,17 @@ body
 }
 body > span
 {
-    color: white;
-    font-size: 2em;
+    font-size: 3em;
+    font-weight: bold;
     margin-bottom: 5px;
 }
 
 table 
 {
+    background-color: #31363F;
     border-spacing: 0;
     border-collapse: separate;
     border-radius: 5px;
-    background-color: #393d46;
-    color: #ECF9FB;
 }
 table th:not(:last-child),
 table td:not(:last-child) 
@@ -60,21 +64,20 @@ th, td {
 }
 tr:nth-child(even)
 {
-    background-color: #26292F;
+    background-color: #222831;
 }
 tr:nth-of-type(1), tr>td:nth-of-type(1), tr>td:nth-of-type(2)
 {
-    background-color: #48bfc4;
-    color: #111;
+    color: #222831;
+    background-color: #76ABAE;
     font-weight: bold;
 }
 
 a 
 {
-    color: #bfcad6;
     text-decoration: none;
-}
-a:hover 
-{
-    text-decoration: underline;
+    &&:hover 
+    {
+        text-decoration: underline;
+    }
 }

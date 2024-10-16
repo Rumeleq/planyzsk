@@ -9,6 +9,7 @@ let header = document.querySelector('body > span');
 if (title.textContent.startsWith("Plan lekcji oddziału"))
 {
     header.textContent = header.textContent.slice(0, 2);
+    title.textContent = title.textContent.slice(0, -4);
 }
 else if (title.textContent.startsWith("Plan lekcji sali"))
 {
