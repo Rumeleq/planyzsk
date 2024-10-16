@@ -19,11 +19,9 @@ function generateList(spanTexts, filenames, list)
     for (let i = 0; i < filenames.length; i++)
     {
         let anchor = document.createElement("a");
-        let list_item = document.createElement("li");
         anchor.href = "dane/" + filenames[i];
         anchor.textContent = spanTexts[i];
-        list_item.appendChild(anchor);
-        list.appendChild(list_item);
+        list.appendChild(anchor);
     }
 }
 
@@ -34,8 +32,12 @@ function getDisplayName(filename)
 
 function searchSchedules() 
 {
+    if(container.querySelector('div.search_results'))
+        container.removeChild(container.querySelector('div.search_results'));
+
     const searchTerm = search_input.value.toLowerCase();
-    const resultsContainer = document.createElement('ul');
+    const resultsContainer = document.createElement('div');
+    resultsContainer.classList.add('search_results');
     resultsContainer.innerHTML = '';
 
     const filteredSchedules = nspanTexts.filter(schedule => 
@@ -44,21 +46,14 @@ function searchSchedules()
     
     filteredSchedules.forEach(schedule => 
     {
-        const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = "dane/" + nfilenames[nspanTexts.indexOf(schedule)];
         a.textContent = getDisplayName(schedule);
-        li.appendChild(a);
-        resultsContainer.appendChild(li);
+        resultsContainer.appendChild(a);
     });
 
     if (filteredSchedules.length === 0) 
-        resultsContainer.innerHTML = '<li>Nie znaleziono.</li>';
-
-    let ulElement = container.querySelector('ul');
-
-    if (ulElement) 
-        ulElement.remove();
+        resultsContainer.innerHTML = '<h2>Nie znaleziono.</h2>';
 
     container.appendChild(resultsContainer);
 }
@@ -91,7 +86,6 @@ document.addEventListener('click', function(event)
 });*/
 
 generateList(ospanTexts, ofilenames, o_list);
-generateList(nspanTexts, nfilenames, n_list);
 generateList(sspanTexts, sfilenames, s_list);
 
 search_button.addEventListener('click', searchSchedules);
