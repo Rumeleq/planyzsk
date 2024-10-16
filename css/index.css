@@ -67,7 +67,7 @@ li
 {
     padding-bottom: 3px;
 }
-a
+section#lists a
 {
     color: #bfcad6;
     text-decoration: none;
@@ -114,7 +114,7 @@ input#search-input
     border-radius: 6px;
     outline: none;
     transition: box-shadow 0.15s ease-in-out;
-
+    
     &::placeholder
     {
         color: #888888;
@@ -143,7 +143,7 @@ button#search-button
     border: none;
     font-weight: bold;
     border-radius: 5px;
-
+    
     &:hover
     {
         cursor: pointer;
@@ -158,9 +158,10 @@ button#search-button
     flex-wrap: wrap;
     justify-content: center;
 }
-.search_results > a
+div.search_results > a
 {
     margin: 5px;
+    text-decoration: none;
     padding: 5px;
     border-radius: 5px;
     background-color: #76ABAE;
@@ -169,8 +170,14 @@ button#search-button
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #ffffff;
+    color: whitesmoke;
+
+    &:hover
+    {
+        text-decoration: underline;
+    }
 }
+
 
 @media (width < 600px) 
 {
