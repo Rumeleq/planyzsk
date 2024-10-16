@@ -169,7 +169,7 @@ button#search-button
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #ededed;
+    color: #ffffff;
 }
 
 @media (width < 600px) 
