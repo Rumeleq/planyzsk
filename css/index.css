@@ -69,12 +69,12 @@ li
 }
 section#lists a
 {
-    color: #bfcad6;
+    color: whitesmoke;
     text-decoration: none;
     
     &:visited
     {
-        color: whitesmoke;
+        color: #bfcad6;
     }
     &:hover
     {
