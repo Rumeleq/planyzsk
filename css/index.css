@@ -170,7 +170,7 @@ button#search-button
     align-items: center;
 }
 
-@media (max-width: 600px) 
+@media (width < 600px) 
 {
     div#app 
     {
