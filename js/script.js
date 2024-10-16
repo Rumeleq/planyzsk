@@ -32,7 +32,7 @@ function getDisplayName(filename)
 
 function searchSchedules() 
 {
-    if(container.querySelector('div.search_results'))
+    if (container.querySelector('div.search_results'))
         container.removeChild(container.querySelector('div.search_results'));
 
     const searchTerm = search_input.value.toLowerCase();
@@ -41,7 +41,7 @@ function searchSchedules()
     resultsContainer.innerHTML = '';
 
     const filteredSchedules = nspanTexts.filter(schedule => 
-        schedule.toLowerCase().includes(searchTerm)
+        schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
     );
     
     filteredSchedules.forEach(schedule => 
@@ -52,7 +52,7 @@ function searchSchedules()
         resultsContainer.appendChild(a);
     });
 
-    if (filteredSchedules.length === 0) 
+    if (filteredSchedules.length === 0)
         resultsContainer.innerHTML = '<h2>Nie znaleziono.</h2>';
 
     container.appendChild(resultsContainer);
@@ -60,30 +60,13 @@ function searchSchedules()
 
 document.addEventListener('keydown', function(event) 
 {
-    if (event.ctrlKey && event.key === 'f') {
+    if (event.ctrlKey && event.key === 'f') 
+    {
         event.preventDefault();
         search_input.focus();
     }
 });
-/*
-document.addEventListener('click', function(event) 
-{
-    if (event.target.tagName === 'a') 
-    {
-        if (event.target.href.includes('dane/o'))
-        {
-            
-        }
-        else if (event.target.href.includes('dane/s'))
-        {
 
-        }
-        else
-        {
-
-        }
-    }
-});*/
 
 generateList(ospanTexts, ofilenames, o_list);
 generateList(sspanTexts, sfilenames, s_list);
@@ -91,6 +74,8 @@ generateList(sspanTexts, sfilenames, s_list);
 search_button.addEventListener('click', searchSchedules);
 search_input.addEventListener('keyup', function(event) 
 {
-    if (event.key === 'Enter') 
+    if (search_input.value.length > 0)
         searchSchedules();
+    else
+        container.removeChild(container.querySelector('div.search_results'));
 });

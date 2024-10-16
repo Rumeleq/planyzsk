@@ -5,7 +5,6 @@ body
 {
     margin: 0 auto;
     display: flex;
-    display: flex;
     flex-direction: column;
     align-items: center;
     background-image: url("../imgs/landing.webp");
@@ -38,14 +37,14 @@ main > div, header
     margin: 10px;
     padding: 15px;
 }
-div#lists
+section#lists
 {
     display: flex;
     justify-content: center;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-div#lists > div:not(div.in_between)
+section#lists > div:not(div.in_between)
 {
     width: 50%;
     padding: 5px;
@@ -53,7 +52,7 @@ div#lists > div:not(div.in_between)
     flex-direction: column;
     align-items: center;
 }
-div#lists > div:not(div.in_between) > h3
+section#lists > div:not(div.in_between) > h3
 {
     color: #76ABAE;
 }
@@ -71,7 +70,8 @@ li
 a
 {
     text-decoration: none;
-    &&:hover
+
+    &:hover
     {
         text-decoration: underline;
     }
@@ -82,7 +82,7 @@ h1
     color: #76ABAE;
     font-size: 2.5em;
 }
-div#container
+section#container
 {
     display: flex;
     align-items: center;
@@ -110,11 +110,11 @@ input#search-input
     outline: none;
     transition: box-shadow 0.15s ease-in-out;
 
-    &&::placeholder
+    &::placeholder
     {
         color: #888888;
     }
-    &&:focus
+    &:focus
     {
         box-shadow: 0 0 0 3px #76ABAE;
     }
@@ -139,15 +139,17 @@ button#search-button
     font-weight: bold;
     border-radius: 5px;
 
-    &&:hover
+    &:hover
     {
         cursor: pointer;
     }
 }
+
 a
 {  
     color: #EEEEEE;
-    &&:visited
+
+    &:visited
     {
         color: whitesmoke;
     }
@@ -170,4 +172,13 @@ a
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 600px) 
+{
+    div#app 
+    {
+        width: 90vw;
+        min-width: unset;
+    }
 }
