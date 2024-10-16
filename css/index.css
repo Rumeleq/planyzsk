@@ -168,6 +168,8 @@ button#search-button
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    color: #ededed;
 }
 
 @media (width < 600px) 
@@ -176,5 +178,9 @@ button#search-button
     {
         width: 98vw;
         min-width: unset;
+    }
+    div#search-field-container 
+    {
+        width: 90%;
     }
 }
