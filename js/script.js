@@ -13,6 +13,8 @@ const nfilenames = ['n1.html', 'n2.html', 'n3.html', 'n4.html', 'n5.html', 'n6.h
 let search_input = document.getElementById('search-input');
 let search_button = document.getElementById('search-button');
 let container = document.getElementById('container');
+let o_list = document.getElementById('o-list');
+let s_list = document.getElementById('s-list');
 
 function generateList(spanTexts, filenames, list)
 {
