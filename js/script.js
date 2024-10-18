@@ -92,7 +92,7 @@ o_list.addEventListener('click', function(event)
     if (event.target.tagName === 'A') 
     {
         event.preventDefault();
-        window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+        window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${event.target.href}`;
 
     }
 });
@@ -101,7 +101,7 @@ s_list.addEventListener('click', function(event)
     if (event.target.tagName === 'A') 
     {
         event.preventDefault();
-        window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+        window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${event.target.href}`;
 
     }
 });
