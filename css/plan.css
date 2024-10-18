@@ -16,38 +16,17 @@ body
     background-size: cover;
     background-attachment: fixed;
 }
-nav#nav-container
-{
-    display: flex;
-    width: 14em;
-    font-size: .9em;
-    overflow: scroll;
-    height: 100%;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    background-color: #222831;
-    border-radius: 10px;
-    padding: 10px;
 
-    & > a:first-child
-    {
-        align-self: center;
-        size: 1em;
-        margin-bottom: 3px;
-        color: whitesmoke;
-    }
-}
 
-section#schedule
+body
 {
-    width: calc(100% - 14em - 40px);
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
 }
-section#schedule > span
+body > span
 {
     font-size: 3em;
     font-weight: bold;

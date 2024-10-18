@@ -32,7 +32,7 @@ function getDisplayName(filename)
     return filename.replace(/\s[A-Z]+\.html$/, '');
 }
 
-function searchSchedules() 
+function searchSchedules()
 {
     if (container.querySelector('div.search_results'))
         container.removeChild(container.querySelector('div.search_results'));
@@ -52,6 +52,11 @@ function searchSchedules()
         a.href = "dane/" + nfilenames[nspanTexts.indexOf(schedule)];
         a.textContent = getDisplayName(schedule);
         resultsContainer.appendChild(a);
+        a.addEventListener('click', function(event)
+        {
+            event.preventDefault();
+            window.location = `plan_index.html?schedule=${encodeURIComponent(a.href)}`;
+        });
     });
 
     if (filteredSchedules.length === 0)
@@ -80,4 +85,21 @@ search_input.addEventListener('keyup', function(event)
         searchSchedules();
     else
         container.removeChild(container.querySelector('div.search_results'));
+});
+
+o_list.addEventListener('click', function(event)
+{
+    if (event.target.tagName === 'A') 
+    {
+        event.preventDefault();
+        window.location = `plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+    }
+});
+s_list.addEventListener('click', function(event)
+{
+    if (event.target.tagName === 'A') 
+    {
+        event.preventDefault();
+        window.location = `plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+    }
 });
