@@ -55,8 +55,7 @@ function searchSchedules()
         a.addEventListener('click', function(event)
         {
             event.preventDefault();
-            window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${encodeURIComponent(a.href)}`;
-
+            window.location = window.location = `https://plan_index.html?schedule=${a.href}`;
         });
     });
 
