@@ -23,7 +23,7 @@ function addElement(elementToAdd, target, add_first)
         else
             document.body.append(element);
     else
-        document.body.querySelector(target).append(element)
+        document.querySelector(target).append(element)
     return element;
 }
 
@@ -99,3 +99,4 @@ indexLink.textContent = 'Strona główna';
 generateList(ospanTexts, ofilenames, navContainer);
 generateList(nspanTexts, nfilenames, navContainer);
 generateList(sspanTexts, sfilenames, navContainer);
+addElement('link', 'head', false).href = '../favicon.ico';
