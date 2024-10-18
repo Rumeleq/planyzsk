@@ -55,7 +55,8 @@ function searchSchedules()
         a.addEventListener('click', function(event)
         {
             event.preventDefault();
-            window.location = `plan_index.html?schedule=${encodeURIComponent(a.href)}`;
+            window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${encodeURIComponent(a.href)}`;
+
         });
     });
 
@@ -92,7 +93,8 @@ o_list.addEventListener('click', function(event)
     if (event.target.tagName === 'A') 
     {
         event.preventDefault();
-        window.location = `plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+        window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+
     }
 });
 s_list.addEventListener('click', function(event)
@@ -100,6 +102,7 @@ s_list.addEventListener('click', function(event)
     if (event.target.tagName === 'A') 
     {
         event.preventDefault();
-        window.location = `plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+        window.location = `${window.location.origin}/repo-name/plan_index.html?schedule=${encodeURIComponent(event.target.href)}`;
+
     }
 });
