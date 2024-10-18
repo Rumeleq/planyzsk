@@ -58,3 +58,14 @@ aElements.forEach(a =>
     const regex = new RegExp(`(,)`, 'g');
     a.innerHTML = a.innerHTML.replace(regex, `$1 `);
 });
+/*
+document.body.innerHTML = "<section id='schedule'>" + document.body.innerHTML + "</section>";
+let navContainer = addElement('nav', 'body', true);
+navContainer.id = 'nav-container';
+let indexLink = addElement('a', '#nav-container', true);
+indexLink.href = '../index.html';
+indexLink.textContent = 'Strona główna';
+generateList(ospanTexts, ofilenames, navContainer);
+generateList(nspanTexts, nfilenames, navContainer);
+generateList(sspanTexts, sfilenames, navContainer);
+addElement('link', 'head', false).href = '../favicon.ico';*/
