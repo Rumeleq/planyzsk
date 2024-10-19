@@ -12,11 +12,11 @@ let navContainer = navIframe.contentDocument.getElementById('nav-container');
 
 navContainer.addEventListener('click', function(event)
 {
-    if (event.target.tagName === 'A') 
+    if (event.target.tagName === 'A')
     {
         event.preventDefault();
         if (event.target.textContent === 'Strona główna')
-            window.location = '../index.html';
+            window.location = '../planyzsk';
         else
         {
             let href = event.target.href;
