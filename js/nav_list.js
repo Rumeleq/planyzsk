@@ -51,7 +51,6 @@ const nfilenames = ['n1.html', 'n2.html', 'n3.html', 'n4.html', 'n5.html', 'n6.h
         if (event.target.tagName === 'A')
         {
             event.preventDefault();
-            console.log(event.target.textContent);
             if (event.target.textContent == 'Strona główna')
                 window.parent.location = '../planyzsk/index.html';
             else
