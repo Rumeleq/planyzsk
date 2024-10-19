@@ -16,7 +16,7 @@ navContainer.addEventListener('click', function(event)
     {
         event.preventDefault();
         if (event.target.textContent === 'Strona główna')
-            window.location = '../planyzsk';
+            window.location = '../planyzsk/index.html';
         else
         {
             let href = event.target.href;
