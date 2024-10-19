@@ -49,14 +49,16 @@ function searchSchedules()
     filteredSchedules.forEach(schedule => 
     {
         const a = document.createElement('a');
-        a.href = "dane/" + nfilenames[nspanTexts.indexOf(schedule)];
+        const href = "dane/" + nfilenames[nspanTexts.indexOf(schedule)];
+        a.href = href;
         a.textContent = getDisplayName(schedule);
         resultsContainer.appendChild(a);
         a.addEventListener('click', function(event)
         {
             event.preventDefault();
-            window.location = window.location = `https://rumeleq.github.io/planyzsk/plan_index.html?schedule=${a.href}`;
-            // https://rumeleq.github.io/planyzsk/
+            const parts = a.href.split('/');
+            const newHref = parts.slice(-2).join('/');
+            window.location = `plan_index.html?schedule=${newHref}`;
         });
     });
 
