@@ -34,7 +34,7 @@ const nfilenames = ['n1.html', 'n2.html', 'n3.html', 'n4.html', 'n5.html', 'n6.h
 
 let navContainer = document.getElementById('nav-container');
 let indexLink = addElement('a', 'nav#nav-container', true);
-indexLink.href = '../planyzsk/index.html';
+indexLink.href = '../planyzsk';
 indexLink.textContent = 'Strona główna';
 generateList(ospanTexts, ofilenames, navContainer);
 generateList(nspanTexts, nfilenames, navContainer);
