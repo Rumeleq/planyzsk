@@ -55,7 +55,8 @@ function searchSchedules()
         a.addEventListener('click', function(event)
         {
             event.preventDefault();
-            window.location = window.location = `https://plan_index.html?schedule=${a.href}`;
+            window.location = window.location = `https://rumeleq.github.io/planyzsk/plan_index.html?schedule=${a.href}`;
+            // https://rumeleq.github.io/planyzsk/
         });
     });
 
