@@ -22,7 +22,6 @@ navContainer.addEventListener('click', function(event)
             let href = event.target.href;
             let parts = href.split('/');
             let newHref = parts.slice(-2).join('/');
-            console.log(newHref);
             let iframe = document.getElementById('schedule-frame');
             iframe.src = newHref;
         }
