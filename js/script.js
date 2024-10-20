@@ -32,27 +32,59 @@ function getDisplayName(filename)
     return filename.replace(/\s[A-Z]+\.html$/, '');
 }
 
-function searchSchedules()
+function searchSchedules(scheduleType)
 {
-    if (container.querySelector('div.search_results'))
-        container.removeChild(container.querySelector('div.search_results'));
-
-    const searchTerm = search_input.value.toLowerCase();
+    if (container.querySelector(`div#${scheduleType[0].toLowerCase()}-results`))
+        container.querySelector(`div#${scheduleType[0].toLowerCase()}-results`).remove();
+    
+    let searchTerm = search_input.value.toLowerCase();
+    let spanTexts, startFrom = 0, filenames;
+    let header_name = scheduleType;
+    switch (scheduleType)
+    {
+        case 'Nauczyciele':
+            spanTexts = nspanTexts;
+            filenames = nfilenames;
+            startFrom = 3;
+            break;
+        case 'Sale':
+            spanTexts = sspanTexts;
+            filenames = sfilenames;
+            if (!searchTerm.startsWith('s'))
+                searchTerm = 's' + searchTerm;
+            break;
+        case 'Oddziały':
+            spanTexts = ospanTexts;
+            filenames = ofilenames;
+            header_name = 'Klasy';
+            break;
+    }
     const resultsContainer = document.createElement('div');
-    resultsContainer.classList.add('search_results');
+    resultsContainer.classList.add('search-results');
+    resultsContainer.id = `${scheduleType[0].toLowerCase()}-results`;
     resultsContainer.innerHTML = '';
-
-    const filteredSchedules = nspanTexts.filter(schedule => 
-        schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
+    let resultsLinksContainer = document.createElement('div');
+    resultsLinksContainer.classList.add('results-links');
+    resultsLinksContainer.innerHTML = '';
+    
+    const filteredSchedules = spanTexts.filter(schedule => 
+        schedule.toLowerCase().trim().slice(startFrom).startsWith(searchTerm)
     );
+    
+    if (filteredSchedules.length == 0)
+        return;
+    
+    const header = document.createElement('h3');
+    header.textContent = `${header_name}`;
+    resultsContainer.appendChild(header);
     
     filteredSchedules.forEach(schedule => 
     {
         const a = document.createElement('a');
-        const href = "dane/" + nfilenames[nspanTexts.indexOf(schedule)];
+        const href = "dane/" + filenames[spanTexts.indexOf(schedule)];
         a.href = href;
         a.textContent = getDisplayName(schedule);
-        resultsContainer.appendChild(a);
+        resultsLinksContainer.appendChild(a);
         a.addEventListener('click', function(event)
         {
             event.preventDefault();
@@ -61,34 +93,43 @@ function searchSchedules()
             window.location = `plan_index.html?schedule=${newHref}`;
         });
     });
-
-    if (filteredSchedules.length === 0)
-        resultsContainer.innerHTML = '<h2>Nie znaleziono.</h2>';
-
+    
+    resultsContainer.appendChild(resultsLinksContainer);
     container.appendChild(resultsContainer);
 }
 
 document.addEventListener('keydown', function(event) 
 {
     if (event.ctrlKey && event.key === 'f') 
-    {
-        event.preventDefault();
+        {
+            event.preventDefault();
         search_input.focus();
     }
 });
 
+search_button.addEventListener('click', searchSchedules);
+search_input.addEventListener('keyup', function() 
+{
+    if (search_input.value.length > 0)
+    {
+        searchSchedules('Nauczyciele');
+        searchSchedules('Oddziały');
+        searchSchedules('Sale');
+        if (!container.querySelector('.search-results'))
+        {
+            const noResults = document.createElement('div');
+            noResults.classList.add('search-results');
+            noResults.id = 'n';
+            noResults.innerHTML = '<h2>Nie znaleziono.</h2>';
+            container.appendChild(noResults);
+        }
+    }
+    else
+        container.querySelectorAll('.search-results').forEach(result => result.remove());
+});
 
 generateList(ospanTexts, ofilenames, o_list);
 generateList(sspanTexts, sfilenames, s_list);
-
-search_button.addEventListener('click', searchSchedules);
-search_input.addEventListener('keyup', function(event) 
-{
-    if (search_input.value.length > 0)
-        searchSchedules();
-    else
-        container.removeChild(container.querySelector('div.search_results'));
-});
 
 o_list.addEventListener('click', function(event)
 {

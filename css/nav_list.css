@@ -9,8 +9,6 @@ nav#nav-container
     font-family: 'Kanit';
     display: flex;
     width: 100%;
-    font-size: .9em;
-    overflow: scroll;
     height: 100%;
     justify-content: flex-start;
     align-items: flex-start;
@@ -22,18 +20,30 @@ nav#nav-container
     & > a:first-child
     {
         align-self: center;
-        size: 1em;
+        font-size: .9em;
         margin-bottom: 3px;
         color: whitesmoke;
     }
-}
-a 
-{
-    color: #bfcad6;
-    text-decoration: none;
-
-    &:hover 
+    & a
     {
-        text-decoration: underline;
+        color: #bfcad6;
+        text-decoration: none;
+        
+        &:hover 
+        {
+            text-decoration: underline;
+        }
     }
+}
+div.nav-links
+{
+    text-decoration: none;
+    font-family: 'Kanit';
+    display: flex;
+    width: 100%;
+    font-size: .9em;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
 }
