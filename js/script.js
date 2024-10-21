@@ -50,8 +50,7 @@ function searchSchedules(scheduleType)
         case 'Sale':
             spanTexts = sspanTexts;
             filenames = sfilenames;
-            if (!searchTerm.startsWith('s'))
-                searchTerm = 's' + searchTerm;
+            //startFrom = 1;
             break;
         case 'Oddziały':
             spanTexts = ospanTexts;
@@ -101,9 +100,10 @@ function searchSchedules(scheduleType)
 document.addEventListener('keydown', function(event) 
 {
     if (event.ctrlKey && event.key === 'f') 
-        {
-            event.preventDefault();
+    {
+        event.preventDefault();
         search_input.focus();
+        search_input.select();
     }
 });
 
