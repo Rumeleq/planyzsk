@@ -87,6 +87,12 @@ section#lists
     justify-content: center;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
+    & a
+    {
+        padding-left: 8%;
+        padding-right: 8%;
+    }
 }
 section#lists > div:not(div.in-between)
 {
