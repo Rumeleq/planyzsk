@@ -36,3 +36,14 @@ a
         text-decoration: underline;
     }
 }
+@media (width < 600px) 
+{
+    iframe#nav-frame
+    {
+        display: none;
+    }
+    iframe#schedule-frame
+    {
+        width: 100%;
+    }
+}
