@@ -13,6 +13,7 @@ window.onload = function()
         let scheduleIframe = document.getElementById('schedule-frame');
         scheduleIframe.src = scheduleHref;
     }
+    let scheduleTitle = document.querySelector('title');
     window.addEventListener('message', function(event) 
     {
         if (event.data.action === 'navigate') 
@@ -23,5 +24,7 @@ window.onload = function()
             let scheduleIframe = document.getElementById('schedule-frame');
             scheduleIframe.src = newHref;
         }
+        else
+            scheduleTitle.textContent = event.data;
     });
 }

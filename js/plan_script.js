@@ -1,6 +1,8 @@
 window.onload = function()
 {
     document.body.style.visibility = "visible";
+    let title = document.querySelector('title');
+    window.parent.postMessage(title.textContent, '*');
 }
 
 let title = document.querySelector('title');
