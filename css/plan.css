@@ -2,6 +2,13 @@
 *
 {
     color: #EEEEEE;
+    
+    &:focus
+    {
+        outline: none;
+        box-shadow: 0 0 0 3px #76ABAE;
+        border-radius: 5%;
+    }
 }
 body 
 {
@@ -15,24 +22,27 @@ body
     background-repeat: repeat;
     background-size: cover;
     background-attachment: fixed;
-}
-
-
-body
-{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
-}
-body > span
-{
-    font-size: 3em;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
 
+    & > span
+    {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+}
+html
+{
+    &::-webkit-scrollbar
+    {
+        display: none;
+    }
+    scrollbar-width: none;
+}
 table 
 {
     background-color: #31363F;

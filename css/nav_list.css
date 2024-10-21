@@ -2,6 +2,22 @@
 *
 {
     color: #EEEEEE;
+
+    &:focus
+    {
+        outline: none;
+        box-shadow: 0 0 0 3px #76ABAE;
+        border-radius: 5%;
+    }
+}
+html
+{
+    &::-webkit-scrollbar
+    {
+        display: none;
+    }
+    overflow-x: hidden;
+    scrollbar-width: none;
 }
 nav#nav-container
 {
@@ -28,6 +44,8 @@ nav#nav-container
     {
         color: #bfcad6;
         text-decoration: none;
+        padding-left: 8%;
+        padding-right: 8%;
         
         &:hover 
         {

@@ -6,16 +6,13 @@ body
     height: 100vh;
     background-color: #222831;;
 }
+
 iframe#schedule-frame
 {
     width: 85%;
     height: 100%;
     border: none;
 
-    &::-webkit-scrollbar
-    {
-        display: none;
-    }
 }
 iframe#nav-frame
 {
