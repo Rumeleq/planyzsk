@@ -26,31 +26,26 @@ function generateList(spanTexts, filenames, list)
         list.appendChild(anchor);
     }
 }
-
+    
 function getDisplayName(filename) 
 {
     return filename.replace(/\s[A-Z]+\.html$/, '');
 }
 
 function searchSchedules(scheduleType)
-{
-    if (container.querySelector(`div#${scheduleType[0].toLowerCase()}-results`))
-        container.querySelector(`div#${scheduleType[0].toLowerCase()}-results`).remove();
-    
+{   
     let searchTerm = search_input.value.toLowerCase();
-    let spanTexts, startFrom = 0, filenames;
+    let spanTexts, filenames;
     let header_name = scheduleType;
     switch (scheduleType)
     {
         case 'Nauczyciele':
             spanTexts = nspanTexts;
             filenames = nfilenames;
-            startFrom = 3;
             break;
         case 'Sale':
             spanTexts = sspanTexts;
             filenames = sfilenames;
-            //startFrom = 1;
             break;
         case 'Oddziały':
             spanTexts = ospanTexts;
@@ -65,18 +60,28 @@ function searchSchedules(scheduleType)
     let resultsLinksContainer = document.createElement('div');
     resultsLinksContainer.classList.add('results-links');
     resultsLinksContainer.innerHTML = '';
-    
-    const filteredSchedules = spanTexts.filter(schedule => 
-        schedule.toLowerCase().trim().slice(startFrom).startsWith(searchTerm)
-    );
-    
+
+    let filteredSchedules;
+    if (scheduleType == 'Nauczyciele') 
+    {
+        filteredSchedules = spanTexts.filter(schedule => 
+            schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
+        );
+    } 
+    else 
+    {
+        filteredSchedules = spanTexts.filter(schedule => 
+            schedule.toLowerCase().trim().includes(searchTerm)
+        );
+    }
+
     if (filteredSchedules.length == 0)
         return;
-    
+
     const header = document.createElement('h3');
     header.textContent = `${header_name}`;
     resultsContainer.appendChild(header);
-    
+
     filteredSchedules.forEach(schedule => 
     {
         const a = document.createElement('a');
@@ -92,9 +97,9 @@ function searchSchedules(scheduleType)
             window.location = `plan_index.html?schedule=${newHref}`;
         });
     });
-    
-    resultsContainer.appendChild(resultsLinksContainer);
-    container.appendChild(resultsContainer);
+
+resultsContainer.appendChild(resultsLinksContainer);
+container.appendChild(resultsContainer);
 }
 
 document.addEventListener('keydown', function(event) 
@@ -112,9 +117,13 @@ search_input.addEventListener('keyup', function()
 {
     if (search_input.value.length > 0)
     {
+        if (container.querySelectorAll('div.search-results'))
+            container.querySelectorAll('div.search-results').forEach(div => div.remove());
+        
         searchSchedules('Nauczyciele');
         searchSchedules('Oddziały');
         searchSchedules('Sale');
+        
         if (!container.querySelector('.search-results'))
         {
             const noResults = document.createElement('div');
