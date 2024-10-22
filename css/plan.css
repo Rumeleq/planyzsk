@@ -39,7 +39,7 @@ html
 {
     &::-webkit-scrollbar
     {
-        display: none;
+        width: none;
     }
     scrollbar-width: none;
 }
