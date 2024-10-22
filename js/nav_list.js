@@ -77,5 +77,3 @@ navContainer.addEventListener('click', function(event)
         }
     }
 });
-
-
