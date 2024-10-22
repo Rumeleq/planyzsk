@@ -14,7 +14,6 @@ body
 {
     font-family: "Kanit";
     margin: 0;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,10 +22,7 @@ body
     background-size: cover;
     background-attachment: fixed;
     width: calc(100% - 40px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+    padding: 5px 20px 20px 20px;
 
     & > span
     {
@@ -35,14 +31,14 @@ body
         margin-bottom: 5px;
     }
 }
-html
+/*html
 {
     &::-webkit-scrollbar
     {
         width: none;
     }
     scrollbar-width: none;
-}
+}*/
 table 
 {
     background-color: #31363F;
