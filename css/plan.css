@@ -2,7 +2,6 @@
 *
 {
     color: #EEEEEE;
-    min-width: min-content;
     &:focus
     {
         outline: none;
