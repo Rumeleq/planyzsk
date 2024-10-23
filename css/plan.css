@@ -30,14 +30,14 @@ body
         margin-bottom: 5px;
     }
 }
-/*html
+html
 {
     &::-webkit-scrollbar
     {
         width: none;
     }
     scrollbar-width: none;
-}*/
+}
 table 
 {
     background-color: #31363F;
