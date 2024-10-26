@@ -170,10 +170,13 @@ svg#arrow
         background-color: #222831;
         fill: #76ABAE;
 
-        &:hover 
+        @media (hover: hover)
         {
-            background-color: #76ABAE;
-            fill: whitesmoke;
+            &:hover 
+            {
+                background-color: #76ABAE;
+                fill: whitesmoke;
+            }
         }
         &.hidden-nav
         {
