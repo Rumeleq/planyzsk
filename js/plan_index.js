@@ -5,7 +5,6 @@ function getQueryParam(param)
 }
 window.onload = function()
 {
-    document.body.style.visibility = "visible";
     let scheduleIframe = document.getElementById('schedule-frame');
     let scheduleHref = getQueryParam('schedule');
     if (scheduleHref)

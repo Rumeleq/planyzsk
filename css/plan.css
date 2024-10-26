@@ -30,7 +30,7 @@ body
         font-weight: bold;
         margin-bottom: 5px;
         margin-top: -6px;
-        position: fixed;
+        position: absolute;
         left: 50%;
         transform: translateX(-50%);
         min-width: max-content;

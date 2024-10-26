@@ -36,6 +36,7 @@ nav#nav-container
     background-color: #222831;
     border-radius: 10px;
     padding: 10px;
+    box-sizing: border-box;
 
     & > a:first-child
     {
@@ -68,4 +69,13 @@ div.nav-links
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    word-spacing: 1px;
+    margin-top: 2.5em;
+}
+@media (width <= 980px)
+{
+    body
+    {
+        font-size: 2.5em;
+    }
 }
