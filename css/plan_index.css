@@ -83,7 +83,7 @@ svg#arrow
     {
         transform: rotate(180deg);
         left: unset;
-        left: calc(50% - 12.5px);
+        left: 50%;
         top: 18px;
         margin-top: 30px;
 
@@ -91,8 +91,16 @@ svg#arrow
         {
             transform: unset;
             top: unset;
-            bottom: 100px;
-            left: calc(50% - 12.5px);
+            bottom: 8%;
+            left: 50%;
+            background-color: #76ABAE;
+            border-radius: 30%;
+            padding: 5px 10px 5px 10px;
+
+            &:hover
+            {
+                background-color: #222831;
+            }   
         }
     }
 }
