@@ -82,7 +82,6 @@ svg#arrow
     svg#arrow
     {
         transform: rotate(180deg);
-        left: unset;
         left: 50%;
         top: 18px;
         margin-top: 30px;
@@ -93,6 +92,7 @@ svg#arrow
             top: unset;
             bottom: 8%;
             left: 50%;
+            transform: translateX(-50%);
             background-color: #76ABAE;
             border-radius: 30%;
             padding: 5px 10px 5px 10px;

@@ -24,12 +24,16 @@ body
     width: calc(100% - 40px);
     padding: 0 20px 20px 20px;
 
-    & > span
+    & > span:first-of-type
     {
         font-size: 3em;
         font-weight: bold;
         margin-bottom: 5px;
         margin-top: -6px;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: max-content;
     }
 }
 html
@@ -46,6 +50,7 @@ table
     border-spacing: 0;
     border-collapse: separate;
     border-radius: 5px;
+    margin-top: 3.8em;
 }
 table th:not(:last-child),
 table td:not(:last-child) 
