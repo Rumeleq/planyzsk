@@ -73,7 +73,7 @@ window.onload = function()
 
     navContainer.addEventListener('click', function(event)
     {
-        if (event.target.textContent === 'Strona główna')
+        if (event.target.textContent === 'Strona główna' || event.target.tagName !== 'A')
             return;
         event.preventDefault();
         let href = event.target.href;
@@ -85,6 +85,7 @@ window.onload = function()
     let svg = document.querySelector('svg');
     svg.addEventListener('click', function() 
     {
+        svg.blur();
         svg.classList.toggle('hidden-nav');
         navContainer.classList.toggle('hidden-nav');
         scheduleIframe.classList.toggle('hidden-nav');
