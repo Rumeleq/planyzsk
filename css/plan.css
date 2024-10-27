@@ -3,6 +3,8 @@
 {
     min-width: min-content;
     color: #EEEEEE;
+    font-family: "Kanit";
+
     &:focus
     {
         outline: none;
@@ -12,7 +14,6 @@
 }
 body 
 {
-    font-family: "Kanit";
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -36,6 +37,7 @@ body
         min-width: max-content;
     }
 }
+
 html 
 {
     overflow-x: hidden;
@@ -46,6 +48,7 @@ html
         display: none;
     }
 }
+
 table 
 {
     background-color: #31363F;
@@ -53,12 +56,14 @@ table
     border-collapse: separate;
     border-radius: 5px;
     margin-top: 3.8em;
+
+    & td:not(:last-child),
+    & th:not(:last-child)
+    {
+        border-right: 1px solid black;
+    }
 }
-table th:not(:last-child),
-table td:not(:last-child) 
-{
-    border-right: 1px solid black;
-}
+
 table>thead>tr:not(:last-child)>th,
 table>thead>tr:not(:last-child)>td,
 table>tbody>tr:not(:last-child)>th,
@@ -73,19 +78,25 @@ table>tfoot:not(:last-child)
 {
     border-bottom: 1px solid black;
 }
-tr:first-of-type > th:first-of-type
+
+tr:first-of-type
 {
-    border-top-left-radius: 5px;
+    & > th:first-of-type
+    {
+        border-top-left-radius: 5px;
+    }
+    & > th:last-of-type
+    {
+        border-top-right-radius: 5px;
+    }
 }
-tr:first-of-type > th:last-of-type
-{
-    border-top-right-radius: 5px;
-}
-th, td {
-    
+
+th, td 
+{ 
     padding: 10px;
     text-align: center;
 }
+
 tr:nth-child(even)
 {
     background-color: #222831;
