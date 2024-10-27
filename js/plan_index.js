@@ -7,17 +7,20 @@ const nfilenames = ['n1.html', 'n2.html', 'n3.html', 'n4.html', 'n5.html', 'n6.h
 
 document.addEventListener('DOMContentLoaded', function() 
 {
+    //Zmiana title strony na title planu w iframe'ie przez message event z iframe'a
     let scheduleTitle = document.querySelector('title');
     window.addEventListener('message', function(event)
     {
         scheduleTitle.textContent = event.data;
     });
     
+    //Ustawienie src iframe'u na podstawie parametru schedule w URL
     let scheduleIframe = document.getElementById('schedule-frame');
     let scheduleHref = getQueryParam('schedule');
     if (scheduleHref) 
         scheduleIframe.src = scheduleHref;
     
+    //Generowanie contentu nav bara
     let navContainer = document.getElementById('nav-container');
     let indexLink = addElement('a', 'nav#nav-container', true);
     indexLink.href = '../planyzsk/index.html';
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function()
     generateList('Nauczyciele', nfilenames, navContainer);
     generateList('Sale', sfilenames, navContainer);
     
+    //Przechwytywanie kliknięć w linki nav bara i zmiana src iframe'u na odpowiedni link
     navContainer.addEventListener('click', function(event)
     {
         if (event.target.textContent === 'Strona główna' || event.target.tagName !== 'A')
@@ -37,16 +41,18 @@ document.addEventListener('DOMContentLoaded', function()
         scheduleIframe.src = href;
     });
     
+    //Zmiana widoczności nav bara po kliknięciu w arrow svg
     let svg = document.querySelector('svg');
     svg.addEventListener('click', function() 
     {
         switchNav(svg, navContainer, scheduleIframe);
     });
     
+    //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
     const mediaQuery = window.matchMedia('(max-width: 980px)');
     handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe);
-    mediaQuery.addEventListener('change', (event) => 
-        handleMediaQuery(event, svg, navContainer, scheduleIframe));
+    mediaQuery.addEventListener('change', (mediaQuery) => 
+        handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe));
 });
 
 function getQueryParam(param) 
@@ -112,8 +118,8 @@ function switchNav(svg, navContainer, scheduleIframe, onOrOff = null)
     }
 }
 
-function handleMediaQuery(event, svg, navContainer, scheduleIframe) 
+function handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe) 
 {
-    if (event.matches) 
+    if (mediaQuery.matches) 
         switchNav(svg, navContainer, scheduleIframe, true);
 }
