@@ -165,14 +165,16 @@ svg#arrow
         transform: rotate(180deg) translateY(50%);
         border-top-right-radius: 30%;
         border-bottom-right-radius: 30%;
-        width: 3em;
-        height: 3em;
+        width: 6em;
+        height: 6em;
         padding: 1.5em 0.5em 1.5em 0.5em;
         background-color: #222831;
         fill: #76ABAE;
 
         @media (hover: hover)
         {
+            width: 3em;
+            height: 3em;
             &:hover 
             {
                 background-color: #76ABAE;
@@ -189,8 +191,6 @@ svg#arrow
             padding: 5px 10px;
             border-top-left-radius: 30%;
             border-bottom-right-radius: 0;
-            width: 3em;
-            height: 3em;
         }
     }
 }
