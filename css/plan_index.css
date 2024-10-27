@@ -2,8 +2,8 @@
 
 * 
 {
-    color: #EEEEEE;
     font-family: 'Kanit';
+    color: #EEEEEE;
 
     &:focus 
     {
@@ -27,9 +27,9 @@ html
 body 
 {
     display: flex;
-    margin: 0;
     width: 100%;
     height: 100vh;
+    margin: 0;
     background-color: #222831;
 }
 
@@ -47,37 +47,33 @@ iframe#schedule-frame
 
 nav#nav-container 
 {
-    width: 15%;
-    height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    width: 15%;
+    height: 100%;
+    padding: 10px;
     background-color: #222831;
     border-radius: 10px;
-    padding: 10px;
     box-sizing: border-box;
     text-decoration: none;
     overflow-y: scroll;
     scrollbar-width: none;
-    
-    &::-webkit-scrollbar 
-    {
-        display: none;
-    }
+
     & > a:first-child 
     {
         align-self: center;
-        font-size: .9em;
         margin-bottom: 3px;
+        font-size: .9em;
         color: whitesmoke;
     }
     & a 
     {
-        color: #bfcad6;
-        text-decoration: none;
         padding-left: 8%;
         padding-right: 8%;
+        color: #bfcad6;
+        text-decoration: none;
         
         &:hover 
         {
@@ -88,30 +84,33 @@ nav#nav-container
     {
         display: none;
     }
+    &::-webkit-scrollbar 
+    {
+        display: none;
+    }
 }
 
 div.nav-links 
 {
-    font-family: 'Kanit';
     display: flex;
-    width: 100%;
-    font-size: .9em;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    word-spacing: 1px;
+    width: 100%;
     margin-top: 2.5em;
+    font-size: .9em;
+    word-spacing: 1px;
 }
 
 svg#arrow 
 {
-    fill: whitesmoke;
-    width: 25px;
-    height: 25px;
-    transform: rotate(270deg);
     position: absolute;
     top: 18px;
     left: 15%;
+    width: 25px;
+    height: 25px;
+    fill: whitesmoke;
+    transform: rotate(270deg);
     cursor: pointer;
 
     &:hover 
@@ -120,23 +119,21 @@ svg#arrow
     }
     &.hidden-nav 
     {
-        transform: rotate(90deg);
         left: 0;
+        transform: rotate(90deg);
     }
 }
 
-
 @media (width <= 980px) 
-{   
-    nav#nav-container
+{  
+    nav#nav-container 
     {
         width: 100%;
         height: 100vh;
         border-radius: 0;
-        display: flex;
         font-size: 4em;
 
-        @media (hover: hover)
+        @media (hover: hover) 
         {
             font-size: 1.25em;
         }
@@ -148,8 +145,8 @@ svg#arrow
 
     iframe#schedule-frame 
     {
-        width: 100%;
         display: none;
+        width: 100%;
 
         &.hidden-nav 
         {
@@ -159,38 +156,38 @@ svg#arrow
 
     svg#arrow 
     {
+        position: absolute;
         left: unset;
         right: 0;
         top: 50%;
-        transform: rotate(180deg) translateY(50%);
-        border-top-right-radius: 30%;
-        border-bottom-right-radius: 30%;
         width: 6em;
         height: 6em;
-        padding: 1.5em 0.5em 1.5em 0.5em;
+        padding: 1.5em 0.5em;
+        transform: rotate(180deg) translateY(50%);
+        border-radius: 0 30% 30% 0;
         background-color: #222831;
         fill: #76ABAE;
 
-        @media (hover: hover)
+        @media (hover: hover) 
         {
             width: 3em;
             height: 3em;
+
             &:hover 
             {
                 background-color: #76ABAE;
                 fill: whitesmoke;
             }
         }
-        &.hidden-nav
+        &.hidden-nav 
         {
-            transform: unset;
             top: unset;
             bottom: 0;
             left: 50%;
-            transform: translateX(-50%);
+            right: unset;
             padding: 5px 10px;
-            border-top-left-radius: 30%;
-            border-bottom-right-radius: 0;
+            transform: translateX(-50%);
+            border-radius: 30% 30% 0 0;
         }
     }
 }
