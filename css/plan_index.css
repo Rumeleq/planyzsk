@@ -134,8 +134,12 @@ svg#arrow
         height: 100vh;
         border-radius: 0;
         display: flex;
-        font-size: 2.5em;
+        font-size: 4em;
 
+        @media (hover: hover)
+        {
+            font-size: 1.25em;
+        }
         &.hidden-nav 
         {
             display: none;
@@ -163,10 +167,7 @@ svg#arrow
         border-bottom-right-radius: 30%;
         width: 3em;
         height: 3em;
-        padding-top: 1.5em;
-        padding-bottom: 1.5em;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
+        padding: 1.5em 0.5em 1.5em 0.5em;
         background-color: #222831;
         fill: #76ABAE;
 
