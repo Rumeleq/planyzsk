@@ -36,13 +36,15 @@ body
         min-width: max-content;
     }
 }
-html
+html 
 {
-    &::-webkit-scrollbar
-    {
-        width: none;
-    }
+    overflow-x: hidden;
     scrollbar-width: none;
+
+    &::-webkit-scrollbar 
+    {
+        display: none;
+    }
 }
 table 
 {
