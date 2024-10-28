@@ -37,18 +37,30 @@ body
         min-width: max-content;
     }
 }
-
-html 
+html
 {
-    overflow-x: hidden;
-    scrollbar-width: none;
+    overflow: scroll;
+    scrollbar-width: 8px;
+    scrollbar-color: #76ABAE;
 
-    &::-webkit-scrollbar 
+    &::-webkit-scrollbar
+    {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-thumb
+    {
+        background-color: #76ABAE;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track
+    {
+        background-color: #31363F;
+    }
+    &::-webkit-scrollbar:horizontal
     {
         display: none;
     }
 }
-
 table 
 {
     background-color: #31363F;

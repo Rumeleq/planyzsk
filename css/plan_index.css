@@ -12,18 +12,6 @@
         border-radius: 5%;
     }
 }
-
-html 
-{
-    overflow-x: hidden;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar 
-    {
-        display: none;
-    }
-}
-
 body 
 {
     display: flex;
@@ -58,9 +46,8 @@ nav#nav-container
     border-radius: 10px;
     box-sizing: border-box;
     text-decoration: none;
-    overflow-y: scroll;
-    scrollbar-width: none;
     color: whitesmoke;
+    overflow-y: scroll;
 
     & > a:first-child 
     {
@@ -83,9 +70,22 @@ nav#nav-container
     {
         display: none;
     }
-    &::-webkit-scrollbar 
+    &::-webkit-scrollbar:horizontal
     {
         display: none;
+    }
+    &::-webkit-scrollbar
+    {
+        width: 8px;
+    }    
+    &::-webkit-scrollbar-thumb
+    {
+        background-color: #76ABAE;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track
+    {
+        background-color: #31363F;
     }
 }
 
