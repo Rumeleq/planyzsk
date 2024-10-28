@@ -101,7 +101,7 @@ div#container
 div#search-field-container 
 {
     position: relative;
-    width: 250px;
+    width: 15em;
 }
 input#search-input 
 {
