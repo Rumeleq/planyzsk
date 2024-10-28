@@ -23,9 +23,7 @@ document.addEventListener('DOMContentLoaded', function()
             scheduleTitle.textContent = event.data;
         }
         else
-        {
             handleCtrlF(event, svg, navContainer, scheduleIframe);
-        }
     });
 
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
@@ -66,10 +64,10 @@ document.addEventListener('DOMContentLoaded', function()
     document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
-    const mediaQuery = window.matchMedia('(max-width: 980px)');
-    handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe);
-    mediaQuery.addEventListener('change', (mediaQuery) =>
-        handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe));
+    //const mediaQuery = window.matchMedia('(max-width: 980px)');
+    handleMediaQuery(svg, navContainer, scheduleIframe);
+    window.addEventListener('resize', () =>
+        handleMediaQuery(svg, navContainer, scheduleIframe));
 
     //Obsługa wyszukiwarki
     search_input = document.getElementById('search-input');
@@ -223,10 +221,9 @@ function addElement(elementToAdd, target, appendFirst)
     return element;
 }
 
-function switchNav(svg, navContainer, scheduleIframe, onOrOff = null) 
+function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null) 
 {
-    console.log(svg);
-    if (onOrOff === null)
+    if (forceHiddenNav === null)
     {
         svg.classList.toggle('hidden-nav');
         navContainer.classList.toggle('hidden-nav');
@@ -234,17 +231,18 @@ function switchNav(svg, navContainer, scheduleIframe, onOrOff = null)
     }
     else
     {
-        svg.classList.toggle('hidden-nav', onOrOff);
-        navContainer.classList.toggle('hidden-nav', onOrOff);
-        scheduleIframe.classList.toggle('hidden-nav', onOrOff);
+        svg.classList.toggle('hidden-nav', forceHiddenNav);
+        navContainer.classList.toggle('hidden-nav', forceHiddenNav);
+        scheduleIframe.classList.toggle('hidden-nav', forceHiddenNav);
     }
 }
 
-function handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe) 
+function handleMediaQuery(svg, navContainer, scheduleIframe) 
 {
-    console.log(svg);
-    if (mediaQuery.matches) 
-        switchNav(svg, navContainer, scheduleIframe, true);
+    if (window.innerWidth <= 980) 
+        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+    else if (window.innerWidth > 980) 
+        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=false);
 }
 
 function handleCtrlF(event, svg, navContainer, scheduleIframe) 
