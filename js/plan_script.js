@@ -60,6 +60,15 @@ document.addEventListener('DOMContentLoaded', function()
         a.innerHTML = a.innerHTML.replace(regex, `$1 `);
     });
 
+    document.addEventListener('keydown', function(event) 
+    {
+        if (event.ctrlKey && event.key === 'f') 
+        {
+            event.preventDefault();
+            window.parent.postMessage('ctrlF', '*');
+        }
+    });
+
     //Wysyłanie zmodifykowanego title strony do parenta i ustawienie widoczności strony
     document.body.style.visibility = "visible";
     window.parent.postMessage(title.textContent, '*');

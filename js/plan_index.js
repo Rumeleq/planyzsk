@@ -11,22 +11,31 @@ document.addEventListener('DOMContentLoaded', function()
 {
     //Zmiana title strony na title planu w iframe'ie przez message event z iframe'a
     let scheduleTitle = document.querySelector('title');
+    let svg = document.querySelector('svg');
+    let navContainer = document.getElementById('nav-container');
+    let scheduleIframe = document.getElementById('schedule-frame');
+
     window.addEventListener('message', function(event)
     {
-        this.document.body.style.visibility = "visible";
-        scheduleTitle.textContent = event.data;
+        if (event.data.startsWith("Plan"))
+        {
+            this.document.body.style.visibility = "visible";
+            scheduleTitle.textContent = event.data;
+        }
+        else
+        {
+            handleCtrlF(event, svg, navContainer, scheduleIframe);
+        }
     });
 
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
-    let scheduleIframe = document.getElementById('schedule-frame');
     let scheduleHref = getQueryParam('schedule');
     if (scheduleHref) 
         scheduleIframe.src = scheduleHref;
     
+
     //Generowanie contentu nav bara
-    let navContainer = document.getElementById('nav-container');
     let indexLink = addElement('a', 'nav#nav-container', true);
-    let svg = document.querySelector('svg');
     indexLink.href = '../planyzsk/index.html';
     indexLink.textContent = 'Strona główna';
     generateList('Oddziały', ofilenames, navContainer);
@@ -51,22 +60,10 @@ document.addEventListener('DOMContentLoaded', function()
     });
     
     //Zmiana widoczności nav bara po kliknięciu w arrow svg
-    svg.addEventListener('click', function() 
-    {
-        switchNav(svg, navContainer, scheduleIframe);
-    });
+    svg.addEventListener('click', () =>
+        switchNav(svg, navContainer, scheduleIframe));
     
-    document.addEventListener('keydown', function(event) 
-    {
-        if (event.ctrlKey && event.key === 'f') 
-        {
-            console.log('ctrl+f');
-            event.preventDefault();
-            switchNav(svg, navContainer, scheduleIframe, false);
-            search_input.focus();
-            search_input.select();
-        }
-    });
+    document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
     const mediaQuery = window.matchMedia('(max-width: 980px)');
@@ -175,8 +172,8 @@ function searchSchedules(scheduleType)
         });
     });
 
-resultsContainer.appendChild(resultsLinksContainer);
-container.appendChild(resultsContainer);
+    resultsContainer.appendChild(resultsLinksContainer);
+    container.appendChild(resultsContainer);
 }
 
 function getQueryParam(param) 
@@ -228,6 +225,7 @@ function addElement(elementToAdd, target, appendFirst)
 
 function switchNav(svg, navContainer, scheduleIframe, onOrOff = null) 
 {
+    console.log(svg);
     if (onOrOff === null)
     {
         svg.classList.toggle('hidden-nav');
@@ -244,6 +242,20 @@ function switchNav(svg, navContainer, scheduleIframe, onOrOff = null)
 
 function handleMediaQuery(mediaQuery, svg, navContainer, scheduleIframe) 
 {
+    console.log(svg);
     if (mediaQuery.matches) 
         switchNav(svg, navContainer, scheduleIframe, true);
+}
+
+function handleCtrlF(event, svg, navContainer, scheduleIframe) 
+{
+   if (event.ctrlKey && event.key === 'f' || event.data === 'ctrlF') 
+   {
+       event.preventDefault();
+       switchNav(svg, navContainer, scheduleIframe, false);
+       search_input.focus();
+       search_input.select();
+   }
+   
+
 }
