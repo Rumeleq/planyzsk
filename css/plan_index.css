@@ -60,19 +60,18 @@ nav#nav-container
     text-decoration: none;
     overflow-y: scroll;
     scrollbar-width: none;
+    color: whitesmoke;
 
     & > a:first-child 
     {
         align-self: center;
         margin-bottom: 3px;
         font-size: .9em;
-        color: whitesmoke;
     }
     & a 
     {
         padding-left: 8%;
         padding-right: 8%;
-        color: #bfcad6;
         text-decoration: none;
         
         &:hover 
@@ -90,6 +89,93 @@ nav#nav-container
     }
 }
 
+div#container
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-self: center;
+    box-sizing: border-box;
+}
+
+div#search-field-container 
+{
+    position: relative;
+    width: 250px;
+}
+input#search-input 
+{
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    font-size: 14px;
+    background-color: #31363F;
+    color: #EEEEEE;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    transition: box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
+    
+    &::placeholder
+    {
+        color: #888888;
+    }
+    &:focus
+    {
+        box-shadow: 0 0 0 3px #76ABAE;
+    }
+    &::selection
+    {
+        background-color: #556b6c;
+        
+    }
+}
+svg#search-icon 
+{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+div.search-results
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    & > h3
+    {
+        margin-bottom: 5px;
+    }
+}
+div.results-links
+{
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    & > a
+    {
+        margin: 5px;
+        text-decoration: none;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #76ABAE;
+        width: calc(50% - 20px);
+        text-align: center;
+
+        &:hover
+        {
+            text-decoration: underline;
+        }
+    }
+}
+
 div.nav-links 
 {
     display: flex;
@@ -100,6 +186,11 @@ div.nav-links
     margin-top: 2.5em;
     font-size: .9em;
     word-spacing: 1px;
+
+    & a
+    {
+        color: #bfcad6;
+    }
 }
 
 svg#arrow 
