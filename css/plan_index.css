@@ -275,9 +275,9 @@ svg#arrow
         {
             position: fixed;
             top: unset;
+            right: unset;
             bottom: env(safe-area-inset-bottom);
             left: 50%;
-            right: unset;
             padding: 5px 10px;
             transform: translateX(-50%);
             border-radius: 30% 30% 0 0;
