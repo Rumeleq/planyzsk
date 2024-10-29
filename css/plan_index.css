@@ -247,7 +247,7 @@ svg#arrow
 
     svg#arrow 
     {
-        position: absolute;
+        position: fixed;
         left: unset;
         right: 0;
         top: 50%;
@@ -258,22 +258,24 @@ svg#arrow
         border-radius: 0 30% 30% 0;
         background-color: #222831;
         fill: #76ABAE;
-
-        @media (hover: hover) 
+        z-index: 100;
+    
+        @media (hover: hover)
         {
             width: 3em;
             height: 3em;
-
             &:hover 
             {
                 background-color: #76ABAE;
                 fill: whitesmoke;
             }
         }
+    
         &.hidden-nav 
         {
+            position: fixed;
             top: unset;
-            bottom: 0;
+            bottom: env(safe-area-inset-bottom); /* Use safe area inset for iOS */
             left: 50%;
             right: unset;
             padding: 5px 10px;
