@@ -275,7 +275,7 @@ svg#arrow
         {
             position: fixed;
             top: unset;
-            bottom: env(safe-area-inset-bottom); /* Use safe area inset for iOS */
+            bottom: env(safe-area-inset-bottom);
             left: 50%;
             right: unset;
             padding: 5px 10px;
