@@ -55,10 +55,8 @@ nav#nav-container
         margin-bottom: 3px;
         font-size: .9em;
     }
-    & a 
+    &  a 
     {
-        padding-left: 8%;
-        padding-right: 8%;
         text-decoration: none;
         
         &:hover 
@@ -178,11 +176,12 @@ div.results-links
 
 div.nav-links 
 {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;    
+    flex-direction: row;
+    flex-wrap: wrap;
     margin-top: 2.5em;
     font-size: .9em;
     word-spacing: 1px;
@@ -190,6 +189,25 @@ div.nav-links
     & a
     {
         color: #bfcad6;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    & > *
+    {
+        width: 100%;
+    }
+    &#o-links > a
+    {
+        width: 50%;
+    }
+    &#s-links
+    {
+        padding-bottom: 110px;
+        & > a
+        {
+            width: 50%;
+        }
     }
 }
 
@@ -311,7 +329,7 @@ svg#arrow
         }
         &:focus
         {
-            box-shadow: 0 0 0 3px #76ABAE;
+            box-shadow: 0 0 0 10px #76ABAE;
         }
         &::selection
         {
