@@ -245,21 +245,11 @@ svg#arrow
 
     svg#arrow 
     {
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
         z-index: 100;
         position: absolute;
         top: unset;
         bottom: 0;
         left: 50%;
-=======
->>>>>>> Stashed changes
-        position: fixed;
-        left: unset;
-        right: 0;
-        top: 50%;
->>>>>>> 1259ce0524808c5fc16f8a67e284d19d0f6fdc86
         width: 6em;
         height: 6em;
         padding: 10px 20px;
@@ -284,19 +274,10 @@ svg#arrow
         {
             position: fixed;
             top: unset;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
             bottom: 0;
-            left: 50%;
             padding: 10px 20px;
-=======
->>>>>>> Stashed changes
             right: unset;
-            bottom: env(safe-area-inset-bottom);
             left: 50%;
-            padding: 5px 10px;
->>>>>>> 1259ce0524808c5fc16f8a67e284d19d0f6fdc86
             transform: translateX(-50%);
             border-radius: 30% 30% 0 0;
         }
