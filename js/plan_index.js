@@ -254,6 +254,4 @@ function handleCtrlF(event, svg, navContainer, scheduleIframe)
        search_input.focus();
        search_input.select();
    }
-   
-
 }
