@@ -254,6 +254,15 @@ svg#arrow
             font-size: 1.25em;
         }
     }
+    div#container
+    {
+        padding: 0px 10px;
+        width: calc(100% - 20px);
+    }
+    div#search-field-container
+    {
+        width: 100%;
+    }
 
     iframe#schedule-frame 
     {
