@@ -11,6 +11,10 @@
         box-shadow: 0 0 0 3px #76ABAE;
         border-radius: 5%;
     }
+    &::selection
+    {
+        background-color: #85a2a4;  
+    }
 }
 body 
 {
