@@ -287,6 +287,7 @@ svg#arrow
         height: 6em;
         padding: 10px 20px;
         transform: rotate(180deg) translateX(50%);
+        border: 2px solid #222831;
         border-radius: 0 0 30% 30%;
         background-color: #31363F;
         fill: #76ABAE;
