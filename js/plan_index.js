@@ -6,6 +6,7 @@ const nspanTexts = ['J. Andrzejak (AJ)', 'A. Brych (AB)', 'K. Chwałowski (KC)',
 const nfilenames = ['n1.html', 'n2.html', 'n3.html', 'n4.html', 'n5.html', 'n6.html', 'n7.html', 'n8.html', 'n9.html', 'n10.html', 'n11.html', 'n12.html', 'n13.html', 'n14.html', 'n15.html', 'n16.html', 'n17.html', 'n18.html', 'n19.html', 'n20.html', 'n21.html', 'n22.html', 'n23.html', 'n24.html', 'n25.html', 'n26.html', 'n27.html', 'n28.html', 'n29.html', 'n30.html', 'n31.html', 'n32.html', 'n33.html', 'n34.html', 'n35.html', 'n36.html', 'n37.html', 'n38.html', 'n39.html', 'n40.html', 'n41.html', 'n42.html', 'n43.html', 'n44.html', 'n45.html', 'n46.html', 'n47.html', 'n48.html', 'n49.html', 'n50.html', 'n51.html', 'n52.html', 'n53.html', 'n54.html', 'n55.html', 'n56.html', 'n57.html', 'n58.html', 'n59.html', 'n60.html', 'n61.html', 'n62.html', 'n63.html', 'n64.html', 'n65.html', 'n66.html', 'n67.html', 'n68.html', 'n69.html', 'n70.html', 'n71.html', 'n72.html', 'n73.html', 'n74.html', 'n75.html', 'n76.html'];
 
 let search_input;
+let wasOverThreshold = window.innerWidth > 980;
 
 document.addEventListener('DOMContentLoaded', function() 
 {
@@ -43,17 +44,19 @@ document.addEventListener('DOMContentLoaded', function()
     //Przechwytywanie kliknięć w linki nav bara i zmiana src iframe'u na odpowiedni link
     navContainer.addEventListener('click', function(event)
     {
+        console.log('click');
         if (event.target.textContent === 'Strona główna' || event.target.tagName !== 'A')
             return;
         event.preventDefault();
+        console.log('click2');
         let href = event.target.href;
         href = href.split('/')
         href = href.slice(-2).join('/');
         scheduleIframe.src = href;
         setTimeout(() => 
         {
-            if (window.innerWidth <= 980)
-            switchNav(svg, navContainer, scheduleIframe);
+            if (window.innerWidth <= 980) 
+                switchNav(svg, navContainer, scheduleIframe);
         }, 200);
     });
     
@@ -64,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function()
     document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
-    //const mediaQuery = window.matchMedia('(max-width: 980px)');
-    handleMediaQuery(svg, navContainer, scheduleIframe);
+    if (window.innerWidth <= 980)
+        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
     window.addEventListener('resize', () =>
         handleMediaQuery(svg, navContainer, scheduleIframe));
 
@@ -161,13 +164,6 @@ function searchSchedules(scheduleType)
         a.href = href;
         a.textContent = getDisplayName(schedule);
         resultsLinksContainer.appendChild(a);
-        a.addEventListener('click', function(event)
-        {
-            event.preventDefault();
-            const parts = a.href.split('/');
-            const newHref = parts.slice(-2).join('/');
-            window.location = `plan_index.html?schedule=${newHref}`;
-        });
     });
 
     resultsContainer.appendChild(resultsLinksContainer);
@@ -239,10 +235,19 @@ function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null)
 
 function handleMediaQuery(svg, navContainer, scheduleIframe) 
 {
+    const isOverThreshold = window.innerWidth > 980;
+    if (isOverThreshold == wasOverThreshold)
+        return;
+    
     if (window.innerWidth <= 980) 
+    {
         switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+    }
     else if (window.innerWidth > 980) 
+    {
         switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=false);
+    }
+    wasOverThreshold = isOverThreshold;
 }
 
 function handleCtrlF(event, svg, navContainer, scheduleIframe) 

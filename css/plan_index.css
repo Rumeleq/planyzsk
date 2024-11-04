@@ -146,7 +146,7 @@ svg#search-icon
 div.search-results
 {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     width: 100%;
     & > h3
@@ -159,7 +159,7 @@ div.results-links
     width: 100%;
     margin-top: 10px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
 
     & > a
@@ -183,12 +183,9 @@ div.nav-links
 {
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;    
-    flex-direction: row;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-flow: column wrap;
     margin-top: 2.5em;
-    font-size: .9em;
     word-spacing: 1px;
 
     & a
@@ -196,7 +193,7 @@ div.nav-links
         color: #bfcad6;
         padding: 0;
         margin: 0;
-        text-align: center;
+        text-align: left;
     }
     & > *
     {
@@ -245,14 +242,18 @@ svg#arrow
         width: 100%;
         height: 100vh;
         border-radius: 0;
-        font-size: 4em;
+        font-size: 3.5em;
         position: relative;
         left: 0%;
 
         @media (hover: hover) 
         {
-            font-size: 1.25em;
+            font-size: 1em;
         }
+    }
+    div.nav-links > a
+    {
+        text-align: center;
     }
     div#container
     {
