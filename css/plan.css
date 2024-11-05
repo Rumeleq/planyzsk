@@ -1,13 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 *
 {
+    min-width: min-content;
     color: #EEEEEE;
+    font-family: "Kanit";
+
+    &:focus
+    {
+        outline: none;
+        box-shadow: 0 0 0 3px #76ABAE;
+        border-radius: 5%;
+    }
+    &::selection
+    {
+        background-color: #85a2a4;  
+    }
 }
 body 
 {
-    font-family: "Kanit";
     margin: 0;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,26 +26,60 @@ body
     background-repeat: repeat;
     background-size: cover;
     background-attachment: fixed;
-}
-body > span
-{
-    font-size: 3em;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    width: calc(100% - 40px);
+    padding: 0 20px 20px 20px;
 
+    & > span:first-of-type
+    {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 5px;
+        margin-top: -6px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: max-content;
+    }
+}
+html
+{
+    overflow: scroll;
+    scrollbar-width: 8px;
+    scrollbar-color: #76ABAE;
+
+    &::-webkit-scrollbar
+    {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-thumb
+    {
+        background-color: #76ABAE;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track
+    {
+        background-color: #31363F;
+    }
+    &::-webkit-scrollbar:horizontal
+    {
+        display: none;
+    }
+}
 table 
 {
     background-color: #31363F;
     border-spacing: 0;
     border-collapse: separate;
     border-radius: 5px;
+    margin-top: 3.8em;
+
+    & td:not(:last-child),
+    & th:not(:last-child)
+    {
+        border-right: 1px solid black;
+    }
 }
-table th:not(:last-child),
-table td:not(:last-child) 
-{
-    border-right: 1px solid black;
-}
+
 table>thead>tr:not(:last-child)>th,
 table>thead>tr:not(:last-child)>td,
 table>tbody>tr:not(:last-child)>th,
@@ -49,19 +94,25 @@ table>tfoot:not(:last-child)
 {
     border-bottom: 1px solid black;
 }
-tr:first-of-type > th:first-of-type
+
+tr:first-of-type
 {
-    border-top-left-radius: 5px;
+    & > th:first-of-type
+    {
+        border-top-left-radius: 5px;
+    }
+    & > th:last-of-type
+    {
+        border-top-right-radius: 5px;
+    }
 }
-tr:first-of-type > th:last-of-type
-{
-    border-top-right-radius: 5px;
-}
-th, td {
-    
+
+th, td 
+{ 
     padding: 10px;
     text-align: center;
 }
+
 tr:nth-child(even)
 {
     background-color: #222831;

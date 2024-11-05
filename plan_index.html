@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script src="js/plan_index.js"></script>
+    <link rel="stylesheet" href="css/plan_index.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Plan 3D</title>
+    
+</head>
+<body style="visibility: hidden;">
+    <svg id="arrow" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
+        <path id="XMLID_224_" d="M325.606,229.393l-150.004-150C172.79,76.58,168.974,75,164.996, 75c-3.979,0-7.794,1.581-10.607,4.394
+        l-149.996,150c-5.858,5.858-5.858,15.355,0,21.213c5.857,5.857,15.355,5.858,21.213,0l139.39-139.393l139.397,139.393
+	    C307.322,253.536,311.161,255,315,255c3.839,0,7.678-1.464,10.607-4.394C331.464,244.748,331.464,235.251,325.606,229.393z"/>
+    </svg>
+    <nav id="nav-container">
+        <div id="container">
+            <div id="search-field-container">
+                <input type="text" id="search-input" placeholder="Szukaj planu" autocomplete="off">
+                <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+        </div>
+    </nav>
+    <iframe src="dane/o16.html" frameborder="0" id="schedule-frame">
+    </iframe>
+</body>
+</html>
