@@ -148,6 +148,7 @@ div.search-results
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
     & > h3
     {
@@ -158,9 +159,10 @@ div.results-links
 {
     width: 100%;
     margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: inherit;
+    flex-direction: inherit;
+    justify-content: inherit;
+    align-items: inherit;
 
     & > a
     {
@@ -183,7 +185,7 @@ div.nav-links
 {
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-flow: column wrap;
     margin-top: 2.5em;
     word-spacing: 1px;
