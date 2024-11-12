@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function()
     document.querySelector('a#kumi_gaming').addEventListener('click', function(event)
     {
         event.preventDefault();
-        window.location.href = event.target.href;
+        window.parent.postMessage('kumiGaming', '*');
     });
 
     //Wysyłanie zmodifykowanego title strony do parenta i ustawienie widoczności strony

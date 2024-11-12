@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function()
             this.document.body.style.visibility = "visible";
             scheduleTitle.textContent = event.data;
         }
-        else
+        else if (event.message === 'ctrlF')
             handleCtrlF(event, svg, navContainer, scheduleIframe);
+        else if (event.message == 'kumiGaming')
+            this.window.location.href = event.target.href;
     });
 
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
