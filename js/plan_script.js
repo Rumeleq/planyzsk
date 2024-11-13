@@ -65,12 +65,22 @@ document.addEventListener('DOMContentLoaded', function()
         if (event.ctrlKey && event.key === 'f') 
         {
             event.preventDefault();
-            window.parent.postMessage('ctrlF', '*');
+            window.parent.postMessage({type: 'ctrlF'}, '*');
         }
     });
 
+    if (document.querySelector('a#kumi_gaming') !== null)
+    {
+        document.querySelector('a#kumi_gaming').addEventListener('click', function(event)
+        {
+            event.preventDefault();
+            const href = this.getAttribute('href');
+            window.parent.postMessage({type: 'kumiGaming', href: href}, '*');
+        });
+    }
+
     //Wysyłanie zmodifykowanego title strony do parenta i ustawienie widoczności strony
     document.body.style.visibility = "visible";
-    window.parent.postMessage(title.textContent, '*');
+    window.parent.postMessage({type: title.textContent}, '*');
 });
 
