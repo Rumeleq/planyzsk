@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function()
         if (event.data.type.startsWith("Plan"))
         {
             this.document.body.style.visibility = "visible";
-            scheduleTitle.textContent = event.data;
+            scheduleTitle.textContent = event.data.type;
         }
         else if (event.data.type === 'ctrlF')
             handleCtrlF(event, svg, navContainer, scheduleIframe);
