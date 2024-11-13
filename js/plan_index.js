@@ -18,15 +18,18 @@ document.addEventListener('DOMContentLoaded', function()
 
     window.addEventListener('message', function(event)
     {
-        if (event.data.startsWith("Plan"))
+        if (event.data.type.startsWith("Plan"))
         {
             this.document.body.style.visibility = "visible";
             scheduleTitle.textContent = event.data;
         }
-        else if (event.data === 'ctrlF')
+        else if (event.data.type === 'ctrlF')
             handleCtrlF(event, svg, navContainer, scheduleIframe);
-        else if (event.data == 'kumiGaming')
-            window.location.href = event.target.href;
+        else if (event.data.type == 'kumiGaming')
+        {
+            window.location.href = event.data.href;
+            console.log(event.data.href);
+        }
     });
 
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
