@@ -186,8 +186,8 @@ div.nav-links
     width: 100%;
     display: flex;
     align-items: flex-start;
-    flex-flow: column wrap;
-    margin-top: 2.5em;
+    flex-flow: row wrap;
+    margin-top: 1.5em;
     word-spacing: 1px;
 
     & a
@@ -195,7 +195,7 @@ div.nav-links
         color: #bfcad6;
         padding: 0;
         margin: 0;
-        text-align: left;
+        text-align: center;
     }
     & > *
     {
@@ -207,7 +207,6 @@ div.nav-links
     }
     &#s-links
     {
-        padding-bottom: 120px;
         & > a
         {
             width: 50%;
@@ -247,15 +246,28 @@ svg#arrow
         font-size: 3.5em;
         position: relative;
         left: 0%;
+        padding-bottom: 120px;
 
         @media (hover: hover) 
         {
             font-size: 1em;
+            padding-bottom: 80px;
+        }
+        & > a:first-of-type
+        {
+            @media(hover: hover)
+            {
+                font-size: 2em;
+            }
         }
     }
     div.nav-links > a
     {
         text-align: center;
+        @media(hover: hover)
+        {
+            font-size: 1.5em;
+        }
     }
     div#container
     {
@@ -265,8 +277,11 @@ svg#arrow
     div#search-field-container
     {
         width: 100%;
+        @media(hover: hover)
+        {
+            height: 58px;
+        }
     }
-
     iframe#schedule-frame 
     {
         display: none;
@@ -324,15 +339,24 @@ svg#arrow
         left: 10px;
         top: 52.5px;
         bottom: unset;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         pointer-events: none;
+        transform: translateY(-50%);
+
+        @media (hover: hover)
+        {
+            position: relative;
+            top: -50%;
+            width: 40px;
+            height: 40px;
+        }
     }
     input#search-input 
     {
         width: 100%;
-        padding: 10px 10px 10px 60px;
-        font-size: 0.75em;
+        padding: 10px 10px 10px 70px;
+        font-size: 1em;
         background-color: #31363F;
         color: #EEEEEE;
         border: none;
@@ -353,6 +377,11 @@ svg#arrow
         {
             background-color: #556b6c;
             
+        }
+        @media(hover: hover)
+        {
+            font-size: 1.5em;
+            padding: 10px 10px 10px 60px;
         }
     }
 }
