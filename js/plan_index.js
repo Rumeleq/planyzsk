@@ -24,11 +24,12 @@ document.addEventListener('DOMContentLoaded', function()
             scheduleTitle.textContent = event.data.type;
         }
         else if (event.data.type === 'ctrlF')
+        {
             handleCtrlF(event, svg, navContainer, scheduleIframe);
+        }
         else if (event.data.type == 'kumiGaming')
         {
             window.location.href = event.data.href;
-            console.log(event.data.href);
         }
     });
 
@@ -257,11 +258,11 @@ function handleMediaQuery(svg, navContainer, scheduleIframe)
 
 function handleCtrlF(event, svg, navContainer, scheduleIframe) 
 {
-   if (event.ctrlKey && event.key === 'f' || event.data === 'ctrlF') 
+   if (event.ctrlKey && event.key === 'f' || event.data.type === 'ctrlF') 
    {
-       event.preventDefault();
-       switchNav(svg, navContainer, scheduleIframe, false);
-       search_input.focus();
-       search_input.select();
+        event.preventDefault();
+        switchNav(svg, navContainer, scheduleIframe, false);
+        search_input.focus();
+        search_input.select();
    }
 }
