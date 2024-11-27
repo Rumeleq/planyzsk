@@ -104,7 +104,8 @@ div#container
 div#search-field-container 
 {
     position: relative;
-    width: 15em;
+    padding: 0 10px;
+    width: 100%;
 }
 input#search-input 
 {
@@ -136,7 +137,7 @@ input#search-input
 svg#search-icon 
 {
     position: absolute;
-    left: 10px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
