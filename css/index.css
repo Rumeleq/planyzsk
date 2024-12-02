@@ -115,6 +115,7 @@ div.in-between
     padding: 0px;
     width: 0px;
     border: 1px solid #76ABAE;
+    height: auto;
 }
 li
 {
@@ -225,7 +226,6 @@ footer
 {
     display: flex;
     justify-content: center;
-    align-items: center;
     background-color: #222831;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -239,5 +239,13 @@ footer
     & a
     {
         color: #a4d6d8;
+    }
+    > *:not(div.in-between)
+    {
+        width: 50%;
+    }
+    > p
+    {
+        text-align: center;
     }
 }
