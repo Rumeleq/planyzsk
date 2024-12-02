@@ -338,7 +338,7 @@ svg#arrow
     svg#search-icon 
     {
         position: absolute;
-        left: 10px;
+        left: 20px;
         top: 52.5px;
         bottom: unset;
         width: 50px;
