@@ -31,8 +31,7 @@ body
 div#app
 {
     margin: 20px 0 20px 0;
-    width: 40vw;
-    min-width: 500px;
+    width: min(40vw, 500px)
 }
 
 header
