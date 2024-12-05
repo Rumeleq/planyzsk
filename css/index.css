@@ -31,7 +31,6 @@ body
 div#app
 {
     margin: 20px 0 20px 0;
-    width: min(40vw, 500px)
 }
 
 header
@@ -231,7 +230,6 @@ footer
     margin: 10px;
     padding: 10px;
     box-sizing: border-box;
-    min-width: 500px;
     font-size: 0.8em;
     color: #76ABAE;
     text-align: center;
@@ -242,6 +240,7 @@ footer
     > *:not(div.in-between)
     {
         width: 50%;
+        box-sizing: border-box;
     }
     > p
     {
