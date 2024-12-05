@@ -225,6 +225,7 @@ function addElement(elementToAdd, target, appendFirst)
 
 function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null) 
 {
+    alert(`turn [${forceHiddenNav}]`);
     if (forceHiddenNav === null)
     {
         svg.classList.toggle('hidden-nav');
