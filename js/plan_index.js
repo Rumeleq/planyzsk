@@ -225,7 +225,6 @@ function addElement(elementToAdd, target, appendFirst)
 
 function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null) 
 {
-    alert(`turn [${forceHiddenNav}]`);
     if (forceHiddenNav === null)
     {
         svg.classList.toggle('hidden-nav');
@@ -238,6 +237,7 @@ function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null)
         navContainer.classList.toggle('hidden-nav', forceHiddenNav);
         scheduleIframe.classList.toggle('hidden-nav', forceHiddenNav);
     }
+    alert(`turn [${forceHiddenNav}]`);
 }
 
 function handleMediaQuery(svg, navContainer, scheduleIframe) 
