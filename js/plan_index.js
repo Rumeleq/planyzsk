@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function()
     document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
-    //if (window.innerWidth <= 980)
-    switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+    if (window.innerWidth <= 980)
+        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
     window.addEventListener('resize', () =>
         handleMediaQuery(svg, navContainer, scheduleIframe));
 
