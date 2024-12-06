@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function()
     let svg = document.querySelector('svg');
     let navContainer = document.getElementById('nav-container');
     let scheduleIframe = document.getElementById('schedule-frame');
+    if (window.innerWidth <= 980)
+        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
 
     window.addEventListener('message', function(event)
     {
@@ -38,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function()
     if (scheduleHref) 
         scheduleIframe.src = scheduleHref;
     
-
     //Generowanie contentu nav bara
     let indexLink = addElement('a', 'nav#nav-container', true);
     indexLink.href = '../planyzsk/index.html';
@@ -73,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function()
     document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
-    if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+    //if (window.innerWidth <= 980)
+    switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
     window.addEventListener('resize', () =>
         handleMediaQuery(svg, navContainer, scheduleIframe));
 
