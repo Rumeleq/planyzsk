@@ -7,15 +7,6 @@ const nfilenames = ['n1.html', 'n2.html', 'n3.html', 'n4.html', 'n5.html', 'n6.h
 
 let search_input;
 let wasOverThreshold = window.innerWidth > 980;
-let scheduleIframe = document.getElementById('schedule-frame');
-
-scheduleIframe.addEventListener('load', () => 
-{
-    let svg = document.querySelector('svg');
-    let navContainer = document.getElementById('nav-container');
-    if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, true);
-});
 
 document.addEventListener('DOMContentLoaded', function() 
 {
