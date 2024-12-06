@@ -237,7 +237,6 @@ function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null)
         navContainer.classList.toggle('hidden-nav', forceHiddenNav);
         scheduleIframe.classList.toggle('hidden-nav', forceHiddenNav);
     }
-    search_input.value = `hide - ${forceHiddenNav}`;
 }
 
 function handleMediaQuery(svg, navContainer, scheduleIframe) 
