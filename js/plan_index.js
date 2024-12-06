@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function()
     let svg = document.querySelector('svg');
     let navContainer = document.getElementById('nav-container');
     let scheduleIframe = document.getElementById('schedule-frame');
-    switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+    if (window.innerWidth <= 980)
+        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
 
     window.addEventListener('message', function(event)
     {
