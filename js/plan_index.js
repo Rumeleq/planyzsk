@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function()
         {
             handleCtrlF(event, svg, navContainer, scheduleIframe);
         }
-        else if (event.data.type == 'kumiGaming')
+        else if (event.data.type === 'kumiGaming')
         {
             window.location.href = event.data.href;
         }
@@ -144,7 +144,7 @@ function searchSchedules(scheduleType)
     resultsLinksContainer.innerHTML = '';
 
     let filteredSchedules;
-    if (scheduleType == 'Nauczyciele') 
+    if (scheduleType === 'Nauczyciele')
     {
         filteredSchedules = spanTexts.filter(schedule => 
             schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
@@ -157,7 +157,7 @@ function searchSchedules(scheduleType)
         );
     }
 
-    if (filteredSchedules.length == 0)
+    if (filteredSchedules.length === 0)
         return;
 
     const header = document.createElement('h3');
@@ -167,8 +167,7 @@ function searchSchedules(scheduleType)
     filteredSchedules.forEach(schedule => 
     {
         const a = document.createElement('a');
-        const href = "dane/" + filenames[spanTexts.indexOf(schedule)];
-        a.href = href;
+        a.href = "dane/" + filenames[spanTexts.indexOf(schedule)];
         a.textContent = getDisplayName(schedule);
         resultsLinksContainer.appendChild(a);
     });
@@ -243,7 +242,7 @@ function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null)
 function handleMediaQuery(svg, navContainer, scheduleIframe) 
 {
     const isOverThreshold = window.innerWidth > 980;
-    if (isOverThreshold == wasOverThreshold)
+    if (isOverThreshold === wasOverThreshold)
         return;
     
     if (window.innerWidth <= 980) 

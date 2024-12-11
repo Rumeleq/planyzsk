@@ -124,7 +124,7 @@ function searchSchedules(scheduleType)
     resultsLinksContainer.innerHTML = '';
 
     let filteredSchedules;
-    if (scheduleType == 'Nauczyciele') 
+    if (scheduleType === 'Nauczyciele')
     {
         filteredSchedules = spanTexts.filter(schedule => 
             schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
@@ -137,7 +137,7 @@ function searchSchedules(scheduleType)
         );
     }
 
-    if (filteredSchedules.length == 0)
+    if (filteredSchedules.length === 0)
         return;
 
     const header = document.createElement('h3');
@@ -147,8 +147,7 @@ function searchSchedules(scheduleType)
     filteredSchedules.forEach(schedule => 
     {
         const a = document.createElement('a');
-        const href = "dane/" + filenames[spanTexts.indexOf(schedule)];
-        a.href = href;
+        a.href = "dane/" + filenames[spanTexts.indexOf(schedule)];
         a.textContent = getDisplayName(schedule);
         resultsLinksContainer.appendChild(a);
         a.addEventListener('click', function(event)
