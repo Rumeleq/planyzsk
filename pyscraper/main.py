@@ -2,9 +2,18 @@ import asyncio
 import json
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
+from enum import Enum
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS  
+
+
+class WeekDays(Enum):
+    MONDAY = 0
+    TUESDAY = 1
+    WEDNESDAY = 2
+    THURSDAY = 3
+    FRIDAY = 4
 
 
 def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -19,7 +28,7 @@ def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_class
         grade (str): just a grade
 
     Raises:
-        ValueError: if the lesson is already in the TEACHERS_TIMETABLES dictionary
+        ValueError: if the lesson is already in the TEACHERS_TIMETABLES dictionary,
         and it's not the same as the new one (except the grade)
     """
     if lesson_teacher not in TEACHERS_TIMETABLES:   # if teacher is not in the TEACHERS_TIMETABLES dictionary, add him
@@ -53,7 +62,8 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
         grade (str): just a grade
 
     Raises:
-        ValueError: if the lesson is already in the CLASSROOMS_TIMETABLES dictionary and it's not the same as the new one (except the grade)
+        ValueError: if the lesson is already in the CLASSROOMS_TIMETABLES dictionary,
+        and it's not the same as the new one (except the grade)
     """
     if lesson_classroom not in CLASSROOMS_TIMETABLES:  # if classroom is not in the CLASSROOMS_TIMETABLES dictionary, add it
         CLASSROOMS_TIMETABLES[lesson_classroom] = {day: [None for _ in range(LESSONS_NUMBER)] for day in range(WEEK_DAYS)}  # add LESSONS_NUMBER lessons per day
@@ -170,6 +180,20 @@ async def find_grades_number():
     return low - 1
 
 
+def parse_json_to_html():
+    with open(f'{JSON_PATH}/timetables/grades/3D.json', 'r', encoding='utf-8') as f:
+        data: dict[str, dict[str, list[list[tuple[str, str, str]]]]] = json.load(f)
+        for day in data:
+            print(WeekDays(int(day)).name)
+            for lesson in data[day]:
+                try:
+                    print(lesson[0][0], lesson[1][0])
+                except TypeError:
+                    pass
+                except IndexError:
+                    print(lesson[0][0])
+
+
 async def main():
     # getting timetables
     tasks: list[asyncio.Task] = list()
@@ -199,6 +223,8 @@ async def main():
     # saving plain text
     with open(f'{JSON_PATH}plain_text.json', 'w', encoding='utf-8') as f:
         json.dump(PLAIN_TEXT, f, ensure_ascii=False, indent=4, sort_keys=True)  # save the PLAIN_TEXT dictionary to the file (used for creating PLAIN_TEXT_SOLUTION in other program)
+
+    parse_json_to_html()
 
 
 if __name__ == '__main__':
