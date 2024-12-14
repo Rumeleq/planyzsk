@@ -3,17 +3,10 @@ import json
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
 from enum import Enum
+from html_parser import parse_json_to_html
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
-from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS  
-
-
-class WeekDays(Enum):
-    MONDAY = 0
-    TUESDAY = 1
-    WEDNESDAY = 2
-    THURSDAY = 3
-    FRIDAY = 4
+from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
 
 
 def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -178,20 +171,6 @@ async def find_grades_number():
             break
 
     return low - 1
-
-
-def parse_json_to_html():
-    with open(f'{JSON_PATH}/timetables/grades/3D.json', 'r', encoding='utf-8') as f:
-        data: dict[str, dict[str, list[list[tuple[str, str, str]]]]] = json.load(f)
-        for day in data:
-            print(WeekDays(int(day)).name)
-            for lesson in data[day]:
-                try:
-                    print(lesson[0][0], lesson[1][0])
-                except TypeError:
-                    pass
-                except IndexError:
-                    print(lesson[0][0])
 
 
 async def main():

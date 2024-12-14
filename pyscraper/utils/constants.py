@@ -5,6 +5,8 @@ JSON_PATH = 'JSON/'  # path to the JSON files
 URL = 'https://www.zsk.poznan.pl/plany_lekcji/2023plany/technikum/plany/'  # URL to the timetables
 WEEK_DAYS = 5
 LESSONS_NUMBER = 11
+HTML_PATH = 'utils'
+
 with open(f'{JSON_PATH}lessons.json', 'r', encoding='utf-8') as f:
     LESSONS: dict[str, str] = json.load(f)  # Constant to replace corrupted lesson names {corrupted_lesson: lesson_name}
 with open(f'{JSON_PATH}teachers.json', 'r', encoding='utf-8') as f:
