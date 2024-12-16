@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function()
     let navContainer = document.getElementById('nav-container');
     let scheduleIframe = document.getElementById('schedule-frame');
     if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+        switchNav(svg, navContainer, scheduleIframe, true);
 
     window.addEventListener('message', function(event)
     {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function()
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
     if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+        switchNav(svg, navContainer, scheduleIframe, true);
     window.addEventListener('resize', () =>
         handleMediaQuery(svg, navContainer, scheduleIframe));
 
@@ -156,11 +156,11 @@ function handleMediaQuery(svg, navContainer, scheduleIframe)
     
     if (window.innerWidth <= 980) 
     {
-        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=true);
+        switchNav(svg, navContainer, scheduleIframe, true);
     }
     else if (window.innerWidth > 980) 
     {
-        switchNav(svg, navContainer, scheduleIframe, forceHiddenNav=false);
+        switchNav(svg, navContainer, scheduleIframe, false);
     }
     wasOverThreshold = isOverThreshold;
 }
