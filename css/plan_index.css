@@ -375,15 +375,14 @@ svg#arrow
         {
             box-shadow: 0 0 0 10px #76ABAE;
         }
-        &::selection
-        {
-            background-color: #556b6c;
-            
-        }
         @media(hover: hover)
         {
             font-size: 1.5em;
             padding: 10px 10px 10px 60px;
+            &:focus
+            {
+                box-shadow: 0 0 0 3px #76ABAE;
+            }
         }
     }
 }
