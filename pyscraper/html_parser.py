@@ -1,7 +1,6 @@
 import json
 import os
 import re
-
 from bs4 import BeautifulSoup as bs
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER
@@ -21,11 +20,18 @@ def normalize_lesson_name(lesson_name: str) -> str:
            str: Normalized lesson name with appropriate spacing added.
    """
     for word in WORDS_TO_ADD_SPACE_AFTER:
-        lesson_name = re.sub(rf'(?i){re.escape(word)}', f'{word} ', lesson_name)
+        regex = rf'({re.escape(word)})(?!j)(?!$)'
+        lesson_name = re.sub(regex, r'\1 ', lesson_name)
+
     for word in WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER:
-        lesson_name = re.sub(rf'(?i){re.escape(word)}', f'{word[0]} {word[1:]}', lesson_name)
+        regex = rf'({re.escape(word[0])})({re.escape(word[1:])})'
+        lesson_name = re.sub(regex, r'\1 \2', lesson_name)
+
     for word in WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER:
-        lesson_name = re.sub(rf'(?i){re.escape(word)}', f'{word[:2]} {word[2:]}', lesson_name)
+        regex = rf'({re.escape(word[:2])})({re.escape(word[2:])})'
+        lesson_name = re.sub(regex, r'\1 \2', lesson_name)
+
+    lesson_name = lesson_name.strip()
 
     return lesson_name
 
@@ -33,7 +39,7 @@ def normalize_lesson_name(lesson_name: str) -> str:
 def parse_json_to_html():
     json_filename = '3D.json'
     grade_name = os.path.splitext(json_filename)[0]
-    with open(f'{JSON_PATH}/timetables/grades/3D.json', 'r', encoding='utf-8') as f:
+    with open(f'{JSON_PATH}/timetables/grades/{json_filename}', 'r', encoding='utf-8') as f:
         schedule: dict[str, dict[str, list[list[tuple[str, str, str]]]]] = json.load(f)
 
     with open(f'{HTML_PATH}/grades_template.html', 'r', encoding='utf-8') as f:
@@ -41,16 +47,38 @@ def parse_json_to_html():
 
     soup.title.string = f'Plan lekcji oddziału - {grade_name}'
     soup.body.span.string = f'{grade_name}'
+    rows = soup.find_all('tr')[1:]
 
-    for week_day in schedule:
-        for school_hour in schedule[week_day]:
+    for i, week_day in enumerate(schedule):
+        for j, school_hour in enumerate(schedule[week_day]):
             if school_hour is None:
                 continue
-            for lesson in school_hour:
-                subject = lesson[0]
+
+            row = rows[j]
+            td = row.find_all('td', class_='l')[i]
+
+            for k, lesson in enumerate(school_hour):
+                subject, teacher, classroom = lesson
                 lesson_name = normalize_lesson_name(subject)
                 lesson[0] = lesson_name
                 print(lesson)
+
+                span_p = soup.new_tag('span', class_='p')
+                span_p.string = lesson_name
+                anchor_n = soup.new_tag('a', class_='n')
+                anchor_n.string = teacher
+                anchor_s = soup.new_tag('a', class_='s')
+                anchor_s.string = classroom
+
+                wrapper_span = soup.new_tag('span')
+                if len(school_hour) > 1:
+                    if k > 0:
+                        br = soup.new_tag('br')
+                        wrapper_span.append(br)
+                    wrapper_span.attrs['style'] = 'font-size: 85%;'
+
+                td.append(wrapper_span)
+                wrapper_span.extend([span_p, anchor_n, anchor_s])
 
     with open('test.html', 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
