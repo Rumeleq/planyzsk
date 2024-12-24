@@ -1,5 +1,5 @@
 from bs4 import ResultSet, Tag
-from utils.constants import TEACHERS, LESSONS
+from pyscraper.utils.constants import LESSONS, TEACHERS
 
 
 def get_lesson_details(span: ResultSet[Tag]):

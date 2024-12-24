@@ -2,8 +2,6 @@ import asyncio
 import json
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
-from enum import Enum
-from html_parser import parse_json_to_html
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
@@ -202,8 +200,6 @@ async def main():
     # saving plain text
     with open(f'{JSON_PATH}plain_text.json', 'w', encoding='utf-8') as f:
         json.dump(PLAIN_TEXT, f, ensure_ascii=False, indent=4, sort_keys=True)  # save the PLAIN_TEXT dictionary to the file (used for creating PLAIN_TEXT_SOLUTION in other program)
-
-    parse_json_to_html()
 
 
 if __name__ == '__main__':

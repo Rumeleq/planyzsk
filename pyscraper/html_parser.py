@@ -36,8 +36,15 @@ def normalize_lesson_name(lesson_name: str) -> str:
     return lesson_name
 
 
-def parse_json_to_html():
-    json_filename = '3D.json'
+def parse_teacher_json_to_html(json_filename: str) -> None:
+    pass
+
+
+def parse_classroom_json_to_html(json_filename: str) -> None:
+    pass
+
+
+def parse_grade_json_to_html(json_filename: str) -> None:
     grade_name = os.path.splitext(json_filename)[0]
     with open(f'{JSON_PATH}/timetables/grades/{json_filename}', 'r', encoding='utf-8') as f:
         schedule: dict[str, dict[str, list[list[tuple[str, str, str]]]]] = json.load(f)
@@ -85,4 +92,4 @@ def parse_json_to_html():
 
 
 if __name__ == '__main__':
-    parse_json_to_html()
+    parse_grade_json_to_html('3D.json')
