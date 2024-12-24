@@ -130,7 +130,11 @@ async def get_timetable(session: ClientSession, i: int):
                             insert_data_to_grades(*w, col_num, row_num, grade)
 
                 elif len(col_spans) == 3:  # if there are 3 spans, put the data in the Dictionaries (the default case)
-                    insert_data_to_teachers(*(w := get_lesson_details(col_spans)), col_num, row_num, grade)
+                    try:
+                        insert_data_to_teachers(*(w := get_lesson_details(col_spans)), col_num, row_num, grade)
+                    except KeyError as e:
+                        print(f'KeyError: {e}; {col_num, row_num, grade}')
+                        continue
                     insert_data_to_classrooms(*w, col_num, row_num, grade)
                     insert_data_to_grades(*w, col_num, row_num, grade)
                 elif len(col_spans) == 2:  # if there are 2 spans, iterate over it and put the data in the Dictionaries (group lesson case)
