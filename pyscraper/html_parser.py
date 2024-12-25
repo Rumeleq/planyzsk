@@ -51,9 +51,17 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
         soup = bs(f, 'html.parser')
 
     soup.title.string = f'Plan lekcji nauczyciela - {teacher_name} ({teacher_intials})'
+    soup.body.span.string = f'{teacher_name} ({teacher_intials})'
+    rows = soup.find_all('tr')[1:]
 
-    with open('test.html', 'w', encoding='utf-8') as f:
-        f.write(soup.prettify())
+    for i, week_day in enumerate(schedule):
+        for j, school_hour in enumerate(schedule[week_day]):
+            if school_hour is None:
+                continue
+            print(school_hour)
+
+    # with open('test.html', 'w', encoding='utf-8') as f:
+    #   f.write(soup.prettify())
 
 
 def parse_grade_json_to_html(json_filename: str) -> None:
