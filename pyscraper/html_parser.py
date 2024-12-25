@@ -58,10 +58,39 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
         for j, school_hour in enumerate(schedule[week_day]):
             if school_hour is None:
                 continue
+            row = rows[j]
+            td = row.find_all('td', class_='l')[i]
+
+            grades: list[str]
+            grades, subject, classroom = school_hour
+            lesson_name = normalize_lesson_name(subject)
+            school_hour[1] = lesson_name
             print(school_hour)
 
-    # with open('test.html', 'w', encoding='utf-8') as f:
-    #   f.write(soup.prettify())
+            span_o = soup.new_tag('span', class_='o')
+            for length, grade in enumerate(grades):
+                if length > 0:
+                    grade_anchor = soup.new_tag('a', class_='o')
+                    grade_anchor.string = grade
+                    comma_span = soup.new_tag('span')
+                    comma_span.string = ','
+                    span_o.extend([comma_span, grade_anchor])
+                else:
+                    grade_anchor = soup.new_tag('a', class_='o')
+                    grade_anchor.string = grade
+                    span_o.append(grade_anchor)
+
+            span_p = soup.new_tag('span', class_='p')
+            span_p.string = lesson_name
+            anchor_s = soup.new_tag('a', class_='s')
+            anchor_s.string = classroom
+
+            wrapper_span = soup.new_tag('span')
+            td.append(wrapper_span)
+            wrapper_span.extend([span_o, span_p, anchor_s])
+
+    with open('test.html', 'w', encoding='utf-8') as f:
+        f.write(soup.prettify())
 
 
 def parse_grade_json_to_html(json_filename: str) -> None:
@@ -113,4 +142,5 @@ def parse_grade_json_to_html(json_filename: str) -> None:
 
 if __name__ == '__main__':
     # parse_grade_json_to_html('3D.json')
-    parse_teacher_json_to_html('AB.json')
+    parse_teacher_json_to_html('TE.json')
+    # parse_classroom_json_to_html('22.json')

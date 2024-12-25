@@ -11,7 +11,7 @@ WORDS_TO_ADD_SPACE_AFTER: list[str] = ['Język', 'Rysunek', 'Pracownia', 'Tworze
 WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = ['zwychowawcą', 'izarządzanie', 'iurządzeń', 'idokumentowanie', 'ielektronika', 'ielektroniczna', 'iinstalacje', 'ihigiena', 'ielektroniczne', 'iutrzymania', 'ipodstacje', 'iurządzenia', 'idokumentowania', 'iaplikacje', 'wautomatyce', 'ipomiary', 'ospołeczeństwie', 'ipomiarów']
 WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER: list[str] = ['dozawodu', 'nastacji']
 
-with open(f'{JSON_PATH}intials_name_dict.json', 'r', encoding='utf-8') as f:
+with open(f'{JSON_PATH}initials_name_dict.json', 'r', encoding='utf-8') as f:
     TEACHER_INTIAL_NAME_DICT: dict[str, str] = json.load(f)  # Constant to replace initials with full names {initials: full_name}
 with open(f'{JSON_PATH}lessons.json', 'r', encoding='utf-8') as f:
     LESSONS: dict[str, str] = json.load(f)  # Constant to replace corrupted lesson names {corrupted_lesson: lesson_name}
