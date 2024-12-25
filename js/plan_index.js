@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function()
     //Zmiana widoczności nav bara po kliknięciu w arrow svg
     svg.addEventListener('click', () =>
         switchNav(svg, navContainer, scheduleIframe));
-    
+
     document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
@@ -167,11 +167,15 @@ function handleMediaQuery(svg, navContainer, scheduleIframe)
 
 function handleCtrlF(event, svg, navContainer, scheduleIframe) 
 {
-   if (event.ctrlKey && event.key === 'f' || event.data.type === 'ctrlF') 
-   {
-        event.preventDefault();
-        switchNav(svg, navContainer, scheduleIframe, false);
-        search_input.focus();
-        search_input.select();
-   }
+    try
+    {
+       if (event.ctrlKey && event.key === 'f' || event.data.type === 'ctrlF')
+       {
+           event.preventDefault();
+           switchNav(svg, navContainer, scheduleIframe, false);
+           search_input.focus();
+           search_input.select();
+       }
+    }
+    catch (TypeError) {}
 }

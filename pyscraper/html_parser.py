@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER
+from utils.constants import TEACHER_INTIAL_NAME_DICT
 from utils.constants import HTML_PATH
 from utils.constants import JSON_PATH
 
@@ -36,12 +37,23 @@ def normalize_lesson_name(lesson_name: str) -> str:
     return lesson_name
 
 
-def parse_teacher_json_to_html(json_filename: str) -> None:
-    pass
-
-
 def parse_classroom_json_to_html(json_filename: str) -> None:
     pass
+
+
+def parse_teacher_json_to_html(json_filename: str) -> None:
+    teacher_intials = os.path.splitext(json_filename)[0]
+    teacher_name = TEACHER_INTIAL_NAME_DICT[teacher_intials]
+    with open(f'{JSON_PATH}/timetables/teachers/{json_filename}', 'r', encoding='utf-8') as f:
+        schedule: dict[str, dict[str, list[tuple[str, str, str]]]] = json.load(f)
+
+    with open(f'{HTML_PATH}/timetable_template.html', 'r', encoding='utf-8') as f:
+        soup = bs(f, 'html.parser')
+
+    soup.title.string = f'Plan lekcji nauczyciela - {teacher_name} ({teacher_intials})'
+
+    with open('test.html', 'w', encoding='utf-8') as f:
+        f.write(soup.prettify())
 
 
 def parse_grade_json_to_html(json_filename: str) -> None:
@@ -49,7 +61,7 @@ def parse_grade_json_to_html(json_filename: str) -> None:
     with open(f'{JSON_PATH}/timetables/grades/{json_filename}', 'r', encoding='utf-8') as f:
         schedule: dict[str, dict[str, list[list[tuple[str, str, str]]]]] = json.load(f)
 
-    with open(f'{HTML_PATH}/grades_template.html', 'r', encoding='utf-8') as f:
+    with open(f'{HTML_PATH}/timetable_template.html', 'r', encoding='utf-8') as f:
         soup = bs(f, 'html.parser')
 
     soup.title.string = f'Plan lekcji oddziału - {grade_name}'
@@ -92,4 +104,5 @@ def parse_grade_json_to_html(json_filename: str) -> None:
 
 
 if __name__ == '__main__':
-    parse_grade_json_to_html('3D.json')
+    # parse_grade_json_to_html('3D.json')
+    parse_teacher_json_to_html('AB.json')
