@@ -64,8 +64,6 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
             grades: list[str]
             grades, subject, classroom = school_hour
             lesson_name = normalize_lesson_name(subject)
-            school_hour[1] = lesson_name
-            print(school_hour)
 
             span_o = soup.new_tag('span', class_='o')
             for length, grade in enumerate(grades):
@@ -73,7 +71,7 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
                     grade_anchor = soup.new_tag('a', class_='o')
                     grade_anchor.string = grade
                     comma_span = soup.new_tag('span')
-                    comma_span.string = ','
+                    comma_span.string = ', '
                     span_o.extend([comma_span, grade_anchor])
                 else:
                     grade_anchor = soup.new_tag('a', class_='o')
@@ -81,7 +79,7 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
                     span_o.append(grade_anchor)
 
             span_p = soup.new_tag('span', class_='p')
-            span_p.string = lesson_name
+            span_p.string = f' {lesson_name} '
             anchor_s = soup.new_tag('a', class_='s')
             anchor_s.string = classroom
 
@@ -90,7 +88,7 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
             wrapper_span.extend([span_o, span_p, anchor_s])
 
     with open('test.html', 'w', encoding='utf-8') as f:
-        f.write(soup.prettify())
+        f.write(str(soup))
 
 
 def parse_grade_json_to_html(json_filename: str) -> None:
@@ -116,8 +114,6 @@ def parse_grade_json_to_html(json_filename: str) -> None:
             for k, lesson in enumerate(school_hour):
                 subject, teacher, classroom = lesson
                 lesson_name = normalize_lesson_name(subject)
-                lesson[0] = lesson_name
-                print(lesson)
 
                 span_p = soup.new_tag('span', class_='p')
                 span_p.string = lesson_name
@@ -142,5 +138,5 @@ def parse_grade_json_to_html(json_filename: str) -> None:
 
 if __name__ == '__main__':
     # parse_grade_json_to_html('3D.json')
-    parse_teacher_json_to_html('TE.json')
-    # parse_classroom_json_to_html('22.json')
+    # parse_teacher_json_to_html('TE.json')
+    parse_classroom_json_to_html('22.json')
