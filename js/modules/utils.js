@@ -1,5 +1,13 @@
-import { nfilenames, nspanTexts, ofilenames, ospanTexts, sfilenames, sspanTexts } from "../modules/data.js";
-
+let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
+import('../modules/data.js').then(async module =>
+{
+    ospanTexts = module.ospanTexts;
+    ofilenames = module.ofilenames;
+    sspanTexts = module.sspanTexts;
+    sfilenames = module.sfilenames;
+    nspanTexts = await module.getNspanTexts();
+    nfilenames = module.nfilenames;
+});
 export function searchSchedules(scheduleType)
 {
     let container = document.getElementById('container');

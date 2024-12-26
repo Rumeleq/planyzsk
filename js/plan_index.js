@@ -1,12 +1,27 @@
-import { ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames } from './modules/data.js';
 import { handleSearchInput } from './modules/utils.js';
 
+let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
+let is_data_loaded_promise = new Promise(resolve =>
+{
+    import('./modules/data.js').then(async module =>
+    {
+        ospanTexts = module.ospanTexts;
+        ofilenames = module.ofilenames;
+        sspanTexts = module.sspanTexts;
+        sfilenames = module.sfilenames;
+        nspanTexts = await module.getNspanTexts();
+        nfilenames = module.nfilenames;
+        resolve();
+    });
+});
 
 let search_input;
 let wasOverThreshold = window.innerWidth > 980;
 
-document.addEventListener('DOMContentLoaded', function() 
+document.addEventListener('DOMContentLoaded', async function()
 {
+    await is_data_loaded_promise;
+
     //Zmiana title strony na title planu w iframe'ie przez message event z iframe'a
     let scheduleTitle = document.querySelector('title');
     let svg = document.querySelector('svg');
@@ -17,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function()
 
     window.addEventListener('message', function(event)
     {
-        if (event.data.type.startsWith("Plan"))
+        if (event.data.type.trim().startsWith('Plan'))
         {
             this.document.body.style.visibility = "visible";
             scheduleTitle.textContent = event.data.type;

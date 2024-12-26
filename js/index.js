@@ -1,10 +1,7 @@
-import { ospanTexts, ofilenames, sspanTexts, sfilenames } from './modules/data.js';
 import { handleSearchInput, searchSchedules } from './modules/utils.js';
-import { test } from './modules/data.js';
 
 window.onload = function()
 {
-    test();
     document.body.style.visibility = "visible";
 }
 
@@ -30,8 +27,19 @@ search_input.addEventListener('keyup', function()
     handleSearchInput(container, search_input)
 });
 
-generateList(ospanTexts, ofilenames, o_list);
-generateList(sspanTexts, sfilenames, s_list);
+let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
+import('./modules/data.js').then(async module =>
+{
+    ospanTexts = module.ospanTexts;
+    ofilenames = module.ofilenames;
+    sspanTexts = module.sspanTexts;
+    sfilenames = module.sfilenames;
+    nspanTexts = await module.getNspanTexts();
+    nfilenames = module.nfilenames;
+    console.log(ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames, o_list, s_list);
+    generateList(ospanTexts, ofilenames, o_list);
+    generateList(sspanTexts, sfilenames, s_list);
+});
 
 o_list.addEventListener('click', function(event)
 {
