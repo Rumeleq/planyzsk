@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async function()
         {
             if (window.innerWidth <= 980) 
                 switchNav(svg, navContainer, scheduleIframe);
-        }, 300);
+        }, 200);
     });
     
     //Zmiana widoczności nav bara po kliknięciu w arrow svg
