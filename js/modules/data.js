@@ -1,7 +1,7 @@
-import o_json from '/./planyzsk/pyscraper/JSON/o_map.json';
-import s_json from '/./planyzsk/pyscraper/JSON/s_map.json';
-import n_json from '/./planyzsk/pyscraper/JSON/n_map.json';
-import initials_name_dict from '/./planyzsk/pyscraper/JSON/initials_name_dict.json';
+import o_json from '/pyscraper/JSON/o_map.json';
+import s_json from '/pyscraper/JSON/s_map.json';
+import n_json from '/pyscraper/JSON/n_map.json';
+import initials_name_dict from '/pyscraper/JSON/initials_name_dict.json';
 
 export const ospanTexts = Object.keys(o_json);
 export const ofilenames = Object.values(o_json).map(value => `${value}.html`);
