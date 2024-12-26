@@ -1,8 +1,10 @@
 import { ospanTexts, ofilenames, sspanTexts, sfilenames } from './modules/data.js';
 import { handleSearchInput, searchSchedules } from './modules/utils.js';
+import { loadJSON } from './modules/data.js';
 
 window.onload = function()
 {
+    loadJSON('/planyzsk/pyscraper/JSON/o_map.json').then(data => console.log(data));
     document.body.style.visibility = "visible";
 }
 
