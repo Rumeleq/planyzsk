@@ -1,5 +1,7 @@
 import asyncio
 import json
+import os
+
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
 from utils.getting import get_lesson_details
@@ -175,6 +177,16 @@ async def find_grades_number():
     return low - 1
 
 
+def write_filenames_map_to_json(filenames: list[str], prefix: str) -> None:
+    filenames_map = {
+        filename.split('/')[-1].split('.')[0] : f'{prefix}{index + 1}'
+        for index, filename in enumerate(sorted(filenames))
+    }
+
+    with open(f'{JSON_PATH}{prefix}_map.json', 'w', encoding='utf-8') as f:
+        json.dump(filenames_map, f, ensure_ascii=False, indent=4)
+
+
 async def main():
     # getting timetables
     tasks: list[asyncio.Task] = list()
@@ -204,6 +216,14 @@ async def main():
     # saving plain text
     with open(f'{JSON_PATH}plain_text.json', 'w', encoding='utf-8') as f:
         json.dump(PLAIN_TEXT, f, ensure_ascii=False, indent=4, sort_keys=True)  # save the PLAIN_TEXT dictionary to the file (used for creating PLAIN_TEXT_SOLUTION in other program)
+
+    grades_json_files = [f'{JSON_PATH}timetables/grades/{file}' for file in os.listdir(f'{JSON_PATH}timetables/grades/')]
+    teachers_json_files = [f'{JSON_PATH}timetables/teachers/{file}' for file in os.listdir(f'{JSON_PATH}timetables/teachers/')]
+    classrooms_json_files = [f'{JSON_PATH}timetables/classrooms/{file}' for file in os.listdir(f'{JSON_PATH}timetables/classrooms/')]
+
+    write_filenames_map_to_json(grades_json_files, 'o')
+    write_filenames_map_to_json(teachers_json_files, 'n')
+    write_filenames_map_to_json(classrooms_json_files, 's')
 
 
 if __name__ == '__main__':
