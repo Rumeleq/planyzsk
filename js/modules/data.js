@@ -6,10 +6,10 @@ async function loadJSON(url)
     return response.json();
 }
 
-const o_json = await loadJSON('./pyscraper/JSON/o_map.json');
-const s_json = await loadJSON('./pyscraper/JSON/s_map.json');
-const n_json = await loadJSON('./pyscraper/JSON/n_map.json');
-const initials_name_dict = await loadJSON('./pyscraper/JSON/initials_name_dict.json');
+const o_json = await loadJSON('/planyzsk/pyscraper/JSON/o_map.json');
+const s_json = await loadJSON('/planyzsk/pyscraper/JSON/s_map.json');
+const n_json = await loadJSON('/planyzsk/pyscraper/JSON/n_map.json');
+const initials_name_dict = await loadJSON('/planyzsk/pyscraper/JSON/initials_name_dict.json');
 
 export const ospanTexts = Object.keys(o_json);
 export const ofilenames = Object.values(o_json).map(value => `${value}.html`);
