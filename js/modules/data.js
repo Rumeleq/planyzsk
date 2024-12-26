@@ -1,7 +1,15 @@
-import o_json from '/planyzsk/pyscraper/JSON/o_map.json';
-import s_json from '/planyzsk/pyscraper/JSON/s_map.json';
-import n_json from '/planyzsk/pyscraper/JSON/n_map.json';
-import initials_name_dict from '/planyzsk/pyscraper/JSON/initials_name_dict.json';
+async function loadJSON(url)
+{
+    const response = await fetch(url);
+    if (!response.ok)
+        throw new Error(`Failed to load JSON from ${url}`);
+    return response.json();
+}
+
+const o_json = await loadJSON('./pyscraper/JSON/o_map.json');
+const s_json = await loadJSON('./pyscraper/JSON/s_map.json');
+const n_json = await loadJSON('./pyscraper/JSON/n_map.json');
+const initials_name_dict = await loadJSON('./pyscraper/JSON/initials_name_dict.json');
 
 export const ospanTexts = Object.keys(o_json);
 export const ofilenames = Object.values(o_json).map(value => `${value}.html`);
