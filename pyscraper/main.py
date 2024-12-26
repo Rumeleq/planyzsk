@@ -1,12 +1,13 @@
 import asyncio
 import json
 import os
-
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
+from utils.constants import TEACHER_INTIAL_NAME_DICT
+from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
 
 
 def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -179,12 +180,34 @@ async def find_grades_number():
 
 def write_filenames_map_to_json(filenames: list[str], prefix: str) -> None:
     filenames_map = {
-        filename.split('/')[-1].split('.')[0] : f'{prefix}{index + 1}'
+        filename : f'{prefix}{index + 1}'
         for index, filename in enumerate(sorted(filenames))
     }
 
     with open(f'{JSON_PATH}{prefix}_map.json', 'w', encoding='utf-8') as f:
         json.dump(filenames_map, f, ensure_ascii=False, indent=4)
+
+
+def write_teacher_map_sorted_by_last_name_to_json(teachers_filenames: list[str]) -> None:
+    sorted_teachers_dict = dict(
+        sorted(
+            TEACHER_INTIAL_NAME_DICT.items(),
+            key=lambda x: x[1].split('. ')[1]
+        )
+    )
+
+    sorted_teacher_filenames = sorted(
+        teachers_filenames,
+        key=lambda filename: list(sorted_teachers_dict.keys()).index(filename)
+    )
+
+    teachers_filenames_map = {
+        initials : f'n{index + 1}'
+        for index, initials in enumerate(sorted_teacher_filenames)
+    }
+
+    with open(f'{JSON_PATH}n_map.json', 'w', encoding='utf-8') as f:
+        json.dump(teachers_filenames_map, f, ensure_ascii=False, indent=4)
 
 
 async def main():
@@ -217,13 +240,23 @@ async def main():
     with open(f'{JSON_PATH}plain_text.json', 'w', encoding='utf-8') as f:
         json.dump(PLAIN_TEXT, f, ensure_ascii=False, indent=4, sort_keys=True)  # save the PLAIN_TEXT dictionary to the file (used for creating PLAIN_TEXT_SOLUTION in other program)
 
-    grades_json_files = [f'{JSON_PATH}timetables/grades/{file}' for file in os.listdir(f'{JSON_PATH}timetables/grades/')]
-    teachers_json_files = [f'{JSON_PATH}timetables/teachers/{file}' for file in os.listdir(f'{JSON_PATH}timetables/teachers/')]
-    classrooms_json_files = [f'{JSON_PATH}timetables/classrooms/{file}' for file in os.listdir(f'{JSON_PATH}timetables/classrooms/')]
+    grades_json_files = [f'{JSON_PATH}timetables/grades/{file}'.split('/')[-1].split('.')[0]
+                         for file in os.listdir(f'{JSON_PATH}timetables/grades/')]
+    teachers_json_files = [f'{JSON_PATH}timetables/teachers/{file}'.split('/')[-1].split('.')[0]
+                           for file in os.listdir(f'{JSON_PATH}timetables/teachers/')]
+    classrooms_json_files = [f'{JSON_PATH}timetables/classrooms/{file}'.split('/')[-1].split('.')[0]
+                             for file in os.listdir(f'{JSON_PATH}timetables/classrooms/')]
 
     write_filenames_map_to_json(grades_json_files, 'o')
-    write_filenames_map_to_json(teachers_json_files, 'n')
+    write_teacher_map_sorted_by_last_name_to_json(teachers_json_files)
     write_filenames_map_to_json(classrooms_json_files, 's')
+
+    for file in grades_json_files:
+        parse_grade_json_to_html(file)
+    for file in teachers_json_files:
+        parse_teacher_json_to_html(file)
+    for file in classrooms_json_files:
+        parse_classroom_json_to_html(file)
 
 
 if __name__ == '__main__':
