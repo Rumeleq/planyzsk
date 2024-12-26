@@ -12,8 +12,8 @@ export async function test()
     loadJSON('/planyzsk/pyscraper/JSON/initials_name_dict.json').then(data => console.log(data));
 }
 
-export const ospanTexts = Object.keys(loadJSON('/planyzsk/pyscraper/JSON/o_map.json'));
-export const ofilenames = Object.values(loadJSON('/planyzsk/pyscraper/JSON/o_map.json')).map(value => `${value}.html`);
+export const ospanTexts = Object.keys(await loadJSON('/planyzsk/pyscraper/JSON/o_map.json'));
+export const ofilenames = Object.values(await loadJSON('/planyzsk/pyscraper/JSON/o_map.json')).map(value => `${value}.html`);
 
 //export const ospanTexts = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '2E', '2F', '2G', '2H', '3A', '3B', '3C', '3D', '3E', '3F', '4A', '4B', '4C', '4D', '4E', '4F', '5A', '5B', '5C', '5D', '5E', '5F', '5G'];
 //export const ofilenames = ['o1.html', 'o2.html', 'o3.html', 'o4.html', 'o5.html', 'o6.html', 'o7.html', 'o8.html', 'o9.html', 'o10.html', 'o11.html', 'o12.html', 'o13.html', 'o14.html', 'o15.html', 'o16.html', 'o17.html', 'o18.html', 'o19.html', 'o20.html', 'o21.html', 'o22.html', 'o23.html', 'o24.html', 'o25.html', 'o26.html', 'o27.html', 'o28.html', 'o29.html', 'o30.html', 'o31.html'];
