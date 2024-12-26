@@ -1,7 +1,15 @@
-export async function loadJSON(url)
+async function loadJSON(url)
 {
     const response = await fetch(url);
     return await response.json();
+}
+
+export async function test()
+{
+    loadJSON('/planyzsk/pyscraper/JSON/o_map.json').then(data => console.log(data));
+    loadJSON('/planyzsk/pyscraper/JSON/s_map.json').then(data => console.log(data));
+    loadJSON('/planyzsk/pyscraper/JSON/n_map.json').then(data => console.log(data));
+    loadJSON('/planyzsk/pyscraper/JSON/initials_name_dict.json').then(data => console.log(data));
 }
 
 export const ospanTexts = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '2E', '2F', '2G', '2H', '3A', '3B', '3C', '3D', '3E', '3F', '4A', '4B', '4C', '4D', '4E', '4F', '5A', '5B', '5C', '5D', '5E', '5F', '5G'];
