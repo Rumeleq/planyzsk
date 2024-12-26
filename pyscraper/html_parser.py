@@ -38,7 +38,57 @@ def normalize_lesson_name(lesson_name: str) -> str:
 
 
 def parse_classroom_json_to_html(json_filename: str) -> None:
-    pass
+    classroom_number = os.path.splitext(json_filename)[0]
+    with open(f'{JSON_PATH}/timetables/classrooms/{json_filename}', 'r', encoding='utf-8') as f:
+        schedule: dict[str, dict[str, list[tuple[str, str, str]]]] = json.load(f)
+
+    with open(f'{HTML_PATH}/timetable_template.html', 'r', encoding='utf-8') as f:
+        soup = bs(f, 'html.parser')
+
+    if classroom_number.isnumeric() and len(classroom_number) == 2:
+        soup.title.string = f'Plan lekcji sali - s{classroom_number}'
+        soup.body.span.string = f's{classroom_number}'
+    else:
+        soup.title.string = f'Plan lekcji sali - {classroom_number}'
+        soup.body.span.string = f'{classroom_number}'
+
+    rows = soup.find_all('tr')[1:]
+
+    for i, week_day in enumerate(schedule):
+        for j, school_hour in enumerate(schedule[week_day]):
+            if school_hour is None:
+                continue
+
+            row = rows[j]
+            td = row.find_all('td', class_='l')[i]
+            grades: list[str]
+            teacher, grades, lesson = school_hour
+            lesson_name = normalize_lesson_name(lesson)
+
+            span_o = soup.new_tag('span', class_='o')
+            for length, grade in enumerate(grades):
+                if length > 0:
+                    grade_anchor = soup.new_tag('a', class_='o')
+                    grade_anchor.string = grade
+                    comma_span = soup.new_tag('span')
+                    comma_span.string = ', '
+                    span_o.extend([comma_span, grade_anchor])
+                else:
+                    grade_anchor = soup.new_tag('a', class_='o')
+                    grade_anchor.string = grade
+                    span_o.append(grade_anchor)
+
+            span_p = soup.new_tag('span', class_='p')
+            span_p.string = f' {lesson_name}'
+            anchor_n = soup.new_tag('a', class_='n')
+            anchor_n.string = f'{teacher} '
+
+            wrapper_span = soup.new_tag('span')
+            td.append(wrapper_span)
+            wrapper_span.extend([anchor_n, span_o, span_p])
+
+    with open('test.html', 'w', encoding='utf-8') as f:
+        f.write(str(soup))
 
 
 def parse_teacher_json_to_html(json_filename: str) -> None:
