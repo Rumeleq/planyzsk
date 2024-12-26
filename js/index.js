@@ -5,6 +5,9 @@ import { loadJSON } from './modules/data.js';
 window.onload = function()
 {
     loadJSON('/planyzsk/pyscraper/JSON/o_map.json').then(data => console.log(data));
+    loadJSON('/planyzsk/pyscraper/JSON/s_map.json').then(data => console.log(data));
+    loadJSON('/planyzsk/pyscraper/JSON/n_map.json').then(data => console.log(data));
+    loadJSON('/planyzsk/pyscraper/JSON/initials_name_dict.json').then(data => console.log(data));
     document.body.style.visibility = "visible";
 }
 
