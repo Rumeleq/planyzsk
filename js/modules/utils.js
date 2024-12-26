@@ -1,4 +1,4 @@
-import { nfilenames, nspanTexts, ofilenames, ospanTexts, sfilenames, sspanTexts } from "../modules/data.js";
+import { nfilenames, nspanTexts, ofilenames, ospanTexts, sfilenames, sspanTexts } from './data';
 
 export function searchSchedules(scheduleType)
 {
