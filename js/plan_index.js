@@ -20,8 +20,6 @@ let wasOverThreshold = window.innerWidth > 980;
 
 document.addEventListener('DOMContentLoaded', async function()
 {
-    await is_data_loaded_promise;
-
     //Zmiana title strony na title planu w iframe'ie przez message event z iframe'a
     let scheduleTitle = document.querySelector('title');
     let svg = document.querySelector('svg');
@@ -30,9 +28,18 @@ document.addEventListener('DOMContentLoaded', async function()
     if (window.innerWidth <= 980)
         switchNav(svg, navContainer, scheduleIframe, true);
 
-    window.addEventListener('message', function(event)
+    console.log('sigma');
+
+    //Ustawienie src iframe'u na podstawie parametru schedule w URL
+    let scheduleHref = getQueryParam('schedule');
+    if (scheduleHref)
+        scheduleIframe.src = scheduleHref;
+
+    window.addEventListener('message', async function(event)
     {
-        if (event.data.type.trim().startsWith('Plan'))
+        await is_data_loaded_promise;
+
+        if (event.data.type.startsWith('Plan'))
         {
             this.document.body.style.visibility = "visible";
             scheduleTitle.textContent = event.data.type;
@@ -47,10 +54,7 @@ document.addEventListener('DOMContentLoaded', async function()
         }
     });
 
-    //Ustawienie src iframe'u na podstawie parametru schedule w URL
-    let scheduleHref = getQueryParam('schedule');
-    if (scheduleHref) 
-        scheduleIframe.src = scheduleHref;
+    await is_data_loaded_promise;
     
     //Generowanie contentu nav bara
     let indexLink = addElement('a', 'nav#nav-container', true);
