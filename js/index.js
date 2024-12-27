@@ -36,7 +36,10 @@ import('./modules/data.js').then(async module =>
     sfilenames = module.sfilenames;
     nspanTexts = await module.getNspanTexts();
     nfilenames = module.nfilenames;
-    console.log(ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames, o_list, s_list);
+    alert(ospanTexts);
+    alert(ofilenames);
+    alert(sspanTexts);
+    alert(sfilenames);
     generateList(ospanTexts, ofilenames, o_list);
     generateList(sspanTexts, sfilenames, s_list);
 });
