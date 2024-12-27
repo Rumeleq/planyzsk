@@ -27,19 +27,26 @@ document.addEventListener("DOMContentLoaded", function()
     let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
     import('./modules/data.js').then(async module =>
     {
-        ospanTexts = module.ospanTexts;
-        ofilenames = module.ofilenames;
-        sspanTexts = module.sspanTexts;
-        sfilenames = module.sfilenames;
-        nspanTexts = await module.getNspanTexts();
-        nfilenames = module.nfilenames;
-        alert(ospanTexts);
-        alert(ofilenames);
-        alert(sspanTexts);
-        alert(sfilenames);
-        generateList(ospanTexts, ofilenames, o_list);
-        generateList(sspanTexts, sfilenames, s_list);
-        document.body.style.visibility = "visible";
+        try
+        {
+            ospanTexts = module.ospanTexts;
+            ofilenames = module.ofilenames;
+            sspanTexts = module.sspanTexts;
+            sfilenames = module.sfilenames;
+            nspanTexts = await module.getNspanTexts();
+            nfilenames = module.nfilenames;
+            alert(ospanTexts);
+            alert(ofilenames);
+            alert(sspanTexts);
+            alert(sfilenames);
+            generateList(ospanTexts, ofilenames, o_list);
+            generateList(sspanTexts, sfilenames, s_list);
+            document.body.style.visibility = "visible";
+        }
+        catch (e)
+        {
+            alert(e);
+        }
     });
 
     o_list.addEventListener('click', function(event)
@@ -50,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function()
             const parts = event.target.href.split('/');
             const newHref = parts.slice(-2).join('/');
             window.location = `plan_index.html?schedule=${newHref}`;
-
         }
     });
     s_list.addEventListener('click', function(event)
