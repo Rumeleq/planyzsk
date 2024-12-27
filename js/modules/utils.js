@@ -1,12 +1,12 @@
 let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
 import('../modules/data.js').then(async module =>
 {
-    ospanTexts = module.ospanTexts;
-    ofilenames = module.ofilenames;
-    sspanTexts = module.sspanTexts;
-    sfilenames = module.sfilenames;
+    ospanTexts = await module.getOspanTexts();
+    ofilenames = await module.getOfilenames();
+    sspanTexts = await module.getSspanTexts();
+    sfilenames = await module.getSfilenames();
     nspanTexts = await module.getNspanTexts();
-    nfilenames = module.nfilenames;
+    nfilenames = await module.getNfilenames();
 });
 export function searchSchedules(scheduleType)
 {

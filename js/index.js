@@ -27,27 +27,15 @@ document.addEventListener("DOMContentLoaded", function()
     let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
     import('./modules/data.js').then(async module =>
     {
-        try
-        {
-            ospanTexts = await module.getOspanTexts();
-            ofilenames = await module.getOfilenames();
-            sspanTexts = await module.getSspanTexts();
-            sfilenames = await module.getSfilenames();
-            nspanTexts = await module.getNspanTexts();
-            nfilenames = await module.getNfilenames();
-            alert(ospanTexts);
-            alert(ofilenames);
-            alert(sspanTexts);
-            alert(sfilenames);
-            generateList(ospanTexts, ofilenames, o_list);
-            generateList(sspanTexts, sfilenames, s_list);
-            document.body.style.visibility = "visible";
-        }
-        catch (e)
-        {
-            alert(`Error type: ${e.name}\nMessage: ${e.message}\nStack: ${e.stack}`);
-            console.error('Full error:', e);
-        }
+        ospanTexts = await module.getOspanTexts();
+        ofilenames = await module.getOfilenames();
+        sspanTexts = await module.getSspanTexts();
+        sfilenames = await module.getSfilenames();
+        nspanTexts = await module.getNspanTexts();
+        nfilenames = await module.getNfilenames();
+        generateList(ospanTexts, ofilenames, o_list);
+        generateList(sspanTexts, sfilenames, s_list);
+        document.body.style.visibility = "visible";
     });
 
     o_list.addEventListener('click', function(event)
