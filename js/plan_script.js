@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', function()
 {
     let title = document.querySelector('title');
     let header = document.querySelector('body > span');
-    
+
+    title.textContent = title.textContent.trim();
+    header.textContent = header.textContent.trim();
+
     //Ustawianie title strony i headera na podstawie zawartości planu
     if (title.textContent.startsWith("Plan lekcji oddziału"))
     {
