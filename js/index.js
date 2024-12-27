@@ -45,7 +45,8 @@ document.addEventListener("DOMContentLoaded", function()
         }
         catch (e)
         {
-            alert(e);
+            alert(`Error type: ${e.name}\nMessage: ${e.message}\nStack: ${e.stack}`);
+            console.error('Full error:', e);
         }
     });
 
