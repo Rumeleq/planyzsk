@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function()
         generateList(ospanTexts, ofilenames, o_list);
         generateList(sspanTexts, sfilenames, s_list);
         document.body.style.visibility = "visible";
-        console.log("DOM fully loaded and parsed");
     });
 
     o_list.addEventListener('click', function(event)
