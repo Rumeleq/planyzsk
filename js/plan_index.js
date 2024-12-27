@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', async function()
     if (window.innerWidth <= 980)
         switchNav(svg, navContainer, scheduleIframe, true);
 
-    console.log('sigma');
-
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
     let scheduleHref = getQueryParam('schedule');
     if (scheduleHref)

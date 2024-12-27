@@ -22,7 +22,5 @@ document.addEventListener('DOMContentLoaded', function()
 
     //Wysyłanie title strony do parenta i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
-    console.log('Parent window:', window.parent);
     window.parent.postMessage({type: title.textContent.trim()}, '*');
-    console.log("Sent title message:", title.textContent.trim());
 });
