@@ -16,7 +16,6 @@ def get_lesson_details(span: ResultSet[Tag]):
     """
     try:
         lesson_title: str = w if (w := span[0].text) not in LESSONS else LESSONS[w]  # if lesson is corrupted, replace with correct one
-        print(lesson_title)
         lesson_teacher: str = w if (w := span[1].text)[0] != '#' else TEACHERS[w]  # if teacher is corrupted, replace with correct one
         lesson_classroom: str = span[2].text
     except KeyError as e:
