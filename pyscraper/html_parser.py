@@ -32,7 +32,9 @@ def normalize_lesson_name(lesson_name: str) -> str:
         regex = rf'({re.escape(word[:2])})({re.escape(word[2:])})'
         lesson_name = re.sub(regex, r'\1 \2', lesson_name)
 
-    lesson_name = lesson_name.replace('-', '- ')
+    optional_spaces_around_hyphen = re.compile(r'(\s?-\s?)')
+    lesson_name = re.sub(optional_spaces_around_hyphen, ' - ', lesson_name)
+
     lesson_name = lesson_name.strip()
 
     return lesson_name
