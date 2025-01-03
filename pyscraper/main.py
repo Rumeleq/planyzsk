@@ -133,6 +133,7 @@ async def get_timetable(session: ClientSession, i: int):
                             insert_data_to_grades(*w, col_num, row_num, grade)
 
                 elif len(col_spans) == 3:  # if there are 3 spans, put the data in the Dictionaries (the default case)
+                    print(get_lesson_details(col_spans))
                     try:
                         insert_data_to_teachers(*(w := get_lesson_details(col_spans)), col_num, row_num, grade)
                     except KeyError as e:
@@ -142,16 +143,19 @@ async def get_timetable(session: ClientSession, i: int):
                     insert_data_to_grades(*w, col_num, row_num, grade)
                 elif len(col_spans) == 2:  # if there are 2 spans, iterate over it and put the data in the Dictionaries (group lesson case)
                     for span in col_spans:
+                        print(get_lesson_details(span.find_all('span')))
                         insert_data_to_teachers(*(w := get_lesson_details(span.find_all('span'))), col_num, row_num, grade)
                         insert_data_to_classrooms(*w, col_num, row_num, grade)
                         insert_data_to_grades(*w, col_num, row_num, grade)
                 elif len(col_spans) == 1:   # if there is only one span, it's a group lesson with one group (half of the class case)
+                    print(get_lesson_details(col_spans[0].find_all('span', recursive=False)))
                     insert_data_to_teachers(*(w := get_lesson_details(col_spans[0].find_all('span', recursive=False))), col_num, row_num, grade)
                     insert_data_to_classrooms(*w, col_num, row_num, grade)
                     insert_data_to_grades(*w, col_num, row_num, grade)
                 else:  # if there are more than 3 spans, iterate over it, organize spans into groups of 3 and put the data in the Dictionaries (more than two groups case)
                     it = iter(col_spans)
                     for span in zip(it, it, it):
+                        print(get_lesson_details(span))
                         insert_data_to_teachers(*(w := get_lesson_details(span)), col_num, row_num, grade)
                         insert_data_to_classrooms(*w, col_num, row_num, grade)
                         insert_data_to_grades(*w, col_num, row_num, grade)
