@@ -140,6 +140,11 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
             td.append(wrapper_span)
             wrapper_span.extend([span_o, span_p, anchor_s])
 
+    if teacher_name == 'K. Giżyński':
+        twitch_link = soup.new_tag('a', href='https://m.twitch.tv/kumi_gaming/home', id='kumi_gaming', style='margin-top: 20px; text-decoration: underline')
+        twitch_link.string = 'Twitch Kumi_Gaming'
+        soup.body.append(twitch_link)
+
     with open(f'../dane/{N_MAP[json_filename]}.html', 'w', encoding='utf-8') as f:
         f.write(str(soup))
 

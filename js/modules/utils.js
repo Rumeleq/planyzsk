@@ -8,6 +8,7 @@ import('../modules/data.js').then(async module =>
     nspanTexts = await module.getNspanTexts();
     nfilenames = await module.getNfilenames();
 });
+
 export function searchSchedules(scheduleType)
 {
     let container = document.getElementById('container');
@@ -21,14 +22,14 @@ export function searchSchedules(scheduleType)
             spanTexts = nspanTexts;
             filenames = nfilenames;
             break;
-        case 'Sale':
-            spanTexts = sspanTexts;
-            filenames = sfilenames;
-            break;
         case 'Oddziały':
             spanTexts = ospanTexts;
             filenames = ofilenames;
             header_name = 'Klasy';
+            break;
+        case 'Sale':
+            spanTexts = sspanTexts;
+            filenames = sfilenames;
             break;
     }
     const resultsContainer = document.createElement('div');
@@ -43,14 +44,30 @@ export function searchSchedules(scheduleType)
     if (scheduleType === 'Nauczyciele')
     {
         filteredSchedules = spanTexts.filter(schedule =>
-            schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
-        );
+        {
+            const scheduleTextLower = schedule.toLowerCase().trim();
+            const searchTermLower = searchTerm.toLowerCase().trim();
+
+            return scheduleTextLower.slice(3).startsWith(searchTermLower) ||
+                scheduleTextLower.slice(-3, -1).startsWith(searchTermLower);
+        });
     }
-    else
+    else if (scheduleType === 'Oddziały')
     {
         filteredSchedules = spanTexts.filter(schedule =>
             schedule.toLowerCase().trim().includes(searchTerm)
         );
+    }
+    else if (scheduleType === 'Sale')
+    {
+        filteredSchedules = spanTexts.filter(schedule =>
+        {
+            const scheduleTextLower = schedule.toLowerCase().trim();
+            const searchTermLower = searchTerm.toLowerCase().trim();
+
+            return scheduleTextLower.startsWith(searchTermLower) ||
+                scheduleTextLower.slice(1).startsWith(searchTermLower);
+        });
     }
 
     if (filteredSchedules.length === 0)
