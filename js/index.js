@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function()
     o_list.addEventListener('click', redirecting_to_iframe);
     s_list.addEventListener('click', redirecting_to_iframe);
 
+
     function redirecting_to_iframe(event)
     {
         if (event.target.tagName === 'A')
