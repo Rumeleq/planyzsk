@@ -38,7 +38,10 @@ document.addEventListener("DOMContentLoaded", function()
         document.body.style.visibility = "visible";
     });
 
-    o_list.addEventListener('click', function(event)
+    o_list.addEventListener('click', redirecting_to_iframe);
+    s_list.addEventListener('click', redirecting_to_iframe);
+
+    function redirecting_to_iframe(event)
     {
         if (event.target.tagName === 'A')
         {
@@ -47,17 +50,7 @@ document.addEventListener("DOMContentLoaded", function()
             const newHref = parts.slice(-2).join('/');
             window.location = `plan_index.html?schedule=${newHref}`;
         }
-    });
-    s_list.addEventListener('click', function(event)
-    {
-        if (event.target.tagName === 'A')
-        {
-            event.preventDefault();
-            const parts = event.target.href.split('/');
-            const newHref = parts.slice(-2).join('/');
-            window.location = `plan_index.html?schedule=${newHref}`;
-        }
-    });
+    }
 
     function generateList(spanTexts, filenames, list)
     {
