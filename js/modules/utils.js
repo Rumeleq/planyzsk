@@ -44,8 +44,13 @@ export function searchSchedules(scheduleType)
     if (scheduleType === 'Nauczyciele')
     {
         filteredSchedules = spanTexts.filter(schedule =>
-            schedule.toLowerCase().trim().slice(3).startsWith(searchTerm)
-        );
+        {
+            const scheduleTextLower = schedule.toLowerCase().trim();
+            const searchTermLower = searchTerm.toLowerCase().trim();
+
+            return scheduleTextLower.slice(3).startsWith(searchTermLower) ||
+                scheduleTextLower.slice(-3, -1).startsWith(searchTermLower);
+        });
     }
     else if (scheduleType === 'Oddziały')
     {
