@@ -75,16 +75,25 @@ def parse_classroom_json_to_html(json_filename: str) -> None:
             for length, grade in enumerate(grades):
                 if re.search(GROUP_REGEX, grade) is not None:
                     grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade[:-4]]}.html')
+                    grade_anchor.string = grade[:-4]
+                    group_span = soup.new_tag('span', class_='group')
+                    group_span.string = grade[-4:]
                 else:
                     grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
-                if length > 0:
                     grade_anchor.string = grade
+                if length > 0:
                     comma_span = soup.new_tag('span')
                     comma_span.string = ', '
-                    span_o.extend([comma_span, grade_anchor])
+                    if re.search(GROUP_REGEX, grade) is not None:
+                        span_o.extend([comma_span, grade_anchor, group_span])
+                    else:
+                        span_o.extend([comma_span, grade_anchor])
                 else:
-                    grade_anchor.string = grade
-                    span_o.append(grade_anchor)
+                    if re.search(GROUP_REGEX, grade) is not None:
+                        span_o.append(grade_anchor)
+                        span_o.append(group_span)
+                    else:
+                        span_o.append(grade_anchor)
 
             span_p = soup.new_tag('span', class_='p')
             span_p.string = f' {lesson_name}'
@@ -127,16 +136,25 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
             for length, grade in enumerate(grades):
                 if re.search(GROUP_REGEX, grade) is not None:
                     grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade[:-4]]}.html')
+                    grade_anchor.string = grade[:-4]
+                    group_span = soup.new_tag('span', class_='group')
+                    group_span.string = grade[-4:]
                 else:
                     grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
-                if length > 0:
                     grade_anchor.string = grade
+                if length > 0:
                     comma_span = soup.new_tag('span')
                     comma_span.string = ', '
-                    span_o.extend([comma_span, grade_anchor])
+                    if re.search(GROUP_REGEX, grade) is not None:
+                        span_o.extend([comma_span, grade_anchor, group_span])
+                    else:
+                        span_o.extend([comma_span, grade_anchor])
                 else:
-                    grade_anchor.string = grade
-                    span_o.append(grade_anchor)
+                    if re.search(GROUP_REGEX, grade) is not None:
+                        span_o.append(grade_anchor)
+                        span_o.append(group_span)
+                    else:
+                        span_o.append(grade_anchor)
 
             span_p = soup.new_tag('span', class_='p')
             span_p.string = f' {lesson_name} '

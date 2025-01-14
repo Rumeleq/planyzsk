@@ -28,7 +28,6 @@ def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_class
         ValueError: if the lesson is already in the TEACHERS_TIMETABLES dictionary,
         and it's not the same as the new one (except the grade)
     """
-    print(lesson_title, lesson_teacher, lesson_classroom, num_col, num_row, grade)
     if re.search(GROUP_REGEX, lesson_title) is not None:
         grade += lesson_title[-4:]
         lesson_title = lesson_title[:-4]
@@ -68,7 +67,6 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
         and it's not the same as the new one (except the grade)
     """
 
-    print(lesson_title, lesson_teacher, lesson_classroom, num_col, num_row, grade)
     if re.search(GROUP_REGEX, lesson_title) is not None:
         grade += lesson_title[-4:]
         lesson_title = lesson_title[:-4]
@@ -165,8 +163,7 @@ async def get_timetable(session: ClientSession, i: int):
                 elif len(col_spans) == 3:  # if there are 3 spans, put the data in the Dictionaries (the default case)
                     try:
                         insert_data_to_teachers(*(w := get_lesson_details(col_spans)), col_num, row_num, grade)
-                    except KeyError as e:
-                        print(f'KeyError: {e}; {col_num, row_num, grade}')
+                    except KeyError:
                         continue
                     insert_data_to_classrooms(*w, col_num, row_num, grade)
                     insert_data_to_grades(*w, col_num, row_num, grade)
