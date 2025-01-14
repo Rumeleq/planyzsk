@@ -267,11 +267,11 @@ if __name__ == '__main__':
     PLAIN_TEXT: dict[str, dict[str, dict[str, str]]] = dict()                               # Variable to store plain text lessons (later exported and used in other program to get PLAIN_TEXT_SOLUTION)
     # {grade: {day: {lesson: lesson_text}}}
 
-    folder_path = '../dane/'
-    for file_name in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, file_name)
-        if os.path.isfile(file_path):
-            os.remove(file_path)
-            print(f"Removed file: {file_path}")
+    folder_paths = ['../dane/', f'{JSON_PATH}timetables/grades/', f'{JSON_PATH}timetables/teachers/', f'{JSON_PATH}timetables/classrooms/']
+    for folder_path in folder_paths:
+        for file_name in os.listdir(folder_path):
+            file_path = os.path.join(folder_path, file_name)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
 
     asyncio.run(main())
