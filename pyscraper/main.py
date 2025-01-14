@@ -272,6 +272,5 @@ if __name__ == '__main__':
         file_path = os.path.join(folder_path, file_name)
         if os.path.isfile(file_path):
             os.remove(file_path)
-            print(f"Removed file: {file_path}")
 
     asyncio.run(main())
