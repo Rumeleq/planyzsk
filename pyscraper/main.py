@@ -1,7 +1,6 @@
 import asyncio
 import json
 import os
-import re
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
 from utils.getting import get_lesson_details
@@ -9,7 +8,6 @@ from utils.saving import save_timetables
 from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
 from utils.constants import TEACHER_INTIAL_NAME_DICT
 from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
-from typing import List
 
 
 def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -42,8 +40,8 @@ def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_class
                 TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row][0][i] < grade:  # find the place where to put the grade
             i += 1
         TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row][0].insert(i, grade)  # insert the grade
-    # else:
-    #    raise ValueError(f'Error: {TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row]} != {grade} {lesson_title} {lesson_classroom}')  # if the lesson is different, raise an error
+    else:
+        raise ValueError(f'Error: {TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row]} != {grade} {lesson_title} {lesson_classroom}')  # if the lesson is different, raise an error
 
 
 def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -76,8 +74,8 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
             i += 1
         CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row][1].insert(i, grade)  # insert the grade
 
-    # else:
-    #    raise ValueError(f'Error: {CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row]} != {grade} {lesson_teacher} {lesson_title}')  # if the lesson is different, raise an error
+    else:
+        raise ValueError(f'Error: {CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row]} != {grade} {lesson_teacher} {lesson_title}')  # if the lesson is different, raise an error
 
 
 def insert_data_to_grades(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -109,23 +107,6 @@ async def get_timetable(session: ClientSession, i: int):
         timetable_html = bs(await response.text(), 'html.parser')  # parse the timetable
         grade = timetable_html.find('span', class_='tytulnapis').text.split(' ')[0]  # get the grade
         print(grade)  # print the grade so we know the progress
-
-        group_regex = r'-\d/\d'
-        for td in timetable_html.find_all('td', class_='l'):
-            td_text = td.get_text()
-            group_regex_td_result: List[str] = re.findall(group_regex, td_text)
-            group_regex_span_result: bool = False
-            spans_in_td = td.find_all('span', class_='p')
-            for i, span in enumerate(spans_in_td):
-                if span.get_text().startswith('#'):
-                    spans_in_td.pop(i)
-
-            for i, result in enumerate(group_regex_td_result):
-                if re.search(group_regex, spans_in_td[i].get_text()):
-                    group_regex_span_result = True
-                if group_regex_td_result is not None and group_regex_span_result is False:
-                    spans_in_td[i].string += result
-
         row: Tag
         for row_num, row in enumerate(timetable_html.find('table', class_='tabela')
                                                     .find_all('tr')[1:]):  # iterate over the lesson numbers (rows)
