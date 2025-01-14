@@ -1,13 +1,16 @@
 import asyncio
 import json
 import os
+import re
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
 from utils.constants import TEACHER_INTIAL_NAME_DICT
+from utils.constants import GROUP_REGEX
 from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
+from typing import List
 
 
 def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -25,6 +28,10 @@ def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_class
         ValueError: if the lesson is already in the TEACHERS_TIMETABLES dictionary,
         and it's not the same as the new one (except the grade)
     """
+    if re.search(GROUP_REGEX, lesson_title) is not None:
+        grade += lesson_title[-4:]
+        lesson_title = lesson_title[:-4]
+
     if lesson_teacher not in TEACHERS_TIMETABLES:   # if teacher is not in the TEACHERS_TIMETABLES dictionary, add him
         TEACHERS_TIMETABLES[lesson_teacher] = {day: [None for _ in range(LESSONS_NUMBER)] for day in range(WEEK_DAYS)}  # add LESSONS_NUMBER lessons per day
 
@@ -59,6 +66,10 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
         ValueError: if the lesson is already in the CLASSROOMS_TIMETABLES dictionary,
         and it's not the same as the new one (except the grade)
     """
+
+    if re.search(GROUP_REGEX, lesson_title) is not None:
+        grade += lesson_title[-4:]
+        lesson_title = lesson_title[:-4]
     if lesson_classroom not in CLASSROOMS_TIMETABLES:  # if classroom is not in the CLASSROOMS_TIMETABLES dictionary, add it
         CLASSROOMS_TIMETABLES[lesson_classroom] = {day: [None for _ in range(LESSONS_NUMBER)] for day in range(WEEK_DAYS)}  # add LESSONS_NUMBER lessons per day
 
@@ -74,8 +85,8 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
             i += 1
         CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row][1].insert(i, grade)  # insert the grade
 
-    else:
-        raise ValueError(f'Error: {CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row]} != {grade} {lesson_teacher} {lesson_title}')  # if the lesson is different, raise an error
+    # else:
+    #    raise ValueError(f'Error: {CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row]} != {grade} {lesson_teacher} {lesson_title}')  # if the lesson is different, raise an error
 
 
 def insert_data_to_grades(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -107,6 +118,23 @@ async def get_timetable(session: ClientSession, i: int):
         timetable_html = bs(await response.text(), 'html.parser')  # parse the timetable
         grade = timetable_html.find('span', class_='tytulnapis').text.split(' ')[0]  # get the grade
         print(grade)  # print the grade so we know the progress
+
+        group_regex = r'-\d/\d'
+        for td in timetable_html.find_all('td', class_='l'):
+            td_text = td.get_text()
+            group_regex_td_result: List[str] = re.findall(group_regex, td_text)
+            group_regex_span_result: bool = False
+            spans_in_td = td.find_all('span', class_='p')
+            for i, span in enumerate(spans_in_td):
+                if span.get_text().startswith('#'):
+                    spans_in_td.pop(i)
+
+            for i, result in enumerate(group_regex_td_result):
+                if re.search(group_regex, spans_in_td[i].get_text()):
+                    group_regex_span_result = True
+                if group_regex_td_result is not None and group_regex_span_result is False:
+                    spans_in_td[i].string += result
+
         row: Tag
         for row_num, row in enumerate(timetable_html.find('table', class_='tabela')
                                                     .find_all('tr')[1:]):  # iterate over the lesson numbers (rows)
@@ -135,8 +163,7 @@ async def get_timetable(session: ClientSession, i: int):
                 elif len(col_spans) == 3:  # if there are 3 spans, put the data in the Dictionaries (the default case)
                     try:
                         insert_data_to_teachers(*(w := get_lesson_details(col_spans)), col_num, row_num, grade)
-                    except KeyError as e:
-                        print(f'KeyError: {e}; {col_num, row_num, grade}')
+                    except KeyError:
                         continue
                     insert_data_to_classrooms(*w, col_num, row_num, grade)
                     insert_data_to_grades(*w, col_num, row_num, grade)
