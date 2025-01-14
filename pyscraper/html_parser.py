@@ -10,7 +10,7 @@ from utils.constants import TEACHER_INTIAL_NAME_DICT
 from utils.constants import HTML_PATH, JSON_PATH
 
 
-def normalize_lesson_name(lesson_name: str) -> str:
+def normalize_lesson_name(lesson_name: str, *args: str) -> str:
     """
        Normalize lesson name by adding spaces according to predefined rules.
 
@@ -20,6 +20,8 @@ def normalize_lesson_name(lesson_name: str) -> str:
        Returns:
            str: Normalized lesson name with appropriate spacing added.
    """
+    if args:
+        lesson_name = lesson_name.replace(args[0], '')
     for word in WORDS_TO_ADD_SPACE_AFTER:
         regex = rf'({re.escape(word)})(?!j)(?!$)'
         lesson_name = re.sub(regex, r'\1 ', lesson_name)
@@ -171,7 +173,7 @@ def parse_grade_json_to_html(json_filename: str) -> None:
 
             for k, lesson in enumerate(school_hour):
                 subject, teacher, classroom = lesson
-                lesson_name = normalize_lesson_name(subject)
+                lesson_name = normalize_lesson_name(subject, grade_name)
 
                 span_p = soup.new_tag('span', class_='p')
                 span_p.string = lesson_name
