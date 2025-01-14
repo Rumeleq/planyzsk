@@ -1,6 +1,7 @@
 import re
 from bs4 import ResultSet, Tag
 from pyscraper.utils.constants import LESSONS, TEACHERS
+from pyscraper.utils.constants import GROUP_REGEX
 
 
 def get_lesson_details(span: ResultSet[Tag]):
@@ -15,11 +16,11 @@ def get_lesson_details(span: ResultSet[Tag]):
         tuple[str, str, str]: returns a tuple with lesson title,
         teacher and classroom in string format
     """
-    group_regex = r'-\d/\d'
+
     corrupted_lesson_regex = r'GM\d'
     try:
-        if re.search(group_regex, span[0].text) is not None and re.search(corrupted_lesson_regex, span[0].text) is not None:
-            lesson_title: str = w if (w := span[0].text[0:-4]) not in LESSONS else LESSONS[w] + span[0].text[-4:]  # if lesson is corrupted, replace with correct one
+        if re.search(GROUP_REGEX, span[0].text) is not None and re.search(corrupted_lesson_regex, span[0].text) is not None:
+            lesson_title: str = w if (w := span[0].text[:-4]) not in LESSONS else LESSONS[w] + span[0].text[-4:]  # if lesson is corrupted, replace with correct one
         else:
             lesson_title: str = w if (w := span[0].text) not in LESSONS else LESSONS[w]  # if lesson is corrupted, replace with correct one
         lesson_teacher: str = w if (w := span[1].text)[0] != '#' else TEACHERS[w]  # if teacher is corrupted, replace with correct one

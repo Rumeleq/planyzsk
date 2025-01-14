@@ -8,6 +8,7 @@ from utils.constants import WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER
 from utils.constants import N_MAP, O_MAP, S_MAP
 from utils.constants import TEACHER_INTIAL_NAME_DICT
 from utils.constants import HTML_PATH, JSON_PATH
+from utils.constants import GROUP_REGEX
 
 
 def normalize_lesson_name(lesson_name: str, *args: str) -> str:
@@ -72,14 +73,16 @@ def parse_classroom_json_to_html(json_filename: str) -> None:
 
             span_o = soup.new_tag('span', class_='o')
             for length, grade in enumerate(grades):
-                if length > 0:
+                if re.search(GROUP_REGEX, grade) is not None:
+                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade[:-4]]}.html')
+                else:
                     grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
+                if length > 0:
                     grade_anchor.string = grade
                     comma_span = soup.new_tag('span')
                     comma_span.string = ', '
                     span_o.extend([comma_span, grade_anchor])
                 else:
-                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
                     grade_anchor.string = grade
                     span_o.append(grade_anchor)
 
@@ -122,14 +125,16 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
 
             span_o = soup.new_tag('span', class_='o')
             for length, grade in enumerate(grades):
-                if length > 0:
+                if re.search(GROUP_REGEX, grade) is not None:
+                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade[:-4]]}.html')
+                else:
                     grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
+                if length > 0:
                     grade_anchor.string = grade
                     comma_span = soup.new_tag('span')
                     comma_span.string = ', '
                     span_o.extend([comma_span, grade_anchor])
                 else:
-                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
                     grade_anchor.string = grade
                     span_o.append(grade_anchor)
 

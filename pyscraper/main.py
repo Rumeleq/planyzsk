@@ -8,6 +8,7 @@ from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
 from utils.constants import TEACHER_INTIAL_NAME_DICT
+from utils.constants import GROUP_REGEX
 from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
 from typing import List
 
@@ -27,6 +28,11 @@ def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_class
         ValueError: if the lesson is already in the TEACHERS_TIMETABLES dictionary,
         and it's not the same as the new one (except the grade)
     """
+    print(lesson_title, lesson_teacher, lesson_classroom, num_col, num_row, grade)
+    if re.search(GROUP_REGEX, lesson_title) is not None:
+        grade += lesson_title[-4:]
+        lesson_title = lesson_title[:-4]
+
     if lesson_teacher not in TEACHERS_TIMETABLES:   # if teacher is not in the TEACHERS_TIMETABLES dictionary, add him
         TEACHERS_TIMETABLES[lesson_teacher] = {day: [None for _ in range(LESSONS_NUMBER)] for day in range(WEEK_DAYS)}  # add LESSONS_NUMBER lessons per day
 
@@ -42,8 +48,8 @@ def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_class
                 TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row][0][i] < grade:  # find the place where to put the grade
             i += 1
         TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row][0].insert(i, grade)  # insert the grade
-    # else:
-    #    raise ValueError(f'Error: {TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row]} != {grade} {lesson_title} {lesson_classroom}')  # if the lesson is different, raise an error
+    else:
+        raise ValueError(f'Error: {TEACHERS_TIMETABLES[lesson_teacher][num_col][num_row]} != {grade} {lesson_title} {lesson_classroom}')  # if the lesson is different, raise an error
 
 
 def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -61,6 +67,11 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
         ValueError: if the lesson is already in the CLASSROOMS_TIMETABLES dictionary,
         and it's not the same as the new one (except the grade)
     """
+
+    print(lesson_title, lesson_teacher, lesson_classroom, num_col, num_row, grade)
+    if re.search(GROUP_REGEX, lesson_title) is not None:
+        grade += lesson_title[-4:]
+        lesson_title = lesson_title[:-4]
     if lesson_classroom not in CLASSROOMS_TIMETABLES:  # if classroom is not in the CLASSROOMS_TIMETABLES dictionary, add it
         CLASSROOMS_TIMETABLES[lesson_classroom] = {day: [None for _ in range(LESSONS_NUMBER)] for day in range(WEEK_DAYS)}  # add LESSONS_NUMBER lessons per day
 
