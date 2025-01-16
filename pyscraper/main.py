@@ -113,7 +113,16 @@ def insert_data_to_grades(lesson_title: str, lesson_teacher: str, lesson_classro
         GRADES_TIMETABLES[grade][num_col][num_row].append((lesson_title, lesson_teacher, lesson_classroom))
 
 
-async def get_timetable(session: ClientSession, i: int):
+async def get_timetable(session: ClientSession, i: int) -> None:
+    """Get the timetable from the website and organize it inside the appropiate dictionaries
+
+    Args:
+        session (ClientSession): aiohttp.ClientSession object
+        i (int): number of the grade to get timetable from
+
+    Raises:
+        ValueError: if the plain text is not in the PLAIN_TEXT_SOLUTION dictionary - manually update plain text values in plain_text_solution.json
+    """
     async with session.get(f'{URL}o{i}.html') as response:  # get the timetable
         timetable_html = bs(await response.text(), 'html.parser')  # parse the timetable
         grade = timetable_html.find('span', class_='tytulnapis').text.split(' ')[0]  # get the grade
@@ -140,7 +149,7 @@ async def get_timetable(session: ClientSession, i: int):
                                                     .find_all('tr')[1:]):  # iterate over the lesson numbers (rows)
             col: Tag
             for col_num, col in enumerate(row.find_all('td')[2:]):  # iterate over the days (columns)
-                col_spans: ResultSet[Tag] = col.find_all('span', recursive=False)  # get the spans from the column (the data is stored in spans, exept the plain text)
+                col_spans: ResultSet[Tag] = col.find_all('span', recursive=False)  # get the spans from the column (the data is stored in spans, except the plain text)
                 if len(col_spans) == 0:  # no spans - plain text case
                     if col.text == '\xa0':  # if empty, skip
                         continue
@@ -150,7 +159,7 @@ async def get_timetable(session: ClientSession, i: int):
                         PLAIN_TEXT[grade][col_num] = dict()
                     PLAIN_TEXT[grade][col_num][row_num] = col.text  # add the plain text value to the mentioned entry
 
-                    if col.text not in PLAIN_TEXT_SOLUTION:  # if the plain text is not in the PLAIN_TEXT_SOLUTION dictionary, raise an error (if so probably the file is outdated)
+                    if col.text not in PLAIN_TEXT_SOLUTION:
                         raise ValueError(f'Error: {grade}/{col_num}/{row_num}: {col.text} not in PLAIN_TEXT_SOLUTION')
                     if PLAIN_TEXT_SOLUTION[col.text] is None:  # if the plain text solution is None, skip it (I considered it an unnecessary data)
                         continue
@@ -167,15 +176,18 @@ async def get_timetable(session: ClientSession, i: int):
                         continue
                     insert_data_to_classrooms(*w, col_num, row_num, grade)
                     insert_data_to_grades(*w, col_num, row_num, grade)
+
                 elif len(col_spans) == 2:  # if there are 2 spans, iterate over it and put the data in the Dictionaries (group lesson case)
                     for span in col_spans:
                         insert_data_to_teachers(*(w := get_lesson_details(span.find_all('span'))), col_num, row_num, grade)
                         insert_data_to_classrooms(*w, col_num, row_num, grade)
                         insert_data_to_grades(*w, col_num, row_num, grade)
-                elif len(col_spans) == 1:   # if there is only one span, it's a group lesson with one group (half of the class case)
+
+                elif len(col_spans) == 1:  # if there is only one span, it's a group lesson with one group (half of the class case)
                     insert_data_to_teachers(*(w := get_lesson_details(col_spans[0].find_all('span', recursive=False))), col_num, row_num, grade)
                     insert_data_to_classrooms(*w, col_num, row_num, grade)
                     insert_data_to_grades(*w, col_num, row_num, grade)
+
                 else:  # if there are more than 3 spans, iterate over it, organize spans into groups of 3 and put the data in the Dictionaries (more than two groups case)
                     it = iter(col_spans)
                     for span in zip(it, it, it):
@@ -184,7 +196,7 @@ async def get_timetable(session: ClientSession, i: int):
                         insert_data_to_grades(*w, col_num, row_num, grade)
 
 
-async def find_grades_number():
+async def find_grades_number() -> int:
     """Find the total number grades to get the timetables from"""
     low, high = 0, 50
 
@@ -286,6 +298,15 @@ async def main():
         parse_classroom_json_to_html(file)
 
 
+def clear_output_files():
+    folder_paths = ['../dane/', f'{JSON_PATH}timetables/grades/', f'{JSON_PATH}timetables/teachers/', f'{JSON_PATH}timetables/classrooms/']
+    for folder_path in folder_paths:
+        for file_name in os.listdir(folder_path):
+            file_path = os.path.join(folder_path, file_name)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+
+
 if __name__ == '__main__':
     # tiemetables dictionaries
     TEACHERS_TIMETABLES: dict[str, dict[str, list[tuple[list[str], str, str]]]] = dict()    # Variable to store teachers timetables {teacher: {day: [lesson1, lesson2, ...]}}
@@ -294,11 +315,5 @@ if __name__ == '__main__':
     PLAIN_TEXT: dict[str, dict[str, dict[str, str]]] = dict()                               # Variable to store plain text lessons (later exported and used in other program to get PLAIN_TEXT_SOLUTION)
     # {grade: {day: {lesson: lesson_text}}}
 
-    folder_paths = ['../dane/', f'{JSON_PATH}timetables/grades/', f'{JSON_PATH}timetables/teachers/', f'{JSON_PATH}timetables/classrooms/']
-    for folder_path in folder_paths:
-        for file_name in os.listdir(folder_path):
-            file_path = os.path.join(folder_path, file_name)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-
+    clear_output_files()
     asyncio.run(main())
