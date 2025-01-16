@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function()
         if (event.ctrlKey && event.key === 'f') 
         {
             event.preventDefault();
-            window.parent.postMessage({type: 'ctrlF'}, '*');
+            window.parent.postMessage({msg_type: 'ctrlF'}, '*');
         }
     });
 
@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', function()
         {
             event.preventDefault();
             const href = this.getAttribute('href');
-            window.parent.postMessage({type: 'kumiGaming', href: href}, '*');
+            window.parent.postMessage({msg_type: 'kumiGaming', href: href}, '*');
         });
     }
 
-    //Wysyłanie title strony do parenta i ustawienie widoczności strony
+    //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
-    window.parent.postMessage({type: title.textContent.trim()}, '*');
+    window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
 });

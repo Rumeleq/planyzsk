@@ -9,6 +9,11 @@ import('../modules/data.js').then(async module =>
     nfilenames = await module.getNfilenames();
 });
 
+function getDisplayName(filename)
+{
+    return filename.replace(/\s[A-Z]+\.html$/, '');
+}
+
 export function searchSchedules(scheduleType)
 {
     let container = document.getElementById('container');
@@ -80,7 +85,7 @@ export function searchSchedules(scheduleType)
     filteredSchedules.forEach(schedule =>
     {
         const a = document.createElement('a');
-        a.href = "dane/" + filenames[spanTexts.indexOf(schedule)];
+        a.href = 'dane/' + filenames[spanTexts.indexOf(schedule)];
         a.textContent = getDisplayName(schedule);
         resultsLinksContainer.appendChild(a);
         a.addEventListener('click', function(event)
@@ -94,11 +99,6 @@ export function searchSchedules(scheduleType)
 
     resultsContainer.appendChild(resultsLinksContainer);
     container.appendChild(resultsContainer);
-}
-
-function getDisplayName(filename)
-{
-    return filename.replace(/\s[A-Z]+\.html$/, '');
 }
 
 export function handleSearchInput(container, search_input)

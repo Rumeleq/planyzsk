@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function()
     let navContainer = document.getElementById('nav-container');
     let scheduleIframe = document.getElementById('schedule-frame');
     if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, true);
+        hideNav(svg, navContainer, scheduleIframe);
 
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
     let scheduleHref = getQueryParam('schedule');
@@ -37,16 +37,16 @@ document.addEventListener('DOMContentLoaded', async function()
     {
         await is_data_loaded_promise;
 
-        if (event.data.type.startsWith('Plan'))
+        if (event.data.msg_type.startsWith('Plan'))
         {
-            this.document.body.style.visibility = "visible";
+            this.document.body.style.visibility = 'visible';
             scheduleTitle.textContent = event.data.type;
         }
-        else if (event.data.type === 'ctrlF')
+        else if (event.data.msg_type === 'ctrlF')
         {
             handleCtrlF(event, svg, navContainer, scheduleIframe);
         }
-        else if (event.data.type === 'kumiGaming')
+        else if (event.data.msg_type === 'kumiGaming')
         {
             window.location.href = event.data.href;
         }
@@ -55,9 +55,6 @@ document.addEventListener('DOMContentLoaded', async function()
     await is_data_loaded_promise;
     
     //Generowanie contentu nav bara
-    let indexLink = addElement('a', 'nav#nav-container', true);
-    indexLink.href = '../planyzsk/index.html';
-    indexLink.textContent = 'Strona główna';
     generateList('Oddziały', ofilenames, navContainer);
     generateList('Nauczyciele', nfilenames, navContainer);
     generateList('Sale', sfilenames, navContainer);
@@ -83,11 +80,15 @@ document.addEventListener('DOMContentLoaded', async function()
     svg.addEventListener('click', () =>
         switchNav(svg, navContainer, scheduleIframe));
 
-    document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
+    document.addEventListener('keydown', function(event)
+    {
+        if (event.ctrlKey && event.key === 'f')
+            handleCtrlF(event, svg, navContainer, scheduleIframe);
+    });
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
     if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, true);
+        hideNav(svg, navContainer, scheduleIframe);
     window.addEventListener('resize', () =>
         handleMediaQuery(svg, navContainer, scheduleIframe));
 
@@ -108,7 +109,7 @@ function getQueryParam(param)
     return urlParams.get(param);
 }
 
-function generateList(listType, filenames, list) 
+function generateList(listType, filenames, listContainer)
 {
     let spanTexts;
     let labelName = listType;
@@ -125,44 +126,43 @@ function generateList(listType, filenames, list)
             labelName = 'Klasy';
             break;
     }
-    let containerDiv = document.createElement('div');
+    let containerDiv = addElement('div', listContainer);
     containerDiv.classList.add('nav-links');
     containerDiv.id = `${listType[0].toLowerCase()}-links`;
-    list.appendChild(containerDiv);
-    for (let i = 0; i < filenames.length; i++) 
+    for (let i = 0; i < filenames.length; i++)
     {
-        let anchor = document.createElement("a");
-        anchor.href = "dane/" + filenames[i];
+        let anchor = addElement('a', containerDiv);
+        anchor.href = 'dane/' + filenames[i];
         anchor.textContent = spanTexts[i];
-        containerDiv.appendChild(anchor);
     }
 }
 
-function addElement(elementToAdd, target, appendFirst) 
+function addElement(elementToAdd, targetElement)
 {
     let element = document.createElement(elementToAdd);
-    let targetElement = document.querySelector(target);
-    if (appendFirst)
-        targetElement.prepend(element);
-    else
-        targetElement.appendChild(element);
+    targetElement.appendChild(element);
     return element;
 }
 
-function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null)
+function switchNav(svg, navContainer, scheduleIframe)
 {
-    if (forceHiddenNav === null)
-    {
-        svg.classList.toggle('hidden-nav');
-        navContainer.classList.toggle('hidden-nav');
-        scheduleIframe.classList.toggle('hidden-nav');
-    }
-    else
-    {
-        svg.classList.toggle('hidden-nav', forceHiddenNav);
-        navContainer.classList.toggle('hidden-nav', forceHiddenNav);
-        scheduleIframe.classList.toggle('hidden-nav', forceHiddenNav);
-    }
+    svg.classList.toggle('hidden-nav');
+    navContainer.classList.toggle('hidden-nav');
+    scheduleIframe.classList.toggle('hidden-nav');
+}
+
+function hideNav(svg, navContainer, scheduleIframe)
+{
+    svg.classList.add('hidden-nav');
+    navContainer.classList.add('hidden-nav');
+    scheduleIframe.classList.add('hidden-nav');
+}
+
+function showNav(svg, navContainer, scheduleIframe)
+{
+    svg.classList.remove('hidden-nav');
+    navContainer.classList.remove('hidden-nav');
+    scheduleIframe.classList.remove('hidden-nav');
 }
 
 function handleMediaQuery(svg, navContainer, scheduleIframe) 
@@ -171,28 +171,18 @@ function handleMediaQuery(svg, navContainer, scheduleIframe)
     if (isOverThreshold === wasOverThreshold)
         return;
     
-    if (window.innerWidth <= 980) 
-    {
-        switchNav(svg, navContainer, scheduleIframe, true);
-    }
-    else if (window.innerWidth > 980) 
-    {
-        switchNav(svg, navContainer, scheduleIframe, false);
-    }
+    if (window.innerWidth <= 980)
+        hideNav(svg, navContainer, scheduleIframe);
+    else if (window.innerWidth > 980)
+        showNav(svg, navContainer, scheduleIframe);
+
     wasOverThreshold = isOverThreshold;
 }
 
 function handleCtrlF(event, svg, navContainer, scheduleIframe) 
 {
-    try
-    {
-       if (event.ctrlKey && event.key === 'f' || event.data.type === 'ctrlF')
-       {
-           event.preventDefault();
-           switchNav(svg, navContainer, scheduleIframe, false);
-           search_input.focus();
-           search_input.select();
-       }
-    }
-    catch (TypeError) {}
+   event.preventDefault();
+   showNav(svg, navContainer, scheduleIframe);
+   search_input.focus();
+   search_input.select();
 }
