@@ -85,8 +85,8 @@ def insert_data_to_classrooms(lesson_title: str, lesson_teacher: str, lesson_cla
             i += 1
         CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row][1].insert(i, grade)  # insert the grade
 
-    # else:
-    #    raise ValueError(f'Error: {CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row]} != {grade} {lesson_teacher} {lesson_title}')  # if the lesson is different, raise an error
+    else:
+        raise ValueError(f'Error: {CLASSROOMS_TIMETABLES[lesson_classroom][num_col][num_row]} != {grade} {lesson_teacher} {lesson_title}')  # if the lesson is different, raise an error
 
 
 def insert_data_to_grades(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
