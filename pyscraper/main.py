@@ -6,9 +6,8 @@ from bs4 import BeautifulSoup as bs, ResultSet, Tag
 from aiohttp import ClientSession
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
-from utils.constants import JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL, WEEK_DAYS
-from utils.constants import TEACHER_INTIAL_NAME_DICT
-from utils.constants import GROUP_REGEX
+from utils.constants import (JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL,
+                             WEEK_DAYS, TEACHER_INTIAL_NAME_DICT, GROUP_REGEX)
 from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
 from typing import List
 
@@ -223,7 +222,7 @@ def write_filenames_map_to_json(filenames: list[str], prefix: str) -> None:
         for index, filename in enumerate(sorted(filenames))
     }
 
-    with open(f'{JSON_PATH}{prefix}_map.json', 'w', encoding='utf-8') as f:
+    with open(f'{JSON_PATH}/resources/{prefix}_map.json', 'w', encoding='utf-8') as f:
         json.dump(filenames_map, f, ensure_ascii=False, indent=4)
 
 
@@ -245,7 +244,7 @@ def write_teacher_map_sorted_by_last_name_to_json(teachers_filenames: list[str])
         for index, initials in enumerate(sorted_teacher_filenames)
     }
 
-    with open(f'{JSON_PATH}n_map.json', 'w', encoding='utf-8') as f:
+    with open(f'{JSON_PATH}/resources/n_map.json', 'w', encoding='utf-8') as f:
         json.dump(teachers_filenames_map, f, ensure_ascii=False, indent=4)
 
 
@@ -276,7 +275,7 @@ async def main():
     await asyncio.gather(*tasks)
 
     # saving plain text
-    with open(f'{JSON_PATH}plain_text.json', 'w', encoding='utf-8') as f:
+    with open(f'{JSON_PATH}/resources/plain_text.json', 'w', encoding='utf-8') as f:
         json.dump(PLAIN_TEXT, f, ensure_ascii=False, indent=4, sort_keys=True)  # save the PLAIN_TEXT dictionary to the file (used for creating PLAIN_TEXT_SOLUTION in other program)
 
     grades_json_files = [f'{JSON_PATH}timetables/grades/{file}'.split('/')[-1].split('.')[0]
@@ -301,6 +300,8 @@ async def main():
 def clear_output_files():
     folder_paths = ['../dane/', f'{JSON_PATH}timetables/grades/', f'{JSON_PATH}timetables/teachers/', f'{JSON_PATH}timetables/classrooms/']
     for folder_path in folder_paths:
+        if not os.path.exists(folder_path):
+            continue
         for file_name in os.listdir(folder_path):
             file_path = os.path.join(folder_path, file_name)
             if os.path.isfile(file_path):
