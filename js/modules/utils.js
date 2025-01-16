@@ -1,17 +1,28 @@
 let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
-import('../modules/data.js').then(async module =>
+let is_data_loaded_promise = new Promise(resolve =>
 {
-    ospanTexts = await module.getOspanTexts();
-    ofilenames = await module.getOfilenames();
-    sspanTexts = await module.getSspanTexts();
-    sfilenames = await module.getSfilenames();
-    nspanTexts = await module.getNspanTexts();
-    nfilenames = await module.getNfilenames();
+    import('../modules/data.js').then(async module =>
+    {
+        ospanTexts = await module.getOspanTexts();
+        ofilenames = await module.getOfilenames();
+        sspanTexts = await module.getSspanTexts();
+        sfilenames = await module.getSfilenames();
+        nspanTexts = await module.getNspanTexts();
+        nfilenames = await module.getNfilenames();
+        resolve();
+    });
 });
 
 function getDisplayName(filename)
 {
     return filename.replace(/\s[A-Z]+\.html$/, '');
+}
+
+function addElement(elementToAdd, targetElement)
+{
+    let element = document.createElement(elementToAdd);
+    targetElement.appendChild(element);
+    return element;
 }
 
 export function searchSchedules(scheduleType)
@@ -123,4 +134,36 @@ export function handleSearchInput(container, search_input)
     }
     else
         container.querySelectorAll('.search-results').forEach(result => result.remove());
+}
+
+export async function generateList(listType)
+{
+    let spanTexts, containerDiv, filenames;
+    let labelName = listType;
+    await is_data_loaded_promise;
+    switch (listType)
+    {
+        case 'Oddziały':
+            spanTexts = ospanTexts;
+            filenames = ofilenames;
+            labelName = 'Klasy';
+            containerDiv = document.getElementById('o-links');
+            break;
+        case 'Nauczyciele':
+            spanTexts = nspanTexts;
+            filenames = nfilenames;
+            containerDiv = document.getElementById('n-links');
+            break;
+        case 'Sale':
+            spanTexts = sspanTexts;
+            filenames = sfilenames;
+            containerDiv = document.getElementById('s-links');
+            break;
+    }
+    for (let i = 0; i < filenames.length; i++)
+    {
+        let anchor = addElement('a', containerDiv);
+        anchor.href = 'dane/' + filenames[i];
+        anchor.textContent = spanTexts[i];
+    }
 }
