@@ -1,12 +1,12 @@
-import { handleSearchInput, searchSchedules } from './modules/utils.js';
+import { handleSearchInput, searchSchedules, generateList } from './modules/utils.js';
 
-document.addEventListener("DOMContentLoaded", function()
+document.addEventListener('DOMContentLoaded', async function()
 {
     let container = document.getElementById('container');
     let search_input = document.getElementById('search-input');
     let search_button = document.getElementById('search-button');
-    let o_list = document.getElementById('o-list');
-    let s_list = document.getElementById('s-list');
+    let o_links = document.getElementById('o-links');
+    let s_links = document.getElementById('s-links');
 
     document.addEventListener('keydown', function(event)
     {
@@ -19,49 +19,25 @@ document.addEventListener("DOMContentLoaded", function()
     });
 
     search_button.addEventListener('click', searchSchedules);
-    search_input.addEventListener('keyup', function()
-    {
-        handleSearchInput(container, search_input)
-    });
+    search_input.addEventListener('keyup', () => handleSearchInput(container, search_input));
 
-    let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
-    import('./modules/data.js').then(async module =>
-    {
-        ospanTexts = await module.getOspanTexts();
-        ofilenames = await module.getOfilenames();
-        sspanTexts = await module.getSspanTexts();
-        sfilenames = await module.getSfilenames();
-        nspanTexts = await module.getNspanTexts();
-        nfilenames = await module.getNfilenames();
-        generateList(ospanTexts, ofilenames, o_list);
-        generateList(sspanTexts, sfilenames, s_list);
-        document.body.style.visibility = "visible";
-    });
+    await generateList('Oddziały');
+    await generateList('Sale');
 
-    o_list.addEventListener('click', redirecting_to_iframe);
-    s_list.addEventListener('click', redirecting_to_iframe);
+    o_links.addEventListener('click', redirecting_to_iframe);
+    s_links.addEventListener('click', redirecting_to_iframe);
 
-
-    function redirecting_to_iframe(event)
-    {
-        if (event.target.tagName === 'A')
-        {
-            event.preventDefault();
-            const parts = event.target.href.split('/');
-            const newHref = parts.slice(-2).join('/');
-            window.location = `plan_index.html?schedule=${newHref}`;
-        }
-    }
-
-    function generateList(spanTexts, filenames, list)
-    {
-        for (let i = 0; i < filenames.length; i++)
-        {
-            let anchor = document.createElement("a");
-            anchor.href = "dane/" + filenames[i];
-            anchor.textContent = spanTexts[i];
-            list.appendChild(anchor);
-        }
-    }
+    document.body.style.visibility = 'visible';
 });
 
+function redirecting_to_iframe(event)
+{
+    if (event.target.tagName === 'A')
+    {
+        event.preventDefault();
+        const scheduleParts = event.target.href.split('/');
+        const shortHref = scheduleParts.slice(-2).join('/');
+        // shortens original href from e.g. [host]/planyzsk/dane/s56.html to dane/s56.html
+        window.location = `plan_index.html?schedule=${shortHref}`;
+    }
+}

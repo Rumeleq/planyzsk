@@ -1,19 +1,4 @@
-import { handleSearchInput } from './modules/utils.js';
-
-let ospanTexts, ofilenames, sspanTexts, sfilenames, nspanTexts, nfilenames;
-let is_data_loaded_promise = new Promise(resolve =>
-{
-    import('./modules/data.js').then(async module =>
-    {
-        ospanTexts = await module.getOspanTexts();
-        ofilenames = await module.getOfilenames();
-        sspanTexts = await module.getSspanTexts();
-        sfilenames = await module.getSfilenames();
-        nspanTexts = await module.getNspanTexts();
-        nfilenames = await module.getNfilenames();
-        resolve();
-    });
-});
+import { handleSearchInput, generateList } from './modules/utils.js';
 
 let search_input;
 let wasOverThreshold = window.innerWidth > 980;
@@ -26,42 +11,28 @@ document.addEventListener('DOMContentLoaded', async function()
     let navContainer = document.getElementById('nav-container');
     let scheduleIframe = document.getElementById('schedule-frame');
     if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, true);
+        hideNav(svg, navContainer, scheduleIframe);
 
     //Ustawienie src iframe'u na podstawie parametru schedule w URL
     let scheduleHref = getQueryParam('schedule');
     if (scheduleHref)
         scheduleIframe.src = scheduleHref;
 
-    window.addEventListener('message', async function(event)
+    window.addEventListener('message', function(event)
     {
-        await is_data_loaded_promise;
-
-        if (event.data.type.startsWith('Plan'))
-        {
-            this.document.body.style.visibility = "visible";
+        if (event.data.msg_type.startsWith('Plan'))
             scheduleTitle.textContent = event.data.type;
-        }
-        else if (event.data.type === 'ctrlF')
-        {
+        else if (event.data.msg_type === 'ctrlF')
             handleCtrlF(event, svg, navContainer, scheduleIframe);
-        }
-        else if (event.data.type === 'kumiGaming')
-        {
+        else if (event.data.msg_type === 'kumiGaming')
             window.location.href = event.data.href;
-        }
     });
 
-    await is_data_loaded_promise;
-    
     //Generowanie contentu nav bara
-    let indexLink = addElement('a', 'nav#nav-container', true);
-    indexLink.href = '../planyzsk/index.html';
-    indexLink.textContent = 'Strona główna';
-    generateList('Oddziały', ofilenames, navContainer);
-    generateList('Nauczyciele', nfilenames, navContainer);
-    generateList('Sale', sfilenames, navContainer);
-    
+    await generateList('Oddziały');
+    await generateList('Nauczyciele');
+    await generateList('Sale');
+
     //Przechwytywanie kliknięć w linki nav bara i zmiana src iframe'u na odpowiedni link
     navContainer.addEventListener('click', function(event)
     {
@@ -83,23 +54,24 @@ document.addEventListener('DOMContentLoaded', async function()
     svg.addEventListener('click', () =>
         switchNav(svg, navContainer, scheduleIframe));
 
-    document.addEventListener('keydown', (event) => handleCtrlF(event, svg, navContainer, scheduleIframe));
+    document.addEventListener('keydown', function(event)
+    {
+        if (event.ctrlKey && event.key === 'f')
+            handleCtrlF(event, svg, navContainer, scheduleIframe);
+    });
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
     if (window.innerWidth <= 980)
-        switchNav(svg, navContainer, scheduleIframe, true);
-    window.addEventListener('resize', () =>
-        handleMediaQuery(svg, navContainer, scheduleIframe));
+        hideNav(svg, navContainer, scheduleIframe);
+    window.addEventListener('resize', () => handleMediaQuery(svg, navContainer, scheduleIframe));
 
     //Obsługa wyszukiwarki
     search_input = document.getElementById('search-input');
     let container = document.getElementById('container');
 
-    search_input.addEventListener('keyup', function() 
-    {
-        handleSearchInput(container, search_input);
-    });
+    search_input.addEventListener('keyup', () => handleSearchInput(container, search_input));
 
+    document.body.style.visibility = 'visible';
 });
 
 function getQueryParam(param) 
@@ -108,61 +80,25 @@ function getQueryParam(param)
     return urlParams.get(param);
 }
 
-function generateList(listType, filenames, list) 
+function switchNav(svg, navContainer, scheduleIframe)
 {
-    let spanTexts;
-    let labelName = listType;
-    switch (listType) 
-    {
-        case 'Nauczyciele':
-            spanTexts = nspanTexts;
-            break;
-        case 'Sale':
-            spanTexts = sspanTexts;
-            break;
-        case 'Oddziały':
-            spanTexts = ospanTexts;
-            labelName = 'Klasy';
-            break;
-    }
-    let containerDiv = document.createElement('div');
-    containerDiv.classList.add('nav-links');
-    containerDiv.id = `${listType[0].toLowerCase()}-links`;
-    list.appendChild(containerDiv);
-    for (let i = 0; i < filenames.length; i++) 
-    {
-        let anchor = document.createElement("a");
-        anchor.href = "dane/" + filenames[i];
-        anchor.textContent = spanTexts[i];
-        containerDiv.appendChild(anchor);
-    }
+    svg.classList.toggle('hidden-nav');
+    navContainer.classList.toggle('hidden-nav');
+    scheduleIframe.classList.toggle('hidden-nav');
 }
 
-function addElement(elementToAdd, target, appendFirst) 
+function hideNav(svg, navContainer, scheduleIframe)
 {
-    let element = document.createElement(elementToAdd);
-    let targetElement = document.querySelector(target);
-    if (appendFirst)
-        targetElement.prepend(element);
-    else
-        targetElement.appendChild(element);
-    return element;
+    svg.classList.add('hidden-nav');
+    navContainer.classList.add('hidden-nav');
+    scheduleIframe.classList.add('hidden-nav');
 }
 
-function switchNav(svg, navContainer, scheduleIframe, forceHiddenNav = null)
+function showNav(svg, navContainer, scheduleIframe)
 {
-    if (forceHiddenNav === null)
-    {
-        svg.classList.toggle('hidden-nav');
-        navContainer.classList.toggle('hidden-nav');
-        scheduleIframe.classList.toggle('hidden-nav');
-    }
-    else
-    {
-        svg.classList.toggle('hidden-nav', forceHiddenNav);
-        navContainer.classList.toggle('hidden-nav', forceHiddenNav);
-        scheduleIframe.classList.toggle('hidden-nav', forceHiddenNav);
-    }
+    svg.classList.remove('hidden-nav');
+    navContainer.classList.remove('hidden-nav');
+    scheduleIframe.classList.remove('hidden-nav');
 }
 
 function handleMediaQuery(svg, navContainer, scheduleIframe) 
@@ -171,28 +107,18 @@ function handleMediaQuery(svg, navContainer, scheduleIframe)
     if (isOverThreshold === wasOverThreshold)
         return;
     
-    if (window.innerWidth <= 980) 
-    {
-        switchNav(svg, navContainer, scheduleIframe, true);
-    }
-    else if (window.innerWidth > 980) 
-    {
-        switchNav(svg, navContainer, scheduleIframe, false);
-    }
+    if (window.innerWidth <= 980)
+        hideNav(svg, navContainer, scheduleIframe);
+    else if (window.innerWidth > 980)
+        showNav(svg, navContainer, scheduleIframe);
+
     wasOverThreshold = isOverThreshold;
 }
 
 function handleCtrlF(event, svg, navContainer, scheduleIframe) 
 {
-    try
-    {
-       if (event.ctrlKey && event.key === 'f' || event.data.type === 'ctrlF')
-       {
-           event.preventDefault();
-           switchNav(svg, navContainer, scheduleIframe, false);
-           search_input.focus();
-           search_input.select();
-       }
-    }
-    catch (TypeError) {}
+   event.preventDefault();
+   showNav(svg, navContainer, scheduleIframe);
+   search_input.focus();
+   search_input.select();
 }

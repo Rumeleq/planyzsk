@@ -201,7 +201,7 @@ def parse_grade_json_to_html(json_filename: str) -> None:
                 span_p = soup.new_tag('span', class_='p')
                 span_p.string = lesson_name
                 anchor_n = soup.new_tag('a', class_='n', href=f'{N_MAP[teacher]}.html')
-                anchor_n.string = teacher
+                anchor_n.string = f' {teacher} '
                 anchor_s = soup.new_tag('a', class_='s', href=f'{S_MAP[classroom]}.html')
                 anchor_s.string = classroom
 
@@ -216,4 +216,4 @@ def parse_grade_json_to_html(json_filename: str) -> None:
                 wrapper_span.extend([span_p, anchor_n, anchor_s])
 
     with open(f'../dane/{O_MAP[json_filename]}.html', 'w', encoding='utf-8') as f:
-        f.write(soup.prettify())
+        f.write(str(soup))
