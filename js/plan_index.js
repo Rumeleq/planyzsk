@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async function()
     window.addEventListener('message', function(event)
     {
         if (event.data.msg_type.startsWith('Plan'))
-            scheduleTitle.textContent = event.data.type;
+            scheduleTitle.textContent = event.data.msg_type;
         else if (event.data.msg_type === 'ctrlF')
             handleCtrlF(event, svg, navContainer, scheduleIframe);
         else if (event.data.msg_type === 'kumiGaming')
