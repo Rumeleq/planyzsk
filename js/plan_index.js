@@ -71,9 +71,24 @@ document.addEventListener('DOMContentLoaded', async function()
 
     search_input.addEventListener('keyup', () => handleSearchInput(container, search_input));
 
-    document.body.style.visibility = 'visible';
-});
 
+    let fav_cbox = document.getElementById('add_fav');
+    fav_cbox.addEventListener('change', appendToStorage);
+
+
+    document.body.style.visibility = 'visible';
+
+});
+function appendToStorage() {
+    let fav_list = JSON.parse(localStorage.getItem("fav_plans"))
+    console.log(window.location.href)
+    if (fav_list === null) {
+        fav_list = []
+    }
+    if(fav_list.includes(window.location.href)) fav_list.splice(fav_list.indexOf(window.location.href), 2)
+    fav_list.push([window.location.href, plan_name.innerText])
+    localStorage.setItem("fav_plans", JSON.stringify(fav_list))
+}
 function getQueryParam(param) 
 {
     let urlParams = new URLSearchParams(window.location.search);
