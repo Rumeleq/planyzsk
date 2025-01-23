@@ -9,20 +9,6 @@
         gtag('js', new Date());
         gtag('config', 'G-6SVZCJMK7X');
     </script>
-    <script>
-        let fav_map;
-        if (localStorage.fav_plans) {
-            try {
-                fav_map = new Map(JSON.parse(localStorage.fav_plans));
-            } catch (e) {
-                fav_map = new Map();
-                localStorage.fav_plans = JSON.stringify(Array.from(fav_map.entries()));
-            }
-        } else {
-            fav_map = new Map();
-            localStorage.fav_plans = JSON.stringify(Array.from(fav_map.entries()));
-        }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
@@ -53,26 +39,16 @@
         <section id="fav_plans">
             <div id="fav_plans_container">
                 <script>
-                    let fplany;
-                    if (localStorage.favorite_plans) {
-                        try {
-                            fplany = new Map(JSON.parse(localStorage.favorite_plans));
-                        } catch (e) {
-                            fplany = new Map();
-                            localStorage.favorite_plans = JSON.stringify(Array.from(fplany.entries()));
-                        }
-                    } else {
-                        fplany = new Map();
-                        localStorage.favorite_plans = JSON.stringify(Array.from(fplany.entries()));
-                    }
-
+                    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans")));
                     let fav_plany_list = document.querySelector("#fav_plans_container");
-                    fplany.forEach(plan => {
-                        let a = document.createElement("a");
-                        a.href = plan.key;
-                        a.innerText = plan.value;
-                        fav_plany_list.appendChild(a);
-                    });
+                    for (const [key, value] of fav_map) {
+                        let a = document.createElement("a")
+                        console.log(`${key}: ${value}`);
+                        a.className = "fav_plans_link"
+                        a.href = (`${key}`)
+                        a.innerText = (`${value}`)
+                        fav_plany_list.appendChild(a)
+                    }
                 </script>
             </div>
         </section>

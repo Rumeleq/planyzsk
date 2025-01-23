@@ -205,7 +205,7 @@ svg#search-icon
     pointer-events: none;
 }
 
-button#search-button
+button#search-button, .fav_plans_link
 {
     margin-left: 57px;
     background-color: #76ABAE;
