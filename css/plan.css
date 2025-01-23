@@ -16,6 +16,7 @@
         background-color: #85a2a4;  
     }
 }
+
 body 
 {
     margin: 0;
@@ -161,3 +162,26 @@ Jako taka naprawa ale sie i tak pieprzy
     }
 }
 */
+
+.star-svg{
+    background-color:#ff0;
+}
+.star-svg path{
+    fill: #828282;
+}
+#add_favorite{
+
+    background-color: transparent;!important;
+    background-repeat: no-repeat;!important;
+    border: none; !important;
+    cursor: pointer;!important;
+    overflow: hidden;!important;
+    outline: none;!important;
+    &:hover{
+        background-color: transparent;!important;
+    }
+    &:active{
+        background-color: transparent;!important;
+        border: none;!important;
+    }
+}

@@ -19,10 +19,25 @@ document.addEventListener('DOMContentLoaded', function()
             window.parent.postMessage({msg_type: 'kumiGaming', href: href}, '*');
         });
     }
-
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
+
+    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
+
+    let parentUrl = window.location !== window.parent.location ? document.referrer : document.URL;
+    let add_buton = document.createAttribute('button');
+    add_buton.onclick = appendToStorage;
+    if(fav_map.has(parentUrl)) {
+        add_buton.textContent = 'Usuń z ulubionych';
+    }
+    else {
+        add_buton.textContent = 'Dodaj do ulubionych';
+    }
+
+
+
+
 });
 
 window.appendToStorage = () => {
