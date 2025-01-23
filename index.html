@@ -31,58 +31,68 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body style="visibility: hidden;">
-    <div id="app">
-        <header>
-            <h1>Plany ulubionych<br>nauczycieli ZSK</h1>
-        </header>
-        
-        <main>
-            <section id="container">
-                <div id="searching-container">
-                    <div id="search-field-container">
-                        <input type="text" id="search-input" placeholder="Szukaj planu" autocomplete="off" aria-label="Szukaj planu">
-                        <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </div>
-                    <button id="search-button">Szukaj</button>
+<div id="app">
+    <header>
+        <h1>Plany ulubionych<br>nauczycieli ZSK</h1>
+    </header>
+
+    <main>
+        <section id="container">
+            <div id="searching-container">
+                <div id="search-field-container">
+                    <input type="text" id="search-input" placeholder="Szukaj planu" autocomplete="off" aria-label="Szukaj planu">
+                    <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
                 </div>
-            </section>
-
-            <section id="fav_plans">
-                <div id="fav_plans_container">
-                    <script>
-                        let fplany = new Map(JSON.parse(localStorage.favorite_plans));
-
-                        let fav_plany_list = document.querySelector("#fav_plans_container")
-                        fplany.forEach(plan => {
-                            let a = document.createElement("a")
-                            a.href = plan.key
-                            a.innerText = plan.value
-                            fav_plany_list.appendChild(a)
-                        });
-                    </script>
-                </div>
-
-            </section>
-    
-            <section id="lists">
-                <div id="o-links"><h3>KLASY</h3></div>
-                <div class="in-between"></div>
-                <div id="s-links"><h3>SALE</h3></div>
-            </section>
-            
-        </main>        
-        <footer>
-            <div>
-                <p>© 2025 Zespół Szkół Komunikacji <br> w Poznaniu</p>
+                <button id="search-button">Szukaj</button>
             </div>
+        </section>
+
+        <section id="fav_plans">
+            <div id="fav_plans_container">
+                <script>
+                    let fplany;
+                    if (localStorage.favorite_plans) {
+                        try {
+                            fplany = new Map(JSON.parse(localStorage.favorite_plans));
+                        } catch (e) {
+                            fplany = new Map();
+                            localStorage.favorite_plans = JSON.stringify(Array.from(fplany.entries()));
+                        }
+                    } else {
+                        fplany = new Map();
+                        localStorage.favorite_plans = JSON.stringify(Array.from(fplany.entries()));
+                    }
+
+                    let fav_plany_list = document.querySelector("#fav_plans_container");
+                    fplany.forEach(plan => {
+                        let a = document.createElement("a");
+                        a.href = plan.key;
+                        a.innerText = plan.value;
+                        fav_plany_list.appendChild(a);
+                    });
+                </script>
+            </div>
+        </section>
+
+        <section id="lists">
+            <div id="o-links"><h3>KLASY</h3></div>
             <div class="in-between"></div>
-            <div>
-                <p>W przypadku zastrzeżeń prosimy o kontakt <br> przez <a href="https://forms.office.com/e/fgCskrmRL6">formularz</a></p>
-            </div>
-        </footer>
-    </div>
+            <div id="s-links"><h3>SALE</h3></div>
+        </section>
+
+    </main>
+    <footer>
+        <div>
+            <p>© 2025 Zespół Szkół Komunikacji <br> w Poznaniu</p>
+        </div>
+        <div class="in-between"></div>
+        <div>
+            <p>W przypadku zastrzeżeń prosimy o kontakt <br> przez <a href="https://forms.office.com/e/fgCskrmRL6">formularz</a></p>
+        </div>
+    </footer>
+</div>
 </body>
 </html>

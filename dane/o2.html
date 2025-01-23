@@ -7,11 +7,17 @@
 <title>Plan lekcji oddziału - 1B</title>
 <link href="../css/plan.css" rel="stylesheet" type="text/css"/>
 <script defer="" src="../js/plan_script.js" type="module"></script>
+    <script>
+        function appendToStorage() {
+            let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
+            console.log(window.location.href);
+            fav_map.set(window.location.href, plan_name.innerText);
+            localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
+        }
+    </script>
 </head>
 <body style="visibility: hidden;">
-<span id="plan_name">1B
-<input type="checkbox" id="add_fav"></span>
-<button id="test">Dodaj do ulubionych</button>
+<span id="plan_name">1B<button onclick="appendToStorage()">test</button> </span>
 <table>
 <tr>
 <th>Nr</th>
