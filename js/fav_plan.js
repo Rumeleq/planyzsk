@@ -1,10 +1,10 @@
 function appendToStorage() {
-    let fav_list = JSON.parse(localStorage.getItem("fav_plans"))
-    console.log(window.location.href)
-    if (fav_list === null) {
-        fav_list = []
+    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
+    let parentUrl = window.location !== window.parent.location ? document.referrer : document.URL;
+    if(!fav_map.has(parentUrl)) {
+        fav_map.set(parentUrl, plan_name.innerText);
+    } else {
+        fav_map.delete(parentUrl);
     }
-    if(fav_list.includes(window.location.href)) fav_list.splice(fav_list.indexOf(window.location.href), 2)
-    fav_list.push([window.location.href, plan_name.innerText])
-    localStorage.setItem("fav_plans", JSON.stringify(fav_list))
+    localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
 }

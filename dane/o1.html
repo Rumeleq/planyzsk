@@ -7,21 +7,10 @@
 <title>Plan lekcji oddziału - 1A</title>
 <link href="../css/plan.css" rel="stylesheet" type="text/css"/>
 <script defer="" src="../js/plan_script.js" type="module"></script>
-    <script>
-        function appendToStorage() {
-            let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
-            let parentUrl = window.location !== window.parent.location ? document.referrer : document.URL;
-            if(!fav_map.has(parentUrl)) {
-                fav_map.set(parentUrl, plan_name.innerText);
-            } else {
-                fav_map.delete(parentUrl);
-            }
-            localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
-        }
-    </script>
+
 </head>
 <body style="visibility: hidden;">
-<span id="plan_name"><button onclick="appendToStorage()">test</button> </span>
+<span id="plan_name">1A<button onclick="appendToStorage()">test</button> </span>
 
 <table>
 <tr>
