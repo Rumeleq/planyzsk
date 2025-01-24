@@ -169,19 +169,41 @@ Jako taka naprawa ale sie i tak pieprzy
 .star-svg path{
     fill: #828282;
 }
-#add_favorite{
+#add-to-fav {
+    appearance: none; /* Remove default browser styling */
+    -webkit-appearance: none; /* For Safari and Chrome */
+    background-color: #eee; /* Light gray background */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 3px; /* Rounded corners */
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s ease-in-out; /* Smooth transitions */
+}
 
-    background-color: transparent;!important;
-    background-repeat: no-repeat;!important;
-    border: none; !important;
-    cursor: pointer;!important;
-    overflow: hidden;!important;
-    outline: none;!important;
-    &:hover{
-        background-color: transparent;!important;
-    }
-    &:active{
-        background-color: transparent;!important;
-        border: none;!important;
-    }
+#add-to-fav::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    background-color: #fff; /* White background for the checkmark */
+    border-radius: 2px;
+    transform: scale(0); /* Initially hidden */
+    transition: all 0.2s ease-in-out;
+}
+
+#add-to-fav:checked::before {
+    transform: scale(1); /* Show the checkmark when checked */
+}
+
+#add-to-fav:checked {
+    background-color: #4CAF50; /* Green background when checked */
+    border-color: #4CAF50;
+}
+
+#add-to-fav:hover {
+    border-color: #999; /* Darker gray border on hover */
 }
