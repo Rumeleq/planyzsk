@@ -43,13 +43,13 @@
                     let fav_plany_list = document.querySelector("#fav_plans_container");
                     for (const [key, value] of fav_map) {
                         let a = document.createElement("a")
-                        console.log(`${key}: ${value}`);
                         a.className = "fav_plans_link"
                         a.href = (`${key}`)
                         a.innerText = (`${value}`)
                         fav_plany_list.appendChild(a)
                     }
                 </script>
+                <button id="clear_fav_plans" onclick="localStorage.clear(); setTimeout(function(){location.reload();}, 100);">Usuń wszystkie</button>
             </div>
         </section>
 

@@ -13,11 +13,11 @@
     }
     &::selection
     {
-        background-color: #85a2a4;  
+        background-color: #85a2a4;
     }
 }
 
-body 
+body
 {
     margin: 0;
     display: flex;
@@ -66,7 +66,7 @@ html
         display: none;
     }
 }
-table 
+table
 {
     background-color: #31363F;
     border-spacing: 0;
@@ -91,7 +91,7 @@ table>tr:not(:last-child)>td,
 table>tr:not(:last-child)>th,
 table>thead:not(:last-child),
 table>tbody:not(:last-child),
-table>tfoot:not(:last-child) 
+table>tfoot:not(:last-child)
 {
     border-bottom: 1px solid black;
 }
@@ -120,8 +120,8 @@ tr:last-of-type
     }
 }
 
-th, td 
-{ 
+th, td
+{
     padding: 10px;
     text-align: center;
 }
@@ -137,12 +137,12 @@ tr:nth-of-type(1), tr>td:nth-of-type(1), tr>td:nth-of-type(2)
     font-weight: bold;
 }
 
-a 
+a
 {
     color: #bfcad6;
     text-decoration: none;
 
-    &:hover 
+    &:hover
     {
         text-decoration: underline;
     }
@@ -162,48 +162,32 @@ Jako taka naprawa ale sie i tak pieprzy
     }
 }
 */
-
-.star-svg{
-    background-color:#ff0;
-}
-.star-svg path{
-    fill: #828282;
-}
 #add-to-fav {
-    appearance: none; /* Remove default browser styling */
-    -webkit-appearance: none; /* For Safari and Chrome */
-    background-color: #eee; /* Light gray background */
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 3px; /* Rounded corners */
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    position: relative;
-    transition: all 0.2s ease-in-out; /* Smooth transitions */
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    outline: none; /* Remove the border */
+    box-shadow: none; /* Remove any box-shadow */
+}
+
+#add-to-fav:focus {
+    outline: none; /* Ensure no border on focus */
+    box-shadow: none; /* Ensure no box-shadow on focus */
 }
 
 #add-to-fav::before {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 12px;
-    height: 12px;
-    background-color: #fff; /* White background for the checkmark */
-    border-radius: 2px;
-    transform: scale(0); /* Initially hidden */
-    transition: all 0.2s ease-in-out;
+    content: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><polygon points='20,0.4 23.6,14 38,14 26.8,22.4 30,36 20,28 10,36 13.2,22.4 2,14 16.4,14' fill='rgb(118,171,174)' stroke='black' stroke-width='0.8'/></svg>");
+    display: inline-block;
+    filter: saturate(0);
+    transition: filter 0.4s ease-in-out;
+
 }
 
 #add-to-fav:checked::before {
-    transform: scale(1); /* Show the checkmark when checked */
-}
-
-#add-to-fav:checked {
-    background-color: #4CAF50; /* Green background when checked */
-    border-color: #4CAF50;
-}
-
-#add-to-fav:hover {
-    border-color: #999; /* Darker gray border on hover */
+    filter: saturate(1);
+    transition: filter 0.4s ease-in-out;
 }

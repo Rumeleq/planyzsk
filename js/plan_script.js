@@ -41,8 +41,13 @@ document.addEventListener('DOMContentLoaded', function()
     add_cbox.id = 'add-to-fav';
     add_cbox.name = 'add-cbox';
     add_cbox.onclick = appendToStorage;
-    add_cbox.checked = fav_map.has(fullUrl);
-    document.body.appendChild(add_cbox);
+    add_cbox.title = 'Dodaj do ulubionych';
+    add_cbox.checked = false;
+    if (fav_map.has(fullUrl)) {
+        add_cbox.checked = true;
+        add_cbox.title = 'Usuń z ulubionych';
+    }
+    document.getElementById('plan_name').appendChild(add_cbox);
 
     //Dodanie labela do checkboxa
     let cbox_label = document.createElement('label');
@@ -69,4 +74,7 @@ window.appendToStorage = () => {
         fav_map.delete(fullUrl);
     }
     localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
+    setTimeout(function(){
+        location.reload();
+    }, 600);
 }
