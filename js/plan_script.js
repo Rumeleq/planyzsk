@@ -34,9 +34,8 @@ document.addEventListener('DOMContentLoaded', function()
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
 
-    let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
-    let iframeUrl = documentContent.URL;
-    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
+    let documentContent = parent.document.getElementById('schedule-frame').contentDocument.URL;
+    let lastPart = documentContent.substring(documentContent.lastIndexOf('/') + 1);
     let fullUrl = `${urlBase}/${lastPart}`;
 
     //Dodanie checkboxa do dodawania do ulubionych (jeśli plan jest w ulubionych to checkbox jest zaznaczony)
