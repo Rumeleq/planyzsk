@@ -21,9 +21,7 @@ document.addEventListener('DOMContentLoaded', function()
             window.parent.postMessage({msg_type: 'kumiGaming', href: href}, '*');
         });
     }
-    //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
-    document.body.style.visibility = 'visible';
-    window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
+
 
     //sekcja odpowiedzialna za dodawanie do ulubionych
 
@@ -57,6 +55,11 @@ document.addEventListener('DOMContentLoaded', function()
     cbox_label.htmlFor = 'add-cbox';
     cbox_label.textContent = 'Dodaj do ulubionych';
     document.body.appendChild(cbox_label);
+
+    //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
+    document.body.style.visibility = 'visible';
+    window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
+
 });
 //Funkcja dodająca/usuwajaca plan do ulubionych
 window.appendToStorage = () => {
