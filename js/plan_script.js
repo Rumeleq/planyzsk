@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function()
 {
+    const urlBase = '../planyzsk/plan_index.html?schedule=dane';
+
     let title = document.querySelector('title');
     document.addEventListener('keydown', function(event) 
     {
@@ -29,11 +31,11 @@ document.addEventListener('DOMContentLoaded', function()
 
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
-    let parentUrl = window.location !== window.parent.location ? document.referrer : document.URL;
-    parentUrl = parentUrl.substring(0, parentUrl.lastIndexOf('/'));
-    let iframeSrc = parent.document.getElementById('schedule-frame').src;
-    let lastPart = iframeSrc.substring(iframeSrc.lastIndexOf('/') + 1);
-    let fullUrl = `${parentUrl}/${lastPart}`;
+
+    let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
+    let iframeUrl = documentContent.URL;
+    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
+    let fullUrl = `${urlBase}/${lastPart}`;
 
     //Dodanie checkboxa do dodawania do ulubionych (jeśli plan jest w ulubionych to checkbox jest zaznaczony)
     let add_cbox = document.createElement('input');
@@ -57,17 +59,15 @@ document.addEventListener('DOMContentLoaded', function()
 });
 //Funkcja dodająca/usuwajaca plan do ulubionych
 window.appendToStorage = () => {
+    const urlBase = '../planyzsk/plan_index.html?schedule=dane';
     //Pobranie aktyalnej localstorage
     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
-    //Stworzenie url
-    let parentUrl = window.location !== window.parent.location ? document.referrer : document.URL;
-    parentUrl = parentUrl.substring(0, parentUrl.lastIndexOf('/'));
 
     let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
     let iframeUrl = documentContent.URL;
 
     let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
-    let fullUrl = `${parentUrl}/${lastPart}`;
+    let fullUrl = `${urlBase}/${lastPart}`;
     console.log(fullUrl);
     //pobranie nazwy planu
     let plan_name = document.getElementById('plan_name');
