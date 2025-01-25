@@ -49,7 +49,12 @@
                         fav_plany_list.appendChild(a)
                     }
                 </script>
-                <button id="clear_fav_plans" onclick="localStorage.clear(); setTimeout(function(){location.reload();}, 100);">Usuń wszystkie</button>
+                <button id="clear_fav_plans"
+                        onclick="
+                        if (window.confirm('Czy na pewno chcesz wyczyścić ulubione plany?')) {
+                            localStorage.removeItem('fav_plans');
+                            setTimeout(function(){location.reload();}, 100);}"
+                >Usuń wszystkie</button>
             </div>
         </section>
 

@@ -62,9 +62,13 @@ window.appendToStorage = () => {
     //Stworzenie url
     let parentUrl = window.location !== window.parent.location ? document.referrer : document.URL;
     parentUrl = parentUrl.substring(0, parentUrl.lastIndexOf('/'));
-    let iframeSrc = parent.document.getElementById('schedule-frame').src;
-    let lastPart = iframeSrc.substring(iframeSrc.lastIndexOf('/') + 1);
+
+    let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
+    let iframeUrl = documentContent.URL;
+
+    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
     let fullUrl = `${parentUrl}/${lastPart}`;
+    console.log(fullUrl);
     //pobranie nazwy planu
     let plan_name = document.getElementById('plan_name');
     //Dodanie/usunięcie planu z ulubionych
