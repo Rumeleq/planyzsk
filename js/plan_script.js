@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function()
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
 
+    //sekcja odpowiedzialna za dodawanie do ulubionych
+
     //Dodanie id do nazwy planu
     let plan_name = document.querySelector('span:first-of-type');
     plan_name.id = 'plan_name';
