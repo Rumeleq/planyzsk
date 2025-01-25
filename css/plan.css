@@ -3,7 +3,7 @@
 {
     min-width: min-content;
     color: #EEEEEE;
-    font-family: "Kanit";
+    font-family: "Kanit", sans-serif;
 
     &:focus
     {
@@ -45,8 +45,8 @@ body
 html
 {
     overflow: scroll;
-    scrollbar-width: 8px;
-    scrollbar-color: #76ABAE;
+    scrollbar-width: thin;
+    scrollbar-color: #76ABAE #31363F;
 
     &::-webkit-scrollbar
     {
@@ -170,13 +170,13 @@ Jako taka naprawa ale sie i tak pieprzy
     width: 30px;
     height: 30px;
     cursor: pointer;
-    outline: none; /* Remove the border */
-    box-shadow: none; /* Remove any box-shadow */
+    outline: none;
+    box-shadow: none;
 }
 
 #add-to-fav:focus {
-    outline: none; /* Ensure no border on focus */
-    box-shadow: none; /* Ensure no box-shadow on focus */
+    outline: none;
+    box-shadow: none;
 }
 
 #add-to-fav::before {
