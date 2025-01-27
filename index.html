@@ -36,9 +36,12 @@
             </div>
         </section>
 
-        <section id="fav_plans">
+        <section id="fav_plans" hidden="hidden">
             <div id="fav_plans_container">
                 <script>
+                    let section_fav_plans = document.querySelector("#fav_plans");
+                    section_fav_plans.hidden = localStorage.getItem("fav_plans") === null;
+
                     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans")));
                     let fav_plany_list = document.querySelector("#fav_plans_container");
                     for (const [key, value] of fav_map) {
