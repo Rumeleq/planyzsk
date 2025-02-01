@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup as bs
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER
 from utils.constants import WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER
-from utils.constants import N_MAP, O_MAP, S_MAP
 from utils.constants import TEACHER_INTIAL_NAME_DICT
 from utils.constants import HTML_PATH, JSON_PATH
 from utils.constants import GROUP_REGEX
@@ -43,7 +42,7 @@ def normalize_lesson_name(lesson_name: str, *args: str) -> str:
     return lesson_name
 
 
-def parse_classroom_json_to_html(json_filename: str) -> None:
+def parse_classroom_json_to_html(json_filename: str, o_map: dict[str, str], n_map: dict[str, str], s_map: dict[str, str]) -> None:
     classroom_number = os.path.splitext(json_filename)[0]
     with open(f'{JSON_PATH}/timetables/classrooms/{json_filename}.json', 'r', encoding='utf-8') as f:
         schedule: dict[str, dict[str, list[tuple[str, str, str]]]] = json.load(f)
@@ -74,12 +73,12 @@ def parse_classroom_json_to_html(json_filename: str) -> None:
             span_o = soup.new_tag('span', class_='o')
             for length, grade in enumerate(grades):
                 if re.search(GROUP_REGEX, grade) is not None:
-                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade[:-4]]}.html')
+                    grade_anchor = soup.new_tag('a', class_='o', href=f'{o_map[grade[:-4]]}.html')
                     grade_anchor.string = grade[:-4]
                     group_span = soup.new_tag('span', class_='group')
                     group_span.string = grade[-4:]
                 else:
-                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
+                    grade_anchor = soup.new_tag('a', class_='o', href=f'{o_map[grade]}.html')
                     grade_anchor.string = grade
                 if length > 0:
                     comma_span = soup.new_tag('span')
@@ -97,18 +96,18 @@ def parse_classroom_json_to_html(json_filename: str) -> None:
 
             span_p = soup.new_tag('span', class_='p')
             span_p.string = f' {lesson_name}'
-            anchor_n = soup.new_tag('a', class_='n', href=f'{N_MAP[teacher]}.html')
+            anchor_n = soup.new_tag('a', class_='n', href=f'{n_map[teacher]}.html')
             anchor_n.string = f'{teacher} '
 
             wrapper_span = soup.new_tag('span')
             td.append(wrapper_span)
             wrapper_span.extend([anchor_n, span_o, span_p])
 
-    with open(f'../dane/{S_MAP[json_filename]}.html', 'w', encoding='utf-8') as f:
+    with open(f'../dane/{s_map[json_filename]}.html', 'w', encoding='utf-8') as f:
         f.write(str(soup))
 
 
-def parse_teacher_json_to_html(json_filename: str) -> None:
+def parse_teacher_json_to_html(json_filename: str, o_map: dict[str, str], n_map: dict[str, str], s_map: dict[str, str]) -> None:
     teacher_intials = os.path.splitext(json_filename)[0]
     teacher_name = TEACHER_INTIAL_NAME_DICT[teacher_intials]
     with open(f'{JSON_PATH}/timetables/teachers/{json_filename}.json', 'r', encoding='utf-8') as f:
@@ -135,12 +134,12 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
             span_o = soup.new_tag('span', class_='o')
             for length, grade in enumerate(grades):
                 if re.search(GROUP_REGEX, grade) is not None:
-                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade[:-4]]}.html')
+                    grade_anchor = soup.new_tag('a', class_='o', href=f'{o_map[grade[:-4]]}.html')
                     grade_anchor.string = grade[:-4]
                     group_span = soup.new_tag('span', class_='group')
                     group_span.string = grade[-4:]
                 else:
-                    grade_anchor = soup.new_tag('a', class_='o', href=f'{O_MAP[grade]}.html')
+                    grade_anchor = soup.new_tag('a', class_='o', href=f'{o_map[grade]}.html')
                     grade_anchor.string = grade
                 if length > 0:
                     comma_span = soup.new_tag('span')
@@ -158,7 +157,7 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
 
             span_p = soup.new_tag('span', class_='p')
             span_p.string = f' {lesson_name} '
-            anchor_s = soup.new_tag('a', class_='s', href=f'{S_MAP[classroom]}.html')
+            anchor_s = soup.new_tag('a', class_='s', href=f'{s_map[classroom]}.html')
             anchor_s.string = classroom
 
             wrapper_span = soup.new_tag('span')
@@ -170,11 +169,11 @@ def parse_teacher_json_to_html(json_filename: str) -> None:
         twitch_link.string = 'Twitch Kumi_Gaming'
         soup.body.append(twitch_link)
 
-    with open(f'../dane/{N_MAP[json_filename]}.html', 'w', encoding='utf-8') as f:
+    with open(f'../dane/{n_map[json_filename]}.html', 'w', encoding='utf-8') as f:
         f.write(str(soup))
 
 
-def parse_grade_json_to_html(json_filename: str) -> None:
+def parse_grade_json_to_html(json_filename: str, o_map: dict[str, str], n_map: dict[str, str], s_map: dict[str, str]) -> None:
     grade_name = os.path.splitext(json_filename)[0]
     with open(f'{JSON_PATH}/timetables/grades/{json_filename}.json', 'r', encoding='utf-8') as f:
         schedule: dict[str, dict[str, list[list[tuple[str, str, str]]]]] = json.load(f)
@@ -200,9 +199,9 @@ def parse_grade_json_to_html(json_filename: str) -> None:
 
                 span_p = soup.new_tag('span', class_='p')
                 span_p.string = lesson_name
-                anchor_n = soup.new_tag('a', class_='n', href=f'{N_MAP[teacher]}.html')
+                anchor_n = soup.new_tag('a', class_='n', href=f'{n_map[teacher]}.html')
                 anchor_n.string = f' {teacher} '
-                anchor_s = soup.new_tag('a', class_='s', href=f'{S_MAP[classroom]}.html')
+                anchor_s = soup.new_tag('a', class_='s', href=f'{s_map[classroom]}.html')
                 anchor_s.string = classroom
 
                 wrapper_span = soup.new_tag('span')
@@ -215,5 +214,5 @@ def parse_grade_json_to_html(json_filename: str) -> None:
                 td.append(wrapper_span)
                 wrapper_span.extend([span_p, anchor_n, anchor_s])
 
-    with open(f'../dane/{O_MAP[json_filename]}.html', 'w', encoding='utf-8') as f:
+    with open(f'../dane/{o_map[json_filename]}.html', 'w', encoding='utf-8') as f:
         f.write(str(soup))
