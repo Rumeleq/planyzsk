@@ -8,6 +8,7 @@ from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import (JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL,
                              WEEK_DAYS, TEACHER_INTIAL_NAME_DICT, GROUP_REGEX)
+from utils.constants import get_o_map, get_n_map, get_s_map
 from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
 from typing import List
 
@@ -289,12 +290,16 @@ async def main():
     write_teacher_map_sorted_by_last_name_to_json(teachers_json_files)
     write_filenames_map_to_json(classrooms_json_files, 's')
 
+    o_map = get_o_map()
+    n_map = get_n_map()
+    s_map = get_s_map()
+
     for file in grades_json_files:
-        parse_grade_json_to_html(file)
+        parse_grade_json_to_html(file, o_map, n_map, s_map)
     for file in teachers_json_files:
-        parse_teacher_json_to_html(file)
+        parse_teacher_json_to_html(file, o_map, n_map, s_map)
     for file in classrooms_json_files:
-        parse_classroom_json_to_html(file)
+        parse_classroom_json_to_html(file, o_map, n_map, s_map)
 
 
 def clear_output_files():
