@@ -1,4 +1,4 @@
-import { handleSearchInput, generateList } from './modules/utils.js';
+import { handleSearchInput, generateList, handleCtrlD, checkCtrlD } from './modules/utils.js';
 
 let search_input;
 let wasOverThreshold = window.innerWidth > 980;
@@ -18,12 +18,13 @@ document.addEventListener('DOMContentLoaded', async function()
     if (scheduleHref)
         scheduleIframe.src = scheduleHref;
 
+    search_input = document.getElementById('search-input');
     window.addEventListener('message', function(event)
     {
         if (event.data.msg_type.startsWith('Plan'))
             scheduleTitle.textContent = event.data.msg_type;
-        else if (event.data.msg_type === 'ctrlF')
-            handleCtrlF(event, svg, navContainer, scheduleIframe);
+        else if (event.data.msg_type === 'ctrlD')
+            handleCtrlD(event, search_input, svg, navContainer, scheduleIframe, showNav);
         else if (event.data.msg_type === 'kumiGaming')
             window.location.href = event.data.href;
     });
@@ -56,8 +57,8 @@ document.addEventListener('DOMContentLoaded', async function()
 
     document.addEventListener('keydown', function(event)
     {
-        if (event.ctrlKey && event.key === 'f')
-            handleCtrlF(event, svg, navContainer, scheduleIframe);
+        if (checkCtrlD(event))
+            handleCtrlD(event, search_input, svg, navContainer, scheduleIframe, showNav);
     });
 
     //Schowanie nav bara, jeśli jest widoczny, po zmniejszeniu okna przeglądarki
@@ -66,7 +67,6 @@ document.addEventListener('DOMContentLoaded', async function()
     window.addEventListener('resize', () => handleMediaQuery(svg, navContainer, scheduleIframe));
 
     //Obsługa wyszukiwarki
-    search_input = document.getElementById('search-input');
     let container = document.getElementById('container');
 
     search_input.addEventListener('keyup', () => handleSearchInput(container, search_input));
@@ -113,12 +113,4 @@ function handleMediaQuery(svg, navContainer, scheduleIframe)
         showNav(svg, navContainer, scheduleIframe);
 
     wasOverThreshold = isOverThreshold;
-}
-
-function handleCtrlF(event, svg, navContainer, scheduleIframe) 
-{
-   event.preventDefault();
-   showNav(svg, navContainer, scheduleIframe);
-   search_input.focus();
-   search_input.select();
 }

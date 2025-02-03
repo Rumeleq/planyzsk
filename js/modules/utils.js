@@ -167,3 +167,20 @@ export async function generateList(listType)
         anchor.textContent = spanTexts[i];
     }
 }
+
+export function checkCtrlD(event)
+{
+    if ((event.ctrlKey || event.metaKey) && event.key === 'd')
+        return true;
+
+    return false;
+}
+
+export function handleCtrlD(event, search_input, svg=null, navContainer=null, scheduleIframe=null, showNav=null)
+{
+    event.preventDefault();
+    if (showNav)
+        showNav(svg, navContainer, scheduleIframe);
+    search_input.focus();
+    search_input.select();
+}
