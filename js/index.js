@@ -1,4 +1,4 @@
-import { handleSearchInput, searchSchedules, generateList } from './modules/utils.js';
+import { handleSearchInput, searchSchedules, generateList, checkCtrlF } from './modules/utils.js';
 
 document.addEventListener('DOMContentLoaded', async function()
 {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async function()
 
     document.addEventListener('keydown', function(event)
     {
-        if (event.ctrlKey && event.key === 'f')
+        if (checkCtrlF(event))
         {
             event.preventDefault();
             search_input.focus();
