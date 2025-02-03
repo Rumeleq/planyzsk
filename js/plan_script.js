@@ -1,14 +1,14 @@
-import { checkCtrlF } from './modules/utils.js';
+import { checkCtrlD } from './modules/utils.js';
 
 document.addEventListener('DOMContentLoaded', function()
 {
     let title = document.querySelector('title');
     document.addEventListener('keydown', function(event) 
     {
-        if (checkCtrlF(event))
+        if (checkCtrlD(event))
         {
             event.preventDefault();
-            window.parent.postMessage({msg_type: 'ctrlF'}, '*');
+            window.parent.postMessage({msg_type: 'ctrlD'}, '*');
         }
     });
 

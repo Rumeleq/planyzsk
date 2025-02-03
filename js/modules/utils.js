@@ -168,15 +168,15 @@ export async function generateList(listType)
     }
 }
 
-export function checkCtrlF(event)
+export function checkCtrlD(event)
 {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'f')
+    if ((event.ctrlKey || event.metaKey) && event.key === 'd')
         return true;
 
     return false;
 }
 
-export function handleCtrlF(event, search_input, svg=null, navContainer=null, scheduleIframe=null, showNav=null)
+export function handleCtrlD(event, search_input, svg=null, navContainer=null, scheduleIframe=null, showNav=null)
 {
     event.preventDefault();
     if (showNav)
