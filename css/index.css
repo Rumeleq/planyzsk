@@ -25,7 +25,7 @@ body
     background-size: cover;
     background-attachment: fixed;
     color: #EEEEEE;
-    font-family: "Kanit";
+    font-family: "Kanit", sans-serif;
     &::-webkit-scrollbar
     {
         width: 8px;
@@ -127,9 +127,9 @@ section#lists > div:not(div.in-between) > h3
 }
 div.in-between
 {
-    margin: 0px;
-    padding: 0px;
-    width: 0px;
+    margin: 0;
+    padding: 0;
+    width: 0;
     border: 1px solid #76ABAE;
     height: auto;
 }
