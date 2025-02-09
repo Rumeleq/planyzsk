@@ -2,7 +2,7 @@
 
 * 
 {
-    font-family: 'Kanit';
+    font-family: 'Kanit', sans-serif;
     color: #EEEEEE;
 
     &:focus 
@@ -16,6 +16,7 @@
         background-color: #556b6c;  
     }
 }
+
 body 
 {
     display: flex;
@@ -246,7 +247,7 @@ svg#arrow
         border-radius: 0;
         font-size: 3.5em;
         position: relative;
-        left: 0%;
+        left: 0;
         padding-bottom: 120px;
 
         @media (hover: hover) 
@@ -272,7 +273,7 @@ svg#arrow
     }
     div#container
     {
-        padding: 0px 10px;
+        padding: 0 10px;
         width: calc(100% - 20px);
     }
     div#search-field-container
@@ -310,8 +311,7 @@ svg#arrow
         border-radius: 0 0 30% 30%;
         background-color: #31363F;
         fill: #76ABAE;
-        z-index: 100;
-    
+
         @media (hover: hover)
         {
             width: 3em;
