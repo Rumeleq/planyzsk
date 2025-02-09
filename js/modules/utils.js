@@ -18,7 +18,7 @@ function getDisplayName(filename)
     return filename.replace(/\s[A-Z]+\.html$/, '');
 }
 
-function addElement(elementToAdd, targetElement)
+export function addElement(elementToAdd, targetElement)
 {
     let element = document.createElement(elementToAdd);
     targetElement.appendChild(element);
