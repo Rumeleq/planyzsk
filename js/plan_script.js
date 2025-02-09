@@ -17,8 +17,22 @@ document.addEventListener('DOMContentLoaded', function()
         document.querySelector('a#kumi_gaming').addEventListener('click', function(event)
         {
             event.preventDefault();
-            const href = this.getAttribute('href');
-            window.parent.postMessage({msg_type: 'kumiGaming', href: href}, '*');
+            document.body.innerHTML = '';
+            let embed = document.createElement('div');
+            embed.id = 'twitch-embed';
+            document.body.appendChild(embed);
+
+            let script = document.createElement('script');
+            script.src = 'https://embed.twitch.tv/embed/v1.js';
+            script.onload = function() {
+                new Twitch.Embed('twitch-embed', {
+                    width: '100%',
+                    height: '100%',
+                    channel: 'Kumi_Gaming',
+                    parent: [window.location.hostname]
+                });
+            };
+            document.body.appendChild(script);
         });
     }
 
