@@ -219,7 +219,7 @@ async def find_grades_number() -> int:
 
 def write_filenames_map_to_json(filenames: list[str], prefix: str) -> None:
     filenames_map = {
-        filename : f'{prefix}{index + 1}'
+        filename: f'{prefix}{index + 1}'
         for index, filename in enumerate(sorted(filenames))
     }
 
@@ -241,7 +241,7 @@ def write_teacher_map_sorted_by_last_name_to_json(teachers_filenames: list[str])
     )
 
     teachers_filenames_map = {
-        initials : f'n{index + 1}'
+        initials: f'n{index + 1}'
         for index, initials in enumerate(sorted_teacher_filenames)
     }
 
@@ -268,11 +268,11 @@ async def main():
     # saving classrooms' timetables
     path = f'{JSON_PATH}timetables/classrooms/'
     await save_timetables(CLASSROOMS_TIMETABLES, path, tasks)
-    
+
     # saving grades' timetables
     path = f'{JSON_PATH}timetables/grades/'
     await save_timetables(GRADES_TIMETABLES, path, tasks)
-    
+
     await asyncio.gather(*tasks)
 
     # saving plain text

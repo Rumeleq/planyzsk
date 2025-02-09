@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', async function()
             scheduleTitle.textContent = event.data.msg_type;
         else if (event.data.msg_type === 'ctrlD')
             handleCtrlD(event, search_input, svg, navContainer, scheduleIframe, showNav);
-        else if (event.data.msg_type === 'kumiGaming')
-            window.location.href = event.data.href;
     });
 
     //Generowanie contentu nav bara
