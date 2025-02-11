@@ -184,3 +184,8 @@ export function handleCtrlD(event, search_input, svg=null, navContainer=null, sc
     search_input.focus();
     search_input.select();
 }
+
+export function isMobile()
+{
+    return !window.matchMedia("(hover: hover)").matches;
+}

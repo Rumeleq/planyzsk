@@ -1,4 +1,4 @@
-import { handleSearchInput, searchSchedules, generateList, checkCtrlD, handleCtrlD } from './modules/utils.js';
+import { handleSearchInput, searchSchedules, generateList, checkCtrlD, handleCtrlD, isMobile } from './modules/utils.js';
 
 document.addEventListener('DOMContentLoaded', async function()
 {
@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', async function()
     let o_links = document.getElementById('o-links');
     let s_links = document.getElementById('s-links');
 
+    if (isMobile())
+        search_input.placeholder = 'Szukaj planu';
     document.addEventListener('keydown', function(event)
     {
         if (checkCtrlD(event))
