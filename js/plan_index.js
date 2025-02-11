@@ -1,4 +1,4 @@
-import { handleSearchInput, generateList, handleCtrlD, checkCtrlD } from './modules/utils.js';
+import { handleSearchInput, generateList, handleCtrlD, checkCtrlD, isMobile } from './modules/utils.js';
 
 let search_input;
 let wasOverThreshold = window.innerWidth > 980;
@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', async function()
         scheduleIframe.src = scheduleHref;
 
     search_input = document.getElementById('search-input');
+    if (isMobile())
+        search_input.placeholder = 'Szukaj planu';
     window.addEventListener('message', function(event)
     {
         if (event.data.msg_type.startsWith('Plan'))
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function()
             return;
         event.preventDefault();
         let href = event.target.href;
-        href = href.split('/')
+        href = href.split('/');
         href = href.slice(-2).join('/');
         scheduleIframe.src = href;
         setTimeout(() => 
