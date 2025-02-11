@@ -9,9 +9,7 @@ document.addEventListener('DOMContentLoaded', async function()
     let s_links = document.getElementById('s-links');
 
     if (isMobile())
-    {
         search_input.placeholder = 'Szukaj planu';
-    }
     document.addEventListener('keydown', function(event)
     {
         if (checkCtrlD(event))
