@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', async function()
     if (isMobile())
     {
         search_input.placeholder = 'Szukaj planu';
-        console.log('Mobile');
-        console.log(search_input);
     }
     document.addEventListener('keydown', function(event)
     {
