@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', async function()
 
     search_input = document.getElementById('search-input');
     if (isMobile())
+    {
         search_input.placeholder = 'Szukaj planu';
+        console.log('Mobile');
+        console.log(search_input);
+    }
     window.addEventListener('message', function(event)
     {
         if (event.data.msg_type.startsWith('Plan'))
