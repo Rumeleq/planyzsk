@@ -66,6 +66,41 @@ header, main > section
     margin: 10px;
     padding: 15px;
 }
+section#fav_plans
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+div#fav_plans_container
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+
+    && > a
+    {
+        margin: 5px;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #76ABAE;
+        width: calc(50% - 20px);
+        text-align: center;
+        color: whitesmoke;
+    }
+    && > button
+    {
+        width: 30%;
+        margin: 5px calc(35% - 5px);
+        padding: 5px;
+        background-color: #76ABAE;
+        color: #31363F;
+        border-radius: 5px;
+        font-weight: bold;
+        border: none;
+    }
+}
 div.search-results
 {
     display: flex;
