@@ -24,8 +24,9 @@ document.addEventListener('DOMContentLoaded', function()
 
     let cur_url = parent.window.location.href;
     let body = parent.document.querySelector('body');
-    let compare_frame = document.getElementById('compare-frame');
-    if (!compare_frame) {
+    let compare_frame = parent.document.getElementById('compare-frame');
+    let compare_frame2 = document.getElementById('compare-frame');
+    if (!compare_frame && !compare_frame2) {
         compare_frame = document.createElement('iframe');
         compare_frame.id = 'compare-frame';
         compare_frame.src = cur_url;
