@@ -22,6 +22,20 @@ document.addEventListener('DOMContentLoaded', function()
         });
     }
 
+    let cur_url = parent.window.location.href;
+    let body = parent.document.querySelector('body');
+    let compare_frame = document.getElementById('compare-frame');
+    if (!compare_frame) {
+        compare_frame = document.createElement('iframe');
+        compare_frame.id = 'compare-frame';
+        compare_frame.src = cur_url;
+        body.appendChild(compare_frame);
+    }
+
+
+
+
+
 
     //sekcja odpowiedzialna za dodawanie do ulubionych
 
