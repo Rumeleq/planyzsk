@@ -50,12 +50,6 @@ document.addEventListener('DOMContentLoaded', function()
     }
     document.getElementById('plan_name').appendChild(add_cbox);
 
-    //Dodanie labela do checkboxa
-    let cbox_label = document.createElement('label');
-    cbox_label.htmlFor = 'add-cbox';
-    cbox_label.textContent = 'Dodaj do ulubionych';
-    document.body.appendChild(cbox_label);
-
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
