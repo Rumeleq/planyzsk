@@ -22,16 +22,8 @@ document.addEventListener('DOMContentLoaded', function()
         });
     }
 
-    let cur_url = parent.window.location.href;
-    let body = parent.document.querySelector('body');
-    let compare_frame = parent.document.getElementById('compare-frame');
-    let compare_frame2 = document.getElementById('compare-frame');
-    if (!compare_frame && !compare_frame2) {
-        compare_frame = document.createElement('iframe');
-        compare_frame.id = 'compare-frame';
-        compare_frame.src = cur_url;
-        body.appendChild(compare_frame);
-    }
+
+
 
 
 
@@ -65,6 +57,14 @@ document.addEventListener('DOMContentLoaded', function()
     }
     document.getElementById('plan_name').appendChild(add_cbox);
 
+
+    let compare_button = document.createElement('button');
+    compare_button.id = 'compare-button';
+    compare_button.textContent = 'Porównaj';
+    compare_button.onclick = f_porownaj;
+    document.getElementById('plan_name').appendChild(compare_button);
+
+
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
@@ -81,7 +81,6 @@ window.appendToStorage = () => {
 
     let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
     let fullUrl = `${urlBase}/${lastPart}`;
-    console.log(fullUrl);
     //pobranie nazwy planu
     let plan_name = document.getElementById('plan_name');
     //Dodanie/usunięcie planu z ulubionych
@@ -94,4 +93,16 @@ window.appendToStorage = () => {
     setTimeout(function(){
         location.reload();
     }, 600);
+}
+window.f_porownaj = () => {
+    let cur_url = parent.window.location.href;
+    let body = parent.document.querySelector('body');
+    let compare_frame = parent.document.getElementById('compare-frame');
+    let compare_frame2 = document.getElementById('compare-frame');
+    if (!compare_frame && !compare_frame2) {
+        compare_frame = document.createElement('iframe');
+        compare_frame.id = 'compare-frame';
+        compare_frame.src = cur_url;
+        body.appendChild(compare_frame);
+    }
 }
