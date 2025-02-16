@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function()
     let plan_name = document.querySelector('span:first-of-type');
     plan_name.id = 'plan_name';
 
+
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
 
@@ -62,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function()
     compare_button.id = 'compare-button';
     compare_button.textContent = 'Porównaj';
     compare_button.onclick = f_porownaj;
+    if (parent.document.getElementById('compare-frame')) {
+        compare_button.textContent = 'Zamknij porównanie';
+    }
     document.getElementById('plan_name').appendChild(compare_button);
 
 
@@ -95,14 +99,15 @@ window.appendToStorage = () => {
     }, 600);
 }
 window.f_porownaj = () => {
-    let cur_url = parent.window.location.href;
-    let body = parent.document.querySelector('body');
-    let compare_frame = parent.document.getElementById('compare-frame');
-    let compare_frame2 = document.getElementById('compare-frame');
-    if (!compare_frame && !compare_frame2) {
-        compare_frame = document.createElement('iframe');
-        compare_frame.id = 'compare-frame';
-        compare_frame.src = cur_url;
-        body.appendChild(compare_frame);
+        let compare_frame = parent.document.getElementById('compare-frame');
+        if (compare_frame) {
+            compare_frame.remove();
+        } else {
+            let cur_url = parent.window.location.href;
+            let body = parent.document.querySelector('body');
+            compare_frame = document.createElement('iframe');
+            compare_frame.id = 'compare-frame';
+            compare_frame.src = cur_url;
+            body.appendChild(compare_frame);
+        }
     }
-}
