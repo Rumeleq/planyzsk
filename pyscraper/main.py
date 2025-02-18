@@ -8,6 +8,7 @@ from utils.getting import get_lesson_details
 from utils.saving import save_timetables
 from utils.constants import (JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL,
                              WEEK_DAYS, TEACHER_INTIAL_NAME_DICT, GROUP_REGEX)
+from utils.constants import get_o_map, get_n_map, get_s_map
 from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
 from typing import List
 
@@ -218,7 +219,7 @@ async def find_grades_number() -> int:
 
 def write_filenames_map_to_json(filenames: list[str], prefix: str) -> None:
     filenames_map = {
-        filename : f'{prefix}{index + 1}'
+        filename: f'{prefix}{index + 1}'
         for index, filename in enumerate(sorted(filenames))
     }
 
@@ -240,7 +241,7 @@ def write_teacher_map_sorted_by_last_name_to_json(teachers_filenames: list[str])
     )
 
     teachers_filenames_map = {
-        initials : f'n{index + 1}'
+        initials: f'n{index + 1}'
         for index, initials in enumerate(sorted_teacher_filenames)
     }
 
@@ -267,11 +268,11 @@ async def main():
     # saving classrooms' timetables
     path = f'{JSON_PATH}timetables/classrooms/'
     await save_timetables(CLASSROOMS_TIMETABLES, path, tasks)
-    
+
     # saving grades' timetables
     path = f'{JSON_PATH}timetables/grades/'
     await save_timetables(GRADES_TIMETABLES, path, tasks)
-    
+
     await asyncio.gather(*tasks)
 
     # saving plain text
@@ -289,12 +290,16 @@ async def main():
     write_teacher_map_sorted_by_last_name_to_json(teachers_json_files)
     write_filenames_map_to_json(classrooms_json_files, 's')
 
+    o_map = get_o_map()
+    n_map = get_n_map()
+    s_map = get_s_map()
+
     for file in grades_json_files:
-        parse_grade_json_to_html(file)
+        parse_grade_json_to_html(file, o_map, n_map, s_map)
     for file in teachers_json_files:
-        parse_teacher_json_to_html(file)
+        parse_teacher_json_to_html(file, o_map, n_map, s_map)
     for file in classrooms_json_files:
-        parse_classroom_json_to_html(file)
+        parse_classroom_json_to_html(file, o_map, n_map, s_map)
 
 
 def clear_output_files():

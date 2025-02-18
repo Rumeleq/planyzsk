@@ -1,3 +1,5 @@
+import { checkCtrlD, addElement } from './modules/utils.js';
+
 document.addEventListener('DOMContentLoaded', function()
 {
     const urlBase = '../planyzsk/plan_index.html?schedule=dane';
@@ -5,22 +7,16 @@ document.addEventListener('DOMContentLoaded', function()
     let title = document.querySelector('title');
     document.addEventListener('keydown', function(event) 
     {
-        if (event.ctrlKey && event.key === 'f') 
+        if (checkCtrlD(event))
         {
             event.preventDefault();
-            window.parent.postMessage({msg_type: 'ctrlF'}, '*');
+            window.parent.postMessage({msg_type: 'ctrlD'}, '*');
         }
     });
 
-    if (document.querySelector('a#kumi_gaming') !== null)
-    {
-        document.querySelector('a#kumi_gaming').addEventListener('click', function(event)
-        {
-            event.preventDefault();
-            const href = this.getAttribute('href');
-            window.parent.postMessage({msg_type: 'kumiGaming', href: href}, '*');
-        });
-    }
+    let kumi_gaming_anchor = document.querySelector('a#kumi_gaming');
+    if (kumi_gaming_anchor !== null)
+        kumi_gaming_anchor.addEventListener('click', createTwitchEmbed);
 
 
     //sekcja odpowiedzialna za dodawanie do ulubionych
@@ -61,28 +57,25 @@ document.addEventListener('DOMContentLoaded', function()
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
 
 });
-//Funkcja dodająca/usuwajaca plan do ulubionych
-window.appendToStorage = () => {
-    const urlBase = '../planyzsk/plan_index.html?schedule=dane';
-    //Pobranie aktyalnej localstorage
-    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
 
-    let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
-    let iframeUrl = documentContent.URL;
+function createTwitchEmbed(event)
+{
+    event.preventDefault();
+    document.body.innerHTML = '';
+    let embed = addElement('div', document.body);
+    embed.id = 'twitch-embed';
 
-    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
-    let fullUrl = `${urlBase}/${lastPart}`;
-    console.log(fullUrl);
-    //pobranie nazwy planu
-    let plan_name = document.getElementById('plan_name');
-    //Dodanie/usunięcie planu z ulubionych
-    if(!fav_map.has(fullUrl)) {
-        fav_map.set(fullUrl, plan_name.innerText);
-    } else {
-        fav_map.delete(fullUrl);
-    }
-    localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
-    setTimeout(function(){
-        location.reload();
-    }, 600);
+    let script = addElement('script', document.body);
+    script.src = 'https://embed.twitch.tv/embed/v1.js';
+
+    script.onload = function()
+    {
+        new Twitch.Embed('twitch-embed',
+            {
+                width: '100%',
+                height: '100%',
+                channel: 'Kumi_Gaming',
+                parent: [window.location.hostname]
+            });
+    };
 }

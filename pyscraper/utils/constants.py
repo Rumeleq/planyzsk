@@ -20,9 +20,36 @@ with open(f'{JSON_PATH}/resources/corrupted_teachers.json', 'r', encoding='utf-8
     C_TEACHERS: dict[str, str] = json.load(f)  # Constant to replace corrupted teacher names {corrupted_teacher: teacher_name}
 with open(f'{JSON_PATH}/resources/plain_text_solution.json', 'r', encoding='utf-8') as f:
     PLAIN_TEXT_SOLUTION: dict[str, str] = json.load(f)  # Constant to replace plain text lessons {pt_lesson: lesson_data}
-with open(f'{JSON_PATH}/resources/n_map.json', 'r', encoding='utf-8') as f:
-    N_MAP: dict[str, str] = json.load(f)
-with open(f'{JSON_PATH}/resources/o_map.json', 'r', encoding='utf-8') as f:
-    O_MAP: dict[str, str] = json.load(f)
-with open(f'{JSON_PATH}/resources/s_map.json', 'r', encoding='utf-8') as f:
-    S_MAP: dict[str, str] = json.load(f)
+
+
+def get_o_map() -> dict[str, str]:
+    """Get the O_MAP constant
+
+    Returns:
+        dict[str, str]: O_MAP constant
+    """
+    with open(f'{JSON_PATH}/resources/o_map.json', 'r', encoding='utf-8') as f:
+        O_MAP: dict[str, str] = json.load(f)
+    return O_MAP
+
+
+def get_n_map() -> dict[str, str]:
+    """Get the N_MAP constant
+
+    Returns:
+        dict[str, str]: N_MAP constant
+    """
+    with open(f'{JSON_PATH}/resources/n_map.json', 'r', encoding='utf-8') as f:
+        N_MAP: dict[str, str] = json.load(f)
+    return N_MAP
+
+
+def get_s_map() -> dict[str, str]:
+    """Get the S_MAP constant
+
+    Returns:
+        dict[str, str]: S_MAP constant
+    """
+    with open(f'{JSON_PATH}/resources/s_map.json', 'r', encoding='utf-8') as f:
+        S_MAP: dict[str, str] = json.load(f)
+    return S_MAP

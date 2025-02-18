@@ -13,11 +13,11 @@
     }
     &::selection
     {
-        background-color: #85a2a4;
+        background-color: #85a2a4;  
     }
 }
 
-body
+body 
 {
     margin: 0;
     display: flex;
@@ -29,6 +29,7 @@ body
     background-attachment: fixed;
     padding: 0 20px 20px 20px;
     max-width: 100%;
+    height: 100%;
 
     & > span:first-of-type
     {
@@ -42,11 +43,12 @@ body
         min-width: max-content;
     }
 }
+
 html
 {
     overflow: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: #76ABAE #31363F;
+    height: 100%;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar
     {
@@ -66,7 +68,8 @@ html
         display: none;
     }
 }
-table
+
+table 
 {
     background-color: #31363F;
     border-spacing: 0;
@@ -91,7 +94,7 @@ table>tr:not(:last-child)>td,
 table>tr:not(:last-child)>th,
 table>thead:not(:last-child),
 table>tbody:not(:last-child),
-table>tfoot:not(:last-child)
+table>tfoot:not(:last-child) 
 {
     border-bottom: 1px solid black;
 }
@@ -120,8 +123,8 @@ tr:last-of-type
     }
 }
 
-th, td
-{
+th, td 
+{ 
     padding: 10px;
     text-align: center;
 }
@@ -137,15 +140,35 @@ tr:nth-of-type(1), tr>td:nth-of-type(1), tr>td:nth-of-type(2)
     font-weight: bold;
 }
 
-a
+a 
 {
     color: #bfcad6;
     text-decoration: none;
 
-    &:hover
+    &:hover 
     {
         text-decoration: underline;
     }
+}
+
+div#twitch-embed
+{
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    & *
+    {
+        box-shadow: none;
+        border-radius: 3%;
+    }
+    @media(hover: hover)
+    {
+        margin-left: 5px;
+    }
+
 }
 
 /*
@@ -162,32 +185,3 @@ Jako taka naprawa ale sie i tak pieprzy
     }
 }
 */
-#add-to-fav {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: transparent;
-    border: none;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
-}
-
-#add-to-fav:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-#add-to-fav::before {
-    content: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><polygon points='20,0.4 23.6,14 38,14 26.8,22.4 30,36 20,28 10,36 13.2,22.4 2,14 16.4,14' fill='rgb(118,171,174)' stroke='black' stroke-width='0.8'/></svg>");
-    display: inline-block;
-    filter: saturate(0);
-    transition: filter 0.4s ease-in-out;
-
-}
-
-#add-to-fav:checked::before {
-    filter: saturate(1);
-    transition: filter 0.4s ease-in-out;
-}
