@@ -25,8 +25,9 @@ document.addEventListener('DOMContentLoaded', function()
     let plan_name = document.querySelector('span:first-of-type');
     plan_name.id = 'plan_name';
 
+
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
-    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
+    let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
 
     let documentContent = parent.document.getElementById('schedule-frame').contentDocument.URL;
     let lastPart = documentContent.substring(documentContent.lastIndexOf('/') + 1);
@@ -46,17 +47,43 @@ document.addEventListener('DOMContentLoaded', function()
     }
     document.getElementById('plan_name').appendChild(add_cbox);
 
-    //Dodanie labela do checkboxa
-    let cbox_label = document.createElement('label');
-    cbox_label.htmlFor = 'add-cbox';
-    cbox_label.textContent = 'Dodaj do ulubionych';
-    document.body.appendChild(cbox_label);
+    //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
+    document.body.style.visibility = 'visible';
+    window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
+
+//Funkcja dodająca/usuwajaca plan do ulubionych
+
 
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
 
 });
+
+window.appendToStorage = () =>
+{
+    const urlBase = '../planyzsk/plan_index.html?schedule=dane';
+    //Pobranie aktyalnej localstorage
+    let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
+
+    let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
+    let iframeUrl = documentContent.URL;
+
+    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
+    let fullUrl = `${urlBase}/${lastPart}`;
+    //pobranie nazwy planu
+    let plan_name = document.getElementById('plan_name');
+    //Dodanie/usunięcie planu z ulubionych
+    if(!fav_map.has(fullUrl)) {
+        fav_map.set(fullUrl, plan_name.innerText);
+    } else {
+        fav_map.delete(fullUrl);
+    }
+    localStorage.setItem('fav_plans', JSON.stringify(Array.from(fav_map.entries())));
+    setTimeout(function(){
+        location.reload();
+    }, 600);
+}
 
 function createTwitchEmbed(event)
 {
