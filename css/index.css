@@ -66,13 +66,13 @@ header, main > section
     margin: 10px;
     padding: 15px;
 }
-section#fav_plans
+section#fav-plans
 {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-div#fav_plans_container
+div#fav-plans-container
 {
     display: flex;
     justify-content: center;
@@ -240,7 +240,7 @@ svg#search-icon
     pointer-events: none;
 }
 
-button#search-button, .fav_plans_link
+button#search-button, .fav-plans-link
 {
     margin-left: 57px;
     background-color: #76ABAE;
@@ -259,6 +259,13 @@ button#search-button, .fav_plans_link
     }
 }
 
+button#clear-fav-plans
+{
+    &:hover
+    {
+        cursor: pointer;
+    }
+}
 
 
 @media (width < 600px) 

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function()
     const base_url = '../planyzsk/plan_index.html?schedule=dane';
 
     let title = document.querySelector('title');
-    document.addEventListener('keydown', function(event) 
+    document.addEventListener('keydown', function(event)
     {
         if (checkCtrlD(event))
         {
@@ -20,10 +20,6 @@ document.addEventListener('DOMContentLoaded', function()
 
 
     //sekcja odpowiedzialna za dodawanie do ulubionych
-
-    //Dodanie id do nazwy planu
-    let plan_name = document.querySelector('span:first-of-type');
-    plan_name.id = 'plan-name';
 
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
     let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
@@ -45,7 +41,8 @@ document.addEventListener('DOMContentLoaded', function()
         add_cbox.checked = true;
         add_cbox.title = 'Usuń z ulubionych';
     }
-    document.getElementById('plan-name').appendChild(add_cbox);
+    let schedule_name_span = document.getElementById('schedule-name');
+    schedule_name_span.appendChild(add_cbox);
 
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
@@ -60,17 +57,19 @@ window.appendToStorage = () =>
     let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
 
     let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
-    let iframeUrl = documentContent.URL;
+    let iframe_url = documentContent.URL;
 
-    let last_part = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
+    let last_part = iframe_url.substring(iframe_url.lastIndexOf('/') + 1);
     let full_url = `${url_base}/${last_part}`;
-    //pobranie nazwy planu
-    let schedule_name_span = document.getElementById('plan-name');
+
+    let schedule_name_span = document.getElementById('schedule-name');
+
     //Dodanie/usunięcie planu z ulubionych
     if (!fav_map.has(full_url))
         fav_map.set(full_url, schedule_name_span.innerText);
     else
         fav_map.delete(full_url);
+
     localStorage.setItem('fav_plans', JSON.stringify(Array.from(fav_map.entries())));
 }
 
@@ -84,7 +83,7 @@ function createTwitchEmbed(event)
     let script = addElement('script', document.body);
     script.src = 'https://embed.twitch.tv/embed/v1.js';
 
-    script.onload = function()
+    script.onload = () =>
     {
         new Twitch.Embed('twitch-embed',
             {
@@ -94,18 +93,4 @@ function createTwitchEmbed(event)
                 parent: [window.location.hostname]
             });
     };
-    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
-    let fullUrl = `${urlBase}/${lastPart}`;
-    //pobranie nazwy planu
-    let plan_name = document.getElementById('plan-name');
-    //Dodanie/usunięcie planu z ulubionych
-    if(!fav_map.has(fullUrl)) {
-        fav_map.set(fullUrl, plan_name.innerText);
-    } else {
-        fav_map.delete(fullUrl);
-    }
-    localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
-    setTimeout(function(){
-        location.reload();
-    }, 600);
 }
