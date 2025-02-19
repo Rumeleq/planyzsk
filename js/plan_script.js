@@ -2,7 +2,7 @@ import { checkCtrlD, addElement } from './modules/utils.js';
 
 document.addEventListener('DOMContentLoaded', function()
 {
-    const urlBase = '../planyzsk/plan_index.html?schedule=dane';
+    const base_url = '../planyzsk/plan_index.html?schedule=dane';
 
     let title = document.querySelector('title');
     document.addEventListener('keydown', function(event) 
@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function()
     plan_name.id = 'plan-name';
 
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
-    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
+    let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
 
     let documentContent = parent.document.getElementById('schedule-frame').contentDocument.URL;
-    let lastPart = documentContent.substring(documentContent.lastIndexOf('/') + 1);
-    let fullUrl = `${urlBase}/${lastPart}`;
+    let last_part = documentContent.substring(documentContent.lastIndexOf('/') + 1);
+    let full_url = `${base_url}/${last_part}`;
 
     //Dodanie checkboxa do dodawania do ulubionych (jeśli plan jest w ulubionych to checkbox jest zaznaczony)
     let add_cbox = document.createElement('input');
@@ -40,19 +40,18 @@ document.addEventListener('DOMContentLoaded', function()
     add_cbox.onclick = appendToStorage;
     add_cbox.title = 'Dodaj do ulubionych';
     add_cbox.checked = false;
-    if (fav_map.has(fullUrl)) {
+    if (fav_map.has(full_url))
+    {
         add_cbox.checked = true;
         add_cbox.title = 'Usuń z ulubionych';
     }
     document.getElementById('plan-name').appendChild(add_cbox);
 
-<<<<<<< Updated upstream
     //Dodanie labela do checkboxa
     let cbox_label = document.createElement('label');
     cbox_label.htmlFor = 'add-cbox';
     cbox_label.textContent = 'Dodaj do ulubionych';
     document.body.appendChild(cbox_label);
-=======
 
     let compare_button = document.createElement('button');
     compare_button.id = 'compare-button';
@@ -64,13 +63,41 @@ document.addEventListener('DOMContentLoaded', function()
     document.getElementById('plan-name').innerHTML += "</span><span id='compare-button-span'>";
     //document.getElementById('compare-button-span').appendChild(compare_button);
 
->>>>>>> Stashed changes
+    document.getElementById('schedule-name').appendChild(add_cbox);
+
+    //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
+    document.body.style.visibility = 'visible';
+    window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
 
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
 
 });
+
+//Funkcja dodająca/usuwajaca plan do ulubionych
+window.appendToStorage = () =>
+{
+    const url_base = '../planyzsk/plan_index.html?schedule=dane';
+    //Pobranie aktyalnej localstorage
+    let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
+
+    let documentContent = parent.document.getElementById('schedule-frame').contentDocument;
+    let iframeUrl = documentContent.URL;
+
+    let last_part = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
+    let full_url = `${url_base}/${last_part}`;
+    //pobranie nazwy planu
+    let schedule_name_span = document.getElementById('schedule-name');
+    //Dodanie/usunięcie planu z ulubionych
+    if (!fav_map.has(full_url))
+        fav_map.set(full_url, schedule_name_span.innerText);
+    else
+        fav_map.delete(full_url);
+    localStorage.setItem('fav_plans', JSON.stringify(Array.from(fav_map.entries())));
+
+    setTimeout(() => { location.reload(); }, 600);
+}
 
 function createTwitchEmbed(event)
 {
@@ -79,7 +106,6 @@ function createTwitchEmbed(event)
     let embed = addElement('div', document.body);
     embed.id = 'twitch-embed';
 
-<<<<<<< Updated upstream
     let script = addElement('script', document.body);
     script.src = 'https://embed.twitch.tv/embed/v1.js';
 
@@ -93,8 +119,6 @@ function createTwitchEmbed(event)
                 parent: [window.location.hostname]
             });
     };
-}
-=======
     let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
     let fullUrl = `${urlBase}/${lastPart}`;
     //pobranie nazwy planu
@@ -123,4 +147,3 @@ window.f_porownaj = () => {
             body.appendChild(compare_frame);
         }
     }
->>>>>>> Stashed changes

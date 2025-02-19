@@ -55,9 +55,11 @@
                 </script>
                 <button id="clear_fav_plans"
                         onclick="
-                        if (window.confirm('Czy na pewno chcesz wyczyścić ulubione plany?')) {
+                        if (window.confirm('Czy na pewno chcesz wyczyścić ulubione plany?'))
+                        {
                             localStorage.removeItem('fav_plans');
-                            setTimeout(function(){location.reload();}, 100);}"
+                            setTimeout(function(){location.reload();}, 100);
+                        }"
                 >Usuń wszystkie</button>
             </div>
         </section>
