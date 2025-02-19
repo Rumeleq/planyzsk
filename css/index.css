@@ -60,36 +60,40 @@ header
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+
 header, main > section
 {
     background-color: #222831;
     margin: 10px;
     padding: 15px;
 }
+
 section#fav-plans
 {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-div#fav-plans-container
-{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    flex-wrap: wrap;
 
-    && > a
+    & > div#fav-plans-container
     {
-        margin: 5px;
-        padding: 5px;
-        border-radius: 5px;
-        background-color: #76ABAE;
-        width: calc(50% - 20px);
-        text-align: center;
-        color: whitesmoke;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+
+        & > a
+        {
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: #76ABAE;
+            width: calc(50% - 20px);
+            text-align: center;
+            color: whitesmoke;
+        }
     }
-    && > button
+
+    & > button
     {
         width: 30%;
         margin: 5px calc(35% - 5px);
@@ -99,8 +103,14 @@ div#fav-plans-container
         border-radius: 5px;
         font-weight: bold;
         border: none;
+
+        &:hover
+        {
+            cursor: pointer;
+        }
     }
 }
+
 div.search-results
 {
     display: flex;
@@ -259,15 +269,6 @@ button#search-button, .fav-plans-link
     }
 }
 
-button#clear-fav-plans
-{
-    &:hover
-    {
-        cursor: pointer;
-    }
-}
-
-
 @media (width < 600px) 
 {
     div#app 
@@ -280,6 +281,7 @@ button#clear-fav-plans
         width: 90%;
     }
 }
+
 footer
 {
     display: flex;

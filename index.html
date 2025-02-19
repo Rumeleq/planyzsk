@@ -38,28 +38,8 @@
 
         <section id="fav-plans" style="display: none;">
             <h2>Ulubione plany</h2>
-            <div id="fav-plans-container">
-                <script>
-                    let section_fav_plans = document.querySelector("#fav-plans");
-                    section_fav_plans.style.display = localStorage.getItem("fav_plans") === null ? "none" : "flex";
-
-                    let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans")));
-                    let fav_plany_list = document.querySelector("#fav-plans-container");
-                    for (const [key, value] of fav_map)
-                    {
-                        let a = document.createElement("a")
-                        a.className = "fav-plans-link"
-                        a.href = (`${key}`)
-                        a.innerText = (`${value}`)
-                        fav_plany_list.appendChild(a)
-                    }
-                </script>
-                <button id="clear-fav-plans"
-                        onclick="
-                        if (window.confirm('Czy na pewno chcesz wyczyścić ulubione plany?'))
-                            localStorage.removeItem('fav_plans');"
-                >Usuń wszystkie</button>
-            </div>
+            <div id="fav-plans-container"></div>
+            <button id="clear-fav-plans">Usuń wszystkie</button>
         </section>
 
         <section id="lists">

@@ -1,4 +1,4 @@
-import { handleSearchInput, searchSchedules, generateList, checkCtrlD, handleCtrlD, isMobile } from './modules/utils.js';
+import { handleSearchInput, searchSchedules, generateList, checkCtrlD, handleCtrlD, isMobile, addElement } from './modules/utils.js';
 
 document.addEventListener('DOMContentLoaded', async function()
 {
@@ -25,6 +25,27 @@ document.addEventListener('DOMContentLoaded', async function()
     o_links.addEventListener('click', redirecting_to_iframe);
     s_links.addEventListener('click', redirecting_to_iframe);
 
+    let section_fav_plans = document.querySelector('#fav-plans');
+    section_fav_plans.style.display = localStorage.getItem('fav_plans') === null ? 'none' : 'flex';
+
+    let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans')));
+    let fav_plany_list = document.querySelector('#fav-plans-container');
+    for (const [key, value] of fav_map)
+    {
+        let fav_anchor = addElement('a', fav_plany_list);
+        fav_anchor.className = 'fav-plans-link';
+        fav_anchor.href = (`${key}`);
+        fav_anchor.innerText = (`${value}`);
+    }
+
+    let clear_fav_plans_btn = document.querySelector('#clear-fav-plans');
+    clear_fav_plans_btn.addEventListener('click', () =>
+    {
+        if (window.confirm('Czy na pewno chcesz wyczyścić ulubione plany?'))
+            localStorage.removeItem('fav_plans');
+        section_fav_plans.innerHTML = '';
+        section_fav_plans.style.display = 'none';
+    });
     document.body.style.visibility = 'visible';
 });
 
