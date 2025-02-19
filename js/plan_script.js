@@ -53,26 +53,9 @@ document.addEventListener('DOMContentLoaded', function()
     cbox_label.textContent = 'Dodaj do ulubionych';
     document.body.appendChild(cbox_label);
 
-    let compare_button = document.createElement('button');
-    compare_button.id = 'compare-button';
-    compare_button.textContent = 'Porównaj';
-    compare_button.onclick = f_porownaj;
-    if (parent.document.getElementById('compare-frame')) {
-        compare_button.textContent = 'Zamknij porównanie';
-    }
-    document.getElementById('plan-name').innerHTML += "</span><span id='compare-button-span'>";
-    //document.getElementById('compare-button-span').appendChild(compare_button);
-
-    document.getElementById('schedule-name').appendChild(add_cbox);
-
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
     window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
-
-    //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
-    document.body.style.visibility = 'visible';
-    window.parent.postMessage({msg_type: title.textContent.trim()}, '*');
-
 });
 
 //Funkcja dodająca/usuwajaca plan do ulubionych
@@ -88,7 +71,7 @@ window.appendToStorage = () =>
     let last_part = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
     let full_url = `${url_base}/${last_part}`;
     //pobranie nazwy planu
-    let schedule_name_span = document.getElementById('schedule-name');
+    let schedule_name_span = document.getElementById('plan-name');
     //Dodanie/usunięcie planu z ulubionych
     if (!fav_map.has(full_url))
         fav_map.set(full_url, schedule_name_span.innerText);
@@ -134,16 +117,3 @@ function createTwitchEmbed(event)
         location.reload();
     }, 600);
 }
-window.f_porownaj = () => {
-        let compare_frame = parent.document.getElementById('compare-frame');
-        if (compare_frame) {
-            compare_frame.remove();
-        } else {
-            let cur_url = parent.window.location.href;
-            let body = parent.document.querySelector('body');
-            compare_frame = document.createElement('iframe');
-            compare_frame.id = 'compare-frame';
-            compare_frame.src = cur_url;
-            body.appendChild(compare_frame);
-        }
-    }
