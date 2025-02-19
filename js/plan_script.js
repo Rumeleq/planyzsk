@@ -72,8 +72,6 @@ window.appendToStorage = () =>
     else
         fav_map.delete(full_url);
     localStorage.setItem('fav_plans', JSON.stringify(Array.from(fav_map.entries())));
-
-    setTimeout(() => { location.reload(); }, 600);
 }
 
 function createTwitchEmbed(event)
