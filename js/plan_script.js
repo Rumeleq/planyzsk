@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function()
 
     //Dodanie id do nazwy planu
     let plan_name = document.querySelector('span:first-of-type');
-    plan_name.id = 'plan_name';
+    plan_name.id = 'plan-name';
 
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans") || "[]"));
@@ -44,13 +44,27 @@ document.addEventListener('DOMContentLoaded', function()
         add_cbox.checked = true;
         add_cbox.title = 'Usuń z ulubionych';
     }
-    document.getElementById('plan_name').appendChild(add_cbox);
+    document.getElementById('plan-name').appendChild(add_cbox);
 
+<<<<<<< Updated upstream
     //Dodanie labela do checkboxa
     let cbox_label = document.createElement('label');
     cbox_label.htmlFor = 'add-cbox';
     cbox_label.textContent = 'Dodaj do ulubionych';
     document.body.appendChild(cbox_label);
+=======
+
+    let compare_button = document.createElement('button');
+    compare_button.id = 'compare-button';
+    compare_button.textContent = 'Porównaj';
+    compare_button.onclick = f_porownaj;
+    if (parent.document.getElementById('compare-frame')) {
+        compare_button.textContent = 'Zamknij porównanie';
+    }
+    document.getElementById('plan-name').innerHTML += "</span><span id='compare-button-span'>";
+    //document.getElementById('compare-button-span').appendChild(compare_button);
+
+>>>>>>> Stashed changes
 
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
@@ -65,6 +79,7 @@ function createTwitchEmbed(event)
     let embed = addElement('div', document.body);
     embed.id = 'twitch-embed';
 
+<<<<<<< Updated upstream
     let script = addElement('script', document.body);
     script.src = 'https://embed.twitch.tv/embed/v1.js';
 
@@ -79,3 +94,33 @@ function createTwitchEmbed(event)
             });
     };
 }
+=======
+    let lastPart = iframeUrl.substring(iframeUrl.lastIndexOf('/') + 1);
+    let fullUrl = `${urlBase}/${lastPart}`;
+    //pobranie nazwy planu
+    let plan_name = document.getElementById('plan-name');
+    //Dodanie/usunięcie planu z ulubionych
+    if(!fav_map.has(fullUrl)) {
+        fav_map.set(fullUrl, plan_name.innerText);
+    } else {
+        fav_map.delete(fullUrl);
+    }
+    localStorage.setItem("fav_plans", JSON.stringify(Array.from(fav_map.entries())));
+    setTimeout(function(){
+        location.reload();
+    }, 600);
+}
+window.f_porownaj = () => {
+        let compare_frame = parent.document.getElementById('compare-frame');
+        if (compare_frame) {
+            compare_frame.remove();
+        } else {
+            let cur_url = parent.window.location.href;
+            let body = parent.document.querySelector('body');
+            compare_frame = document.createElement('iframe');
+            compare_frame.id = 'compare-frame';
+            compare_frame.src = cur_url;
+            body.appendChild(compare_frame);
+        }
+    }
+>>>>>>> Stashed changes
