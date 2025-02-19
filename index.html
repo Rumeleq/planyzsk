@@ -45,7 +45,8 @@
 
                     let fav_map = new Map(JSON.parse(localStorage.getItem("fav_plans")));
                     let fav_plany_list = document.querySelector("#fav-plans-container");
-                    for (const [key, value] of fav_map) {
+                    for (const [key, value] of fav_map)
+                    {
                         let a = document.createElement("a")
                         a.className = "fav-plans-link"
                         a.href = (`${key}`)
@@ -56,10 +57,7 @@
                 <button id="clear-fav-plans"
                         onclick="
                         if (window.confirm('Czy na pewno chcesz wyczyścić ulubione plany?'))
-                        {
-                            localStorage.removeItem('fav_plans');
-                            setTimeout(function(){location.reload();}, 100);
-                        }"
+                            localStorage.removeItem('fav_plans');"
                 >Usuń wszystkie</button>
             </div>
         </section>

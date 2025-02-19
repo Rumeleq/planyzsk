@@ -24,25 +24,25 @@ document.addEventListener('DOMContentLoaded', function()
     //Stworzenie url do sprawdzenia czy plan jest w ulubionych
     let fav_map = new Map(JSON.parse(localStorage.getItem('fav_plans') || '[]'));
 
-    let documentContent = parent.document.getElementById('schedule-frame').contentDocument.URL;
-    let last_part = documentContent.substring(documentContent.lastIndexOf('/') + 1);
+    let parent_url = parent.document.getElementById('schedule-frame').contentDocument.URL;
+    let last_part = parent_url.substring(parent_url.lastIndexOf('/') + 1);
+    console.log(last_part);
     let full_url = `${base_url}/${last_part}`;
 
     //Dodanie checkboxa do dodawania do ulubionych (jeśli plan jest w ulubionych to checkbox jest zaznaczony)
-    let add_cbox = document.createElement('input');
-    add_cbox.type = 'checkbox';
-    add_cbox.id = 'add-to-fav';
-    add_cbox.name = 'add-cbox';
-    add_cbox.onclick = appendToStorage;
-    add_cbox.title = 'Dodaj do ulubionych';
-    add_cbox.checked = false;
+    let schedule_name_span = document.getElementById('schedule-name');
+    let fav_checkbox = addElement('input', schedule_name_span);
+    fav_checkbox.type = 'checkbox';
+    fav_checkbox.id = 'add-to-fav';
+    fav_checkbox.onclick = appendToStorage;
+    fav_checkbox.title = 'Dodaj do ulubionych';
     if (fav_map.has(full_url))
     {
-        add_cbox.checked = true;
-        add_cbox.title = 'Usuń z ulubionych';
+        fav_checkbox.checked = true;
+        fav_checkbox.title = 'Usuń z ulubionych';
     }
-    let schedule_name_span = document.getElementById('schedule-name');
-    schedule_name_span.appendChild(add_cbox);
+    console.log(fav_map);
+    schedule_name_span.appendChild(fav_checkbox);
 
     //Wysyłanie title strony do parenta (plan_index) i ustawienie widoczności strony
     document.body.style.visibility = 'visible';
