@@ -1,13 +1,14 @@
 import json
 import os
 import re
-from bs4 import BeautifulSoup as bs, Tag
-from utils.constants import WORDS_TO_ADD_SPACE_AFTER
-from utils.constants import WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER
-from utils.constants import WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER
-from utils.constants import TEACHER_INTIAL_NAME_DICT
-from utils.constants import HTML_PATH, JSON_PATH
-from utils.constants import GROUP_REGEX
+
+from bs4 import BeautifulSoup as bs
+from bs4 import Tag
+from utils.constants import (GROUP_REGEX, HTML_PATH, JSON_PATH,
+                             TEACHER_INTIAL_NAME_DICT,
+                             WORDS_TO_ADD_SPACE_AFTER,
+                             WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER,
+                             WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER)
 
 
 def normalize_lesson_name(lesson_name: str, *args: str) -> str:
