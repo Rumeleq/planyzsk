@@ -44,13 +44,13 @@ document.addEventListener('DOMContentLoaded', async function()
         href = href.split('/');
         href = href.slice(-2).join('/');
         scheduleIframe.src = href;
-        setTimeout(() => 
+        setTimeout(() =>
         {
-            if (window.innerWidth <= 980) 
+            if (window.innerWidth <= 980)
                 switchNav(svg, navContainer, scheduleIframe);
         }, 200);
     });
-    
+
     //Zmiana widoczności nav bara po kliknięciu w arrow svg
     svg.addEventListener('click', () =>
         switchNav(svg, navContainer, scheduleIframe));
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async function()
     document.body.style.visibility = 'visible';
 });
 
-function getQueryParam(param) 
+function getQueryParam(param)
 {
     let urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -101,12 +101,12 @@ function showNav(svg, navContainer, scheduleIframe)
     scheduleIframe.classList.remove('hidden-nav');
 }
 
-function handleMediaQuery(svg, navContainer, scheduleIframe) 
+function handleMediaQuery(svg, navContainer, scheduleIframe)
 {
     const isOverThreshold = window.innerWidth > 980;
     if (isOverThreshold === wasOverThreshold)
         return;
-    
+
     if (window.innerWidth <= 980)
         hideNav(svg, navContainer, scheduleIframe);
     else if (window.innerWidth > 980)

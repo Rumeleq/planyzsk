@@ -3,7 +3,7 @@ import { checkCtrlD, addElement } from './modules/utils.js';
 document.addEventListener('DOMContentLoaded', function()
 {
     let title = document.querySelector('title');
-    document.addEventListener('keydown', function(event) 
+    document.addEventListener('keydown', function(event)
     {
         if (checkCtrlD(event))
         {
