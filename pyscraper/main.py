@@ -2,8 +2,8 @@ import asyncio
 import json
 import os
 import re
-from typing import List
 from datetime import date
+from typing import List
 
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup as bs
@@ -207,7 +207,6 @@ async def find_grades_number() -> int:
     while low < high:
         mid = (low + high) // 2
         test_url = f'{URL}o{mid}.html'
-        print(test_url)
         try:
             async with ClientSession() as session:
                 async with session.get(test_url, allow_redirects=False) as page_response:
@@ -215,7 +214,6 @@ async def find_grades_number() -> int:
                         # Handlowanie klas 5 od maja
                         if 5 <= date.today().month <= 6:
                             grade = bs(await page_response.text(), 'html.parser').find('span', class_='tytulnapis').text.split(' ')[0][0]
-                            print(grade)
                             if grade == '5':
                                 high = mid
                             else:
