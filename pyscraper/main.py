@@ -3,6 +3,7 @@ import json
 import os
 import re
 from typing import List
+from datetime import date
 
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup as bs
@@ -211,7 +212,14 @@ async def find_grades_number() -> int:
             async with ClientSession() as session:
                 async with session.get(test_url, allow_redirects=False) as page_response:
                     if page_response.status == 200:
-                        low = mid + 1
+                        # Handlowanie klas 5 od maja
+                        if 5 <= date.today().month <= 6:
+                            grade = bs(await page_response.text(), 'html.parser').find('span', class_='tytulnapis').text.split(' ')[0][0]
+                            print(grade)
+                            if grade == '5':
+                                high = mid
+                            else:
+                                low = mid + 1
                     else:
                         high = mid
         except Exception as e:
