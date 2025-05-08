@@ -1,6 +1,5 @@
 import json
 
-
 JSON_PATH = 'JSON/'  # path to the JSON files
 URL = 'https://www.zsk.poznan.pl/plany_lekcji/2023plany/technikum/plany/'  # URL to the timetables
 WEEK_DAYS = 5

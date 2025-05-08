@@ -1,7 +1,8 @@
 import re
+
 from bs4 import ResultSet, Tag
-from pyscraper.utils.constants import C_LESSONS, C_TEACHERS
-from pyscraper.utils.constants import GROUP_REGEX
+
+from pyscraper.utils.constants import C_LESSONS, C_TEACHERS, GROUP_REGEX
 
 
 def get_lesson_details(span: ResultSet[Tag]):

@@ -5,12 +5,12 @@
     "Religia 1CD": "Religia RA B108A",
     "CKP 7.20 - 12.00": null,
     "WF KM/MT 13.45-16.00": null,
-    "DSD 2abcde 62 / Etyka 2a 37": "JęzykniemieckiDSDIPro ME 62/Etyka AM 37",
-    "ds 2abcde / 23": "JęzykniemieckiDSDIPro ME 23",
+    "DSD 2abcde 62 / Etyka 2a 37": "JęzykniemieckiDSDIPro ME 62/Etyka AM 38",
+    "ds 2abcde / 23": "JęzykniemieckiDSDIPro ME 27",
     "DSD 2abcde 62 ": "JęzykniemieckiDSDIPro ME 62",
     "BUKOWSKA": null,
-    "dsd me / pracownia ms 2/2": "JęzykniemieckiDSDIPro ME 23/Pracowniaprogramowaniaobiektowego MS 34",
-    "dsd 2abcde / 23": "JęzykniemieckiDSDIPro ME 23",
+    "dsd me / pracownia ms 2/2": "JęzykniemieckiDSDIPro ME 27/Pracowniaprogramowaniaobiektowego MS 34",
+    "dsd 2abcde / 23": "JęzykniemieckiDSDIPro ME 27",
     "WF 10:40-12:55": null,
     "wych 12:55-13:40/ Wych 13:45- 16:00": null,
     "Religia 3A": "Religia RA 62",
@@ -36,5 +36,7 @@
     "Matematyka dodatkowa": "MatematykaDodatkowa MW B109",
     "RG Urz47/JJ Org21": "Urządzeniaiinstalacjeelektroniczne RG 47/Organizacjatransportukolejowego JJ 21",
     "Religia 5D 62": "Religia PS 62",
-    "Zaj. z wych. AJ B109": "Zajęciazwychowawcą AJ B109"
+    "Zaj. z wych. AJ B109": "Zajęciazwychowawcą AJ B109",
+    "DSD ME 62": "JęzykniemieckiDSDIPro ME 27",
+    "WF 13:45-16.00": null
 }

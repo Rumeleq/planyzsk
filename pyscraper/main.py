@@ -2,15 +2,19 @@ import asyncio
 import json
 import os
 import re
-from bs4 import BeautifulSoup as bs, ResultSet, Tag
+from datetime import date
+from typing import List
+
 from aiohttp import ClientSession
+from bs4 import BeautifulSoup as bs
+from bs4 import ResultSet, Tag
+from html_parser import (parse_classroom_json_to_html,
+                         parse_grade_json_to_html, parse_teacher_json_to_html)
+from utils.constants import (GROUP_REGEX, JSON_PATH, LESSONS_NUMBER,
+                             PLAIN_TEXT_SOLUTION, TEACHER_INTIAL_NAME_DICT,
+                             URL, WEEK_DAYS, get_n_map, get_o_map, get_s_map)
 from utils.getting import get_lesson_details
 from utils.saving import save_timetables
-from utils.constants import (JSON_PATH, LESSONS_NUMBER, PLAIN_TEXT_SOLUTION, URL,
-                             WEEK_DAYS, TEACHER_INTIAL_NAME_DICT, GROUP_REGEX)
-from utils.constants import get_o_map, get_n_map, get_s_map
-from html_parser import parse_grade_json_to_html, parse_teacher_json_to_html, parse_classroom_json_to_html
-from typing import List
 
 
 def insert_data_to_teachers(lesson_title: str, lesson_teacher: str, lesson_classroom: str, num_col: int, num_row: int, grade: str) -> None:
@@ -207,7 +211,13 @@ async def find_grades_number() -> int:
             async with ClientSession() as session:
                 async with session.get(test_url, allow_redirects=False) as page_response:
                     if page_response.status == 200:
-                        low = mid + 1
+                        # Handlowanie klas 5 od maja
+                        if 5 <= date.today().month <= 6:
+                            grade = bs(await page_response.text(), 'html.parser').find('span', class_='tytulnapis').text.split(' ')[0][0]
+                            if grade == '5':
+                                high = mid
+                            else:
+                                low = mid + 1
                     else:
                         high = mid
         except Exception as e:
@@ -253,7 +263,7 @@ async def main():
     # getting timetables
     tasks: list[asyncio.Task] = list()
     async with ClientSession() as session:
-        grades_number: int = await find_grades_number()
+        grades_number = await find_grades_number()
         print(grades_number)
         for i in range(1, grades_number + 1):
             tasks.append(asyncio.create_task(get_timetable(session, i)))  # create tasks for each timetable
