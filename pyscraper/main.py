@@ -325,37 +325,26 @@ async def get_timetable(session: ClientSession, i: int) -> None:
                         insert_data_to_grades(*w, col_num, row_num, grade)
 
 
-async def find_grades_number() -> int:
-    """Find the total number grades to get the timetables from"""
-    low, high = 0, 50
+async def find_grades_number() -> tuple[int, int]:
+    """Find the lowest and highest grade link numbers that exist"""
+    lower, upper = None, None
+    async with ClientSession() as session:
+        for i in range(1, 100):  # bezpieczny zakres
+            test_url = f"{URL}o{i}.html"
+            try:
+                async with session.get(test_url, allow_redirects=False) as resp:
+                    if resp.status == 200:
+                        if lower is None:
+                            lower = i
+                        upper = i
+            except Exception as e:
+                print(f"Unexpected error for {test_url}: {type(e).__name__} - {e}")
+                break
 
-    while low < high:
-        mid = (low + high) // 2
-        test_url = f"{URL}o{mid}.html"
-        try:
-            async with ClientSession() as session:
-                async with session.get(
-                    test_url, allow_redirects=False
-                ) as page_response:
-                    if page_response.status == 200:
-                        # Handlowanie klas 5 od maja
-                        if 5 <= date.today().month <= 6:
-                            grade = (
-                                bs(await page_response.text(), "html.parser")
-                                .find("span", class_="tytulnapis")
-                                .text.split(" ")[0][0]
-                            )
-                            if grade == "5":
-                                high = mid
-                            else:
-                                low = mid + 1
-                    else:
-                        high = mid
-        except Exception as e:
-            print(f"Unexpected error for {test_url}: {type(e).__name__} - {e}")
-            break
+    if lower is None or upper is None:
+        raise ValueError("Nie znaleziono żadnych istniejących linków")
 
-    return low - 1
+    return lower, upper
 
 
 def write_filenames_map_to_json(filenames: list[str], prefix: str) -> None:
@@ -393,9 +382,11 @@ async def main():
     # getting timetables
     tasks: list[asyncio.Task] = list()
     async with ClientSession() as session:
-        grades_number = await find_grades_number()
+        grade_tuple = await find_grades_number()
+        grades_number = grade_tuple[1]
+        grade_start = grade_tuple[0]
         print(grades_number)
-        for i in range(1, grades_number + 1):
+        for i in range(grade_start, grades_number + 1):
             tasks.append(
                 asyncio.create_task(get_timetable(session, i))
             )  # create tasks for each timetable
