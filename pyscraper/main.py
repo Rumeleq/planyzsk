@@ -2,7 +2,6 @@ import asyncio
 import json
 import os
 import re
-from datetime import date
 from typing import List
 
 from aiohttp import ClientSession
@@ -239,97 +238,105 @@ async def get_timetable(session: ClientSession, i: int) -> None:
             for col_num, col in enumerate(
                 row.find_all("td")[2:]
             ):  # iterate over the days (columns)
+                for a in col.find_all("a"):
+                    a.name = "span"
+
                 col_spans: ResultSet[Tag] = col.find_all(
                     "span", recursive=False
                 )  # get the spans from the column (the data is stored in spans, except the plain text)
-                if len(col_spans) == 0:  # no spans - plain text case
-                    if col.text == "\xa0":  # if empty, skip
-                        continue
-                    if (
-                        grade not in PLAIN_TEXT
-                    ):  # if not present, add PLAIN_TEXT[grade][col_num][row_num] entry
-                        PLAIN_TEXT[grade] = dict()
-                    if col_num not in PLAIN_TEXT[grade]:  # same as above for the column
-                        PLAIN_TEXT[grade][col_num] = dict()
-                    PLAIN_TEXT[grade][col_num][row_num] = (
-                        col.text
-                    )  # add the plain text value to the mentioned entry
+                try:
+                    if len(col_spans) == 0:  # no spans - plain text case
+                        if col.text == "\xa0":  # if empty, skip
+                            continue
+                        if (
+                            grade not in PLAIN_TEXT
+                        ):  # if not present, add PLAIN_TEXT[grade][col_num][row_num] entry
+                            PLAIN_TEXT[grade] = dict()
+                        if (
+                            col_num not in PLAIN_TEXT[grade]
+                        ):  # same as above for the column
+                            PLAIN_TEXT[grade][col_num] = dict()
+                        PLAIN_TEXT[grade][col_num][row_num] = (
+                            col.text
+                        )  # add the plain text value to the mentioned entry
 
-                    if col.text not in PLAIN_TEXT_SOLUTION:
-                        raise ValueError(
-                            f"Error: {grade}/{col_num}/{row_num}: {col.text} not in PLAIN_TEXT_SOLUTION"
-                        )
-                    if (
-                        PLAIN_TEXT_SOLUTION[col.text] is None
-                    ):  # if the plain text solution is None, skip it (I considered it an unnecessary data)
-                        continue
-                    else:  # if the plain text is in the PLAIN_TEXT_SOLUTION dictionary, iterate over the spans and put the data in the dictionaries
-                        for span in PLAIN_TEXT_SOLUTION[col.text].split("/"):
+                        if col.text not in PLAIN_TEXT_SOLUTION:
+                            raise ValueError(
+                                f"Error: {grade}/{col_num}/{row_num}: {col.text} not in PLAIN_TEXT_SOLUTION"
+                            )
+                        if (
+                            PLAIN_TEXT_SOLUTION[col.text] is None
+                        ):  # if the plain text solution is None, skip it (I considered it an unnecessary data)
+                            continue
+                        else:  # if the plain text is in the PLAIN_TEXT_SOLUTION dictionary, iterate over the spans and put the data in the dictionaries
+                            for span in PLAIN_TEXT_SOLUTION[col.text].split("/"):
+                                insert_data_to_teachers(
+                                    *(w := span.split(" ")), col_num, row_num, grade
+                                )
+                                insert_data_to_classrooms(*w, col_num, row_num, grade)
+                                insert_data_to_grades(*w, col_num, row_num, grade)
+                    elif (
+                        len(col_spans) == 3
+                    ):  # if there are 3 spans, put the data in the Dictionaries (the default case)
+                        try:
                             insert_data_to_teachers(
-                                *(w := span.split(" ")), col_num, row_num, grade
+                                *(w := get_lesson_details(col_spans)),
+                                col_num,
+                                row_num,
+                                grade,
+                            )
+                        except KeyError:
+                            continue
+                        insert_data_to_classrooms(*w, col_num, row_num, grade)
+                        insert_data_to_grades(*w, col_num, row_num, grade)
+                    elif (
+                        len(col_spans) == 2
+                    ):  # if there are 2 spans, iterate over it and put the data in the Dictionaries (group lesson case)
+                        for span in col_spans:
+                            insert_data_to_teachers(
+                                *(w := get_lesson_details(span.find_all("span"))),
+                                col_num,
+                                row_num,
+                                grade,
                             )
                             insert_data_to_classrooms(*w, col_num, row_num, grade)
                             insert_data_to_grades(*w, col_num, row_num, grade)
-
-                elif (
-                    len(col_spans) == 3
-                ):  # if there are 3 spans, put the data in the Dictionaries (the default case)
-                    try:
+                    elif (
+                        len(col_spans) == 1
+                    ):  # if there is only one span, it's a group lesson with one group (half of the class case)
                         insert_data_to_teachers(
-                            *(w := get_lesson_details(col_spans)),
-                            col_num,
-                            row_num,
-                            grade,
-                        )
-                    except KeyError:
-                        continue
-                    insert_data_to_classrooms(*w, col_num, row_num, grade)
-                    insert_data_to_grades(*w, col_num, row_num, grade)
-
-                elif (
-                    len(col_spans) == 2
-                ):  # if there are 2 spans, iterate over it and put the data in the Dictionaries (group lesson case)
-                    for span in col_spans:
-                        insert_data_to_teachers(
-                            *(w := get_lesson_details(span.find_all("span"))),
+                            *(
+                                w := get_lesson_details(
+                                    col_spans[0].find_all("span", recursive=False)
+                                )
+                            ),
                             col_num,
                             row_num,
                             grade,
                         )
                         insert_data_to_classrooms(*w, col_num, row_num, grade)
                         insert_data_to_grades(*w, col_num, row_num, grade)
-
-                elif (
-                    len(col_spans) == 1
-                ):  # if there is only one span, it's a group lesson with one group (half of the class case)
-                    insert_data_to_teachers(
-                        *(
-                            w := get_lesson_details(
-                                col_spans[0].find_all("span", recursive=False)
+                    else:  # if there are more than 3 spans, iterate over it, organize spans into groups of 3 and put the data in the Dictionaries (more than two groups case)
+                        it = iter(col_spans)
+                        for span in zip(it, it, it):
+                            insert_data_to_teachers(
+                                *(w := get_lesson_details(span)),
+                                col_num,
+                                row_num,
+                                grade,
                             )
-                        ),
-                        col_num,
-                        row_num,
-                        grade,
-                    )
-                    insert_data_to_classrooms(*w, col_num, row_num, grade)
-                    insert_data_to_grades(*w, col_num, row_num, grade)
-
-                else:  # if there are more than 3 spans, iterate over it, organize spans into groups of 3 and put the data in the Dictionaries (more than two groups case)
-                    it = iter(col_spans)
-                    for span in zip(it, it, it):
-                        insert_data_to_teachers(
-                            *(w := get_lesson_details(span)), col_num, row_num, grade
-                        )
-                        insert_data_to_classrooms(*w, col_num, row_num, grade)
-                        insert_data_to_grades(*w, col_num, row_num, grade)
+                            insert_data_to_classrooms(*w, col_num, row_num, grade)
+                            insert_data_to_grades(*w, col_num, row_num, grade)
+                except Exception as e:
+                    print(f"KeyError: {e}; {span, grade}")
 
 
 async def find_grades_number() -> tuple[int, int]:
     """Find the lowest and highest grade link numbers that exist"""
+    return 3, 31
     lower, upper = None, None
     async with ClientSession() as session:
-        for i in range(1, 100):  # bezpieczny zakres
+        for i in range(1, 100):
             test_url = f"{URL}o{i}.html"
             try:
                 async with session.get(test_url, allow_redirects=False) as resp:
@@ -383,10 +390,10 @@ async def main():
     tasks: list[asyncio.Task] = list()
     async with ClientSession() as session:
         grade_tuple = await find_grades_number()
-        grades_number = grade_tuple[1]
-        grade_start = grade_tuple[0]
-        print(grades_number)
-        for i in range(grade_start, grades_number + 1):
+        grades_start = grade_tuple[0]
+        grades_end = grade_tuple[1]
+        print(grades_end - grades_start + 1)
+        for i in range(grades_start, grades_end + 1):
             tasks.append(
                 asyncio.create_task(get_timetable(session, i))
             )  # create tasks for each timetable
