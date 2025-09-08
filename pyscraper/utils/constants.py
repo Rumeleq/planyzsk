@@ -115,6 +115,7 @@ WORDS_TO_ADD_SPACE_AFTER: list[str] = [
     "usługi",
     "rozwijające",
     "zainteresowania",
+    "uzdolnienia",
 ]
 WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = [
     "zwychowawcą",
@@ -135,7 +136,7 @@ WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = [
     "ipomiary",
     "ospołeczeństwie",
     "ipomiarów",
-    "iuzdolnieniauczniów_D",
+    "iuzdolnienia",
 ]
 WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER: list[str] = ["dozawodu", "nastacji"]
 
