@@ -37,13 +37,18 @@ document.addEventListener('DOMContentLoaded', async function()
     //Przechwytywanie kliknięć w linki nav bara i zmiana src iframe'u na odpowiedni link
     navContainer.addEventListener('click', function(event)
     {
+
         if (event.target.textContent === 'Strona główna' || event.target.tagName !== 'A')
             return;
         event.preventDefault();
         let href = event.target.href;
         href = href.split('/');
         href = href.slice(-2).join('/');
+        console.log(scheduleIframe.src);
         scheduleIframe.src = href;
+        console.log(href);
+        console.log(scheduleIframe.src);
+
         setTimeout(() =>
         {
             if (window.innerWidth <= 980)
