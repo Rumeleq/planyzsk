@@ -44,10 +44,7 @@ document.addEventListener('DOMContentLoaded', async function()
         let href = event.target.href;
         href = href.split('/');
         href = href.slice(-2).join('/');
-        console.log(scheduleIframe.src);
         scheduleIframe.src = href;
-        console.log(href);
-        console.log(scheduleIframe.src);
 
         setTimeout(() =>
         {
