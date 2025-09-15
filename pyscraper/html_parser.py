@@ -243,5 +243,6 @@ def parse_grade_json_to_html(
                 td.append(wrapper_span)
                 wrapper_span.extend([span_p, anchor_n, anchor_s])
 
+    os.makedirs("dane", exist_ok=True)
     with open(f"../dane/{o_map[json_filename]}.html", "w", encoding="utf-8") as f:
         f.write(str(soup))

@@ -1,7 +1,7 @@
 import json
 
 JSON_PATH = "JSON/"  # path to the JSON files
-URL = "https://www.zsk.poznan.pl/plany_lekcji/2023plany/plany/"  # URL to the timetables
+URL = "https://www.zsk.poznan.pl/plany_lekcji/2025/plany/"  # URL to the timetables
 WEEK_DAYS = 5
 LESSONS_NUMBER = 11
 HTML_PATH = "utils"
@@ -109,6 +109,13 @@ WORDS_TO_ADD_SPACE_AFTER: list[str] = [
     "pracy",
     "Niemiecki",
     "Matematyka",
+    "techniczny",
+    "wspomagany",
+    "Cyfrowe",
+    "usługi",
+    "rozwijające",
+    "zainteresowania",
+    "uzdolnienia",
 ]
 WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = [
     "zwychowawcą",
@@ -129,6 +136,7 @@ WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = [
     "ipomiary",
     "ospołeczeństwie",
     "ipomiarów",
+    "iuzdolnienia",
 ]
 WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER: list[str] = ["dozawodu", "nastacji"]
 

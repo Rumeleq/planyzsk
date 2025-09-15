@@ -38,6 +38,6 @@ def get_lesson_details(span: ResultSet[Tag]):
         )  # if teacher is corrupted, replace with correct one
         lesson_classroom: str = span[2].text
     except KeyError as e:
-        print(f"KeyError: {e}; {span}")
+        # print(f"KeyError: {e}; {span}")
         raise e
     return lesson_title, lesson_teacher, lesson_classroom
