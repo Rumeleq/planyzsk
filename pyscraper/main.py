@@ -334,6 +334,9 @@ async def get_timetable(session: ClientSession, i: int) -> None:
 async def find_grades_number() -> tuple[int, int]:
     """Find the lowest and highest grade link numbers that exist"""
     return 3, 31
+    # działa do majowej zmiany planu, z powodu odejścia klas maturalnych;
+    # z powodu dziwnej indeksacji klasy pierwszej jako o(ddział)3 funkcja zwraca teraz tuple obu granicznych indeksów
+    # do czasu naprawy błędów uszkodzonych nazw lekcji i nauczycieli (z winy źródła) funckja zostaje w wersji uproszczonej na potrzeby testów
     lower, upper = None, None
     async with ClientSession() as session:
         for i in range(1, 100):
