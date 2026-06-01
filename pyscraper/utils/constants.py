@@ -116,6 +116,8 @@ WORDS_TO_ADD_SPACE_AFTER: list[str] = [
     "rozwijające",
     "zainteresowania",
     "uzdolnienia",
+    "dyspozycji",
+    "Godziny"
 ]
 WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = [
     "zwychowawcą",
@@ -138,7 +140,7 @@ WORDS_TO_ADD_SPACE_AFTER_FIRST_CHARACTER: list[str] = [
     "ipomiarów",
     "iuzdolnienia",
 ]
-WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER: list[str] = ["dozawodu", "nastacji"]
+WORDS_TO_ADD_SPACE_AFTER_SECOND_CHARACTER: list[str] = ["dozawodu", "nastacji", "dodyspozycji"]
 
 with open(f"{JSON_PATH}/resources/initials_name_dict.json", "r", encoding="utf-8") as f:
     TEACHER_INTIAL_NAME_DICT: dict[str, str] = json.load(
